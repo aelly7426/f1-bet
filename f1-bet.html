@@ -992,15 +992,17 @@ function renderResult() {
          </div>`
       : '';
 
+    const sessEmoji = (s.key === 'sq' || s.key === 'quali') ? '⏱' : '🏁';
+
     return `
     <div class="card" id="sess-card-${s.key}" style="border-color:${locked ? 'rgba(0,200,100,0.4)' : 'var(--border)'};border-width:${locked ? '2px' : '1px'};padding:0;overflow:hidden;">
       <div style="display:flex;justify-content:space-between;align-items:center;padding:18px 24px;cursor:pointer;background:rgba(255,255,255,0.03);" onclick="toggleResultCard('${s.key}')">
-        <div style="display:flex;align-items:center;gap:12px;">
-          <span class="sess-label">${s.label}</span>
-          <span class="sess-mult">×${s.mult}</span>
-          ${allReady ? '<span style="font-size:clamp(8px,2vw,10px);padding:2px 9px;border-radius:4px;background:rgba(0,200,100,0.12);color:#00c864;border:1px solid rgba(0,200,100,0.25);font-family:\'Orbitron\',sans-serif;">✓ 예측 완료</span>' : ''}
-        </div>
         <div style="display:flex;align-items:center;gap:10px;">
+          <span class="sess-label">${s.label}</span>
+          <span style="font-size:clamp(14px,3.5vw,20px);">${sessEmoji}</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;">
+          ${allReady ? '<span style="font-size:clamp(8px,2vw,10px);padding:3px 10px;border-radius:10px;font-family:\'Orbitron\',sans-serif;background:rgba(0,200,100,0.12);color:#00c864;border:1px solid rgba(0,200,100,0.25);font-weight:700;letter-spacing:1px;">✓ 예측 완료</span>' : ''}
           ${locked ? '<span style="font-size:clamp(8px,2vw,10px);padding:3px 10px;border-radius:10px;font-family:\'Orbitron\',sans-serif;background:rgba(0,200,100,0.25);color:#00ff88;border:1px solid rgba(0,255,136,0.5);font-weight:700;letter-spacing:1px;">✓ LOCKED</span>' : ''}
           <span id="res-arrow-${s.key}" style="font-size:clamp(9px,2.5vw,11px);color:rgba(255,255,255,0.5);transition:transform 0.2s;">▼</span>
         </div>
