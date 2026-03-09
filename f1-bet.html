@@ -744,21 +744,34 @@ async function fetchStandings() {
   const status = document.getElementById('fetchStatus');
   btn.disabled = true; btn.textContent = '⏳ Fetching...'; status.textContent = '';
   try {
-    // OpenF1 API: 최신 레이스 세션의 팀 챔피언십 순위
-    const res = await fetch('https://api.openf1.org/v1/championship_teams?session_key=latest');
-    if (!res.ok) throw new Error('Network error');
-    const data = await res.json();
-    if (!data || !data.length) throw new Error('데이터를 찾을 수 없어요');
+    // Step 1: 올해 완료된 Race 세션 중 가장 최근 것의 session_key 조회
+    const year = new Date().getFullYear();
+    const sessRes = await fetch(`https://api.openf1.org/v1/sessions?year=${year}&session_name=Race`);
+    if (!sessRes.ok) throw new Error('세션 정보를 가져올 수 없어요');
+    const sessions = await sessRes.json();
+    if (!sessions || !sessions.length) throw new Error('레이스 세션 데이터가 없어요');
+
+    // 현재 시간 이전의 세션만 필터 → 가장 최근 레이스
+    const now = Date.now();
+    const past = sessions.filter(s => new Date(s.date_end).getTime() < now);
+    if (!past.length) throw new Error('완료된 레이스가 없어요');
+    past.sort((a, b) => new Date(b.date_end) - new Date(a.date_end));
+    const latestSessionKey = past[0].session_key;
+    const latestRaceName = past[0].meeting_name || past[0].country_name || '';
+
+    // Step 2: 해당 세션의 컨스트럭터 챔피언십 순위 조회
+    const champRes = await fetch(`https://api.openf1.org/v1/championship_teams?session_key=${latestSessionKey}`);
+    if (!champRes.ok) throw new Error('순위 데이터를 가져올 수 없어요');
+    const data = await champRes.json();
+    if (!data || !data.length) throw new Error('순위 데이터가 없어요');
 
     // position_current 기준 오름차순 정렬
     data.sort((a, b) => a.position_current - b.position_current);
 
     const ordered = [];
     for (const s of data) {
-      // team_name에서 부분 매칭
       const rawName = s.team_name || '';
       let mapped = OPENF1_MAP[rawName] || null;
-      // 직접 매칭 안 되면 부분 문자열로 시도
       if (!mapped) {
         for (const [key, val] of Object.entries(OPENF1_MAP)) {
           if (rawName.includes(key) || key.includes(rawName)) { mapped = val; break; }
@@ -772,7 +785,7 @@ async function fetchStandings() {
     state.constructors = ordered.slice(0, 11);
     renderConstructors();
     if (window.fbSave) window.fbSave();
-    status.innerHTML = '<span style="color:#00c864">✅ Updated! (via OpenF1)</span>';
+    status.innerHTML = `<span style="color:#00c864">✅ Updated! (${latestRaceName} 기준)</span>`;
     btn.disabled = false; btn.textContent = 'Update Constructor Standings';
   } catch(e) {
     status.innerHTML = `<span style="color:#ff6b6b">❌ ${e.message}</span>`;
