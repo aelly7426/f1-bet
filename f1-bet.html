@@ -162,7 +162,9 @@
   .sn-sess-block{margin-bottom:14px;}
   .sn-net-amount.pos{color:#00c864;} .sn-net-amount.neg{color:var(--red);} .sn-net-amount.zero{color:var(--muted);}
   .sn-rounds-title{margin:8px 0 16px;padding-left:4px;}
-  .sn-rounds-title{margin:8px 0 16px;padding-left:4px;}
+  .sn-round-toggle{display:flex;justify-content:space-between;align-items:center;cursor:pointer;user-select:none;}
+  .sn-round-arrow{font-size:11px;color:var(--muted);transition:transform 0.2s;flex-shrink:0;}
+  .sn-round-body{margin-top:16px;}
   @media(min-width:768px){
     .picks-grid{grid-template-columns:repeat(3,1fr);}
     .res-grid{grid-template-columns:repeat(3,1fr);}
@@ -1403,7 +1405,7 @@ function renderSeason() {
   }).join('');
 
   // ── Per-round history cards ──
-  const lastName = d => d ? d.trim().split(' ').pop() : d;
+  const lastName = d => d ? d.trim().split(' ').pop().slice(0,3).toUpperCase() : d;
 
   const roundCards = [...seasonLog].reverse().map(entry => {
     const sessionRows = entry.sessions.map(s => {
@@ -1447,15 +1449,20 @@ function renderSeason() {
     }).join('');
 
     return `
-    <div class="card">
-      <div class="sn-round-header">
-        <div class="card-title" style="margin-bottom:0">${entry.raceName}</div>
-        <span class="sn-round-badge">${entry.weekendType === 'sprint' ? '🟠 Sprint' : '⬜ GP'}</span>
+    <div class="card sn-round-card">
+      <div class="sn-round-toggle" onclick="toggleRoundCard(this)">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div class="card-title" style="margin-bottom:0">${entry.raceName}</div>
+          <span class="sn-round-badge">${entry.weekendType === 'sprint' ? '🟠 Sprint' : '⬜ GP'}</span>
+        </div>
+        <span class="sn-round-arrow">▼</span>
       </div>
-      ${sessionRows}
-      <div class="sn-net-bar">
-        <span class="sn-net-label">이번 라운드 손익</span>
-        ${netSummary}
+      <div class="sn-round-body">
+        ${sessionRows}
+        <div class="sn-net-bar">
+          <span class="sn-net-label">이번 라운드 손익</span>
+          ${netSummary}
+        </div>
       </div>
     </div>`;
   }).join('');
@@ -1467,9 +1474,30 @@ function renderSeason() {
     </div>
     <div class="card-title sn-rounds-title">📋 라운드별 기록</div>
     ${roundCards}`;
+
+  // 첫 번째(가장 최근) 카드만 펼치고 나머지는 접기
+  el.querySelectorAll('.sn-round-card').forEach((card, i) => {
+    const body = card.querySelector('.sn-round-body');
+    const arrow = card.querySelector('.sn-round-arrow');
+    if (i === 0) {
+      body.style.display = 'block';
+      arrow.style.transform = 'rotate(0deg)';
+    } else {
+      body.style.display = 'none';
+      arrow.style.transform = 'rotate(-90deg)';
+    }
+  });
 }
 
 // ── Tab switch ───────────────────────────────────────────
+function toggleRoundCard(toggleEl) {
+  const body = toggleEl.nextElementSibling;
+  const arrow = toggleEl.querySelector('.sn-round-arrow');
+  const isOpen = body.style.display !== 'none';
+  body.style.display = isOpen ? 'none' : 'block';
+  arrow.style.transform = isOpen ? 'rotate(-90deg)' : 'rotate(0deg)';
+}
+
 function renderCurrentRoundBadge() {
   const el = document.getElementById('currentRoundBadge');
   if (!el) return;
