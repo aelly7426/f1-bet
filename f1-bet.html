@@ -611,16 +611,18 @@ function getDefaultConstructors() {
 function loadRoundData(raceName) {
   const d = state.roundData[raceName];
   if (d) {
-    // 저장된 라운드 데이터 불러오기
     state.participants      = JSON.parse(JSON.stringify(d.participants));
     state.results           = JSON.parse(JSON.stringify(d.results));
     state.resultLocked      = JSON.parse(JSON.stringify(d.resultLocked || {}));
-    state.constructors      = d.constructors && d.constructors.length
-                              ? JSON.parse(JSON.stringify(d.constructors))
-                              : getDefaultConstructors();
     state.constructorLocked = d.constructorLocked || false;
+    // constructorLocked=true인 경우만 저장된 컨스트럭터 사용
+    // false면 직전 locked 라운드 기준으로 덮어씀
+    if (d.constructorLocked && d.constructors && d.constructors.length) {
+      state.constructors = JSON.parse(JSON.stringify(d.constructors));
+    } else {
+      state.constructors = getDefaultConstructors();
+    }
   } else {
-    // 새 라운드: 초기화 후 직전 LOCKED 라운드 컨스트럭터를 기본값으로
     state.participants      = NAMES.map(name => ({ name, sessions: {} }));
     state.results           = {};
     state.resultLocked      = {};
