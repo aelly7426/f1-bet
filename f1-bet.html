@@ -315,34 +315,34 @@ img.emoji {
 
     // state 덮어쓰기
     if (data.state) {
-      state.raceName     = data.state.raceName     || '';
-      state.weekendType  = data.state.weekendType  || 'gp';
-      if (data.state.constructors) {
-        state.constructors = data.state.constructors;
-      }
-      if (typeof data.state.constructorLocked === 'boolean') {
-        state.constructorLocked = data.state.constructorLocked;
-      }
-      state.roundData    = data.state.roundData    || {};
-      // 현재 라운드 데이터를 roundData에서 불러오기
+      state.raceName    = data.state.raceName    || '';
+      state.weekendType = data.state.weekendType || 'gp';
+      state.roundData   = data.state.roundData   || {};
+
+      // 현재 라운드 데이터를 roundData에서 불러오기 (컨스트럭터 포함)
       const rn = state.raceName;
       const rd = state.roundData[rn];
       if (rd) {
-        state.participants     = rd.participants;
-        state.results          = rd.results;
-        state.resultLocked     = rd.resultLocked || {};
-        // 현재 라운드에 저장된 컨스트럭터가 있으면 우선 적용
+        state.participants  = rd.participants;
+        state.results       = rd.results;
+        state.resultLocked  = rd.resultLocked || {};
+        // 현재 라운드에 저장된 컨스트럭터 우선 적용
         if (rd.constructors && rd.constructors.length) {
           state.constructors      = JSON.parse(JSON.stringify(rd.constructors));
           state.constructorLocked = rd.constructorLocked || false;
+        } else {
+          // rd는 있지만 constructors가 없는 경우 → 최상위값 사용
+          if (data.state.constructors) state.constructors = JSON.parse(JSON.stringify(data.state.constructors));
+          if (typeof data.state.constructorLocked === 'boolean') state.constructorLocked = data.state.constructorLocked;
         }
       } else {
-        state.participants  = data.state.participants  || state.participants;
-        state.results       = data.state.results       || {};
-        state.resultLocked  = data.state.resultLocked  || {};
+        state.participants = data.state.participants || state.participants;
+        state.results      = data.state.results      || {};
+        state.resultLocked = data.state.resultLocked || {};
         // 새 라운드: 직전 라운드의 컨스트럭터를 기본값으로
         const match2 = rn.match(/Round (\d+)/);
         const n2 = match2 ? parseInt(match2[1]) : null;
+        let foundPrev = false;
         if (n2 && n2 > 1) {
           for (let prev = n2 - 1; prev >= 1; prev--) {
             const prevRound = ROUNDS.find(r => r.n === prev);
@@ -351,10 +351,16 @@ img.emoji {
             const prevData = state.roundData[prevName];
             if (prevData && prevData.constructors && prevData.constructors.length) {
               state.constructors = JSON.parse(JSON.stringify(prevData.constructors));
+              foundPrev = true;
               break;
             }
           }
         }
+        // 직전 라운드도 없으면 Firebase 최상위 constructors 사용
+        if (!foundPrev && data.state.constructors) {
+          state.constructors = JSON.parse(JSON.stringify(data.state.constructors));
+        }
+        if (typeof data.state.constructorLocked === 'boolean') state.constructorLocked = data.state.constructorLocked;
       }
     }
     if (Array.isArray(data.seasonLog)) window._seasonLog = data.seasonLog;
