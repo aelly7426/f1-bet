@@ -92,16 +92,16 @@
 
   /* SCOREBOARD */
   .scoreboard{display:flex;flex-direction:column;gap:8px;}
-  .score-row{display:flex;align-items:center;gap:clamp(6px,1.5vw,12px);background:var(--surface2);border-radius:8px;padding:clamp(10px,2vw,14px) clamp(10px,2vw,16px);border:1px solid rgba(255,255,255,0.06);transition:all .3s;position:relative;overflow:hidden;}
+  .score-row{display:flex;align-items:center;gap:8px;background:var(--surface2);border-radius:8px;padding:clamp(10px,2vw,14px) clamp(10px,2vw,16px);border:1px solid rgba(255,255,255,0.06);transition:all .3s;position:relative;overflow:hidden;}
   .score-row.winner{border-color:var(--gold);box-shadow:0 0 20px rgba(255,215,0,0.15);}
   .score-row.winner::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(255,215,0,0.05),transparent);pointer-events:none;}
   .score-row.second{border-color:var(--silver);}
   .score-row.third{border-color:var(--bronze);}
-  .score-rank{font-family:'Orbitron',sans-serif;font-size:clamp(12px,2vw,15px);font-weight:900;width:clamp(22px,3vw,30px);text-align:center;flex-shrink:0;}
-  .score-name{font-weight:700;font-size:clamp(12px,2vw,16px);font-family:'Orbitron',sans-serif;letter-spacing:clamp(1px,0.3vw,2px);width:clamp(60px,9vw,90px);flex-shrink:0;white-space:nowrap;}
-  .score-breakdown{flex:1;display:flex;flex-direction:column;gap:5px;}
-  .sess-breakdown-line{display:flex;flex-wrap:nowrap;gap:4px;align-items:center;}
-  .sess-breakdown-label{font-size:clamp(9px,1.2vw,10px);color:var(--muted);width:clamp(70px,11vw,100px);flex-shrink:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .score-rank{font-family:'Orbitron',sans-serif;font-size:clamp(12px,2vw,15px);font-weight:900;width:24px;text-align:center;flex-shrink:0;}
+  .score-name{font-weight:700;font-size:clamp(12px,2vw,16px);font-family:'Orbitron',sans-serif;letter-spacing:clamp(1px,0.3vw,2px);width:clamp(44px,7vw,70px);flex-shrink:0;white-space:nowrap;}
+  .score-breakdown{flex:1;display:flex;flex-direction:column;gap:5px;min-width:0;}
+  .sess-breakdown-line{display:flex;flex-wrap:nowrap;gap:3px;align-items:center;}
+  .sess-breakdown-label{font-size:clamp(9px,1.2vw,10px);color:var(--muted);width:clamp(44px,8vw,72px);flex-shrink:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
   .hit-badge{font-size:clamp(9px,1.2vw,10px);padding:2px 7px;border-radius:3px;font-family:'Orbitron',sans-serif;white-space:nowrap;}
   .hit-badge.hit{background:rgba(0,200,100,0.15);color:#00c864;border:1px solid rgba(0,200,100,0.3);}
   .hit-badge.miss{background:rgba(255,255,255,0.04);color:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.07);}
@@ -149,7 +149,7 @@
   .sn-cum-amount.pos{color:#00c864;} .sn-cum-amount.neg{color:var(--red);} .sn-cum-amount.zero{color:var(--muted);}
   .sn-cum-list{display:flex;flex-direction:column;gap:8px;}
   .sn-round-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;flex-wrap:wrap;gap:8px;}
-  .sn-round-badge{font-size:10px;padding:3px 10px;border-radius:4px;background:rgba(225,6,0,0.1);color:var(--red);border:1px solid rgba(225,6,0,0.2);font-family:'Orbitron',sans-serif;}
+  .sn-round-badge{display:none;font-size:10px;padding:3px 10px;border-radius:4px;background:rgba(225,6,0,0.1);color:var(--red);border:1px solid rgba(225,6,0,0.2);font-family:'Orbitron',sans-serif;}
   .sn-pick-row{display:flex;gap:8px;align-items:center;font-size:12px;padding:4px 0;border-bottom:1px solid rgba(255,255,255,0.04);}
   .sn-pick-name{font-family:'Orbitron',sans-serif;font-weight:700;color:#fff;min-width:50px;}
   .sn-pick-picks{color:var(--muted);flex:1;display:flex;gap:0;justify-content:center;}
@@ -174,7 +174,7 @@
   }
 
 /* fetchBtn 반응형 */
-.fetch-btn { width: 200px; font-size: 10.5px; }
+.fetch-btn { width: auto; font-size: 10.5px; }
 
 /* Constructor Standings 카드 제목 & RACEWEEK - 버튼 높이에 맞게 */
 .constructor-title { font-size: clamp(13px, 2vw, 17px) !important; line-height: 1.4; }
@@ -224,23 +224,21 @@ img.emoji {
 
   <!-- ── SETUP ────────────────────────────────── -->
   <div class="section active" id="tab-setup">
+    <div class="card-title raceweek-title" style="margin:8px 0 10px;padding-left:4px;">RACEWEEK 🏁</div>
     <div class="card">
-      <div class="card-title raceweek-title">RACEWEEK 🏁</div>
       <div class="sn-sess-block">
         <label>Round</label>
-        <select id="roundSelect" onchange="onRoundChange()">
+        <select id="roundSelect" onchange="onRoundChange()" onfocus="onRoundFocus(this)" onblur="onRoundBlur(this)">
           <option value="">Select round...</option>
         </select>
       </div>
     </div>
 
+    <div class="card-title constructor-title" style="margin:8px 0 10px;padding-left:4px;">Constructor Standings 🏆</div>
     <div class="card">
-      <div style="display:flex;align-items:flex-start;gap:12px;margin-bottom:14px;">
-        <div class="card-title constructor-title" style="margin-bottom:0;flex:1;padding-top:2px;">Constructor<br>Standings 🏆</div>
-        <div style="display:flex;flex-direction:column;align-items:center;gap:4px;flex-shrink:0;">
-          <button id="fetchBtn" style="padding:8px 6px;white-space:normal;line-height:1.5;text-align:center;" class="btn sec fetch-btn" onclick="fetchStandings()">Update Constructor<br>Standings</button>
-          <div id="fetchStatus" style="font-size:10px;min-height:14px;text-align:center;white-space:nowrap;"></div>
-        </div>
+      <div style="margin-bottom:14px;">
+        <button id="fetchBtn" style="padding:8px 16px;white-space:nowrap;width:100%;" class="btn sec fetch-btn" onclick="fetchStandings()">Update Constructor Standings</button>
+        <div id="fetchStatus" style="font-size:10px;height:18px;text-align:center;white-space:nowrap;margin-top:6px;"></div>
       </div>
       <div id="constructorInputs" style="display:flex;flex-direction:column;gap:8px;"></div>
       <div style="margin-top:14px;display:flex;gap:10px;align-items:center;" id="constructorLockRow">
@@ -546,7 +544,9 @@ function init() {
   ROUNDS.forEach(r => {
     const opt = document.createElement('option');
     opt.value = r.n;
-    opt.textContent = `${r.n}. ${r.fullName}`;
+    opt.dataset.short = `${r.n}. ${r.name}`;
+    opt.dataset.full  = `${r.n}. ${r.fullName}`;
+    opt.textContent = opt.dataset.full;
     sel.appendChild(opt);
   });
   renderConstructors();
@@ -558,7 +558,9 @@ function syncSetupUI() {
   today.setHours(0, 0, 0, 0);
   const next = ROUNDS.find(r => new Date(r.date) >= today) || ROUNDS[ROUNDS.length - 1];
   const sel = document.getElementById('roundSelect');
-  if (sel) sel.value = next.n;
+  if (sel) {
+    sel.value = next.n;
+  }
   const newRaceName = `Round ${next.n} — ${next.name}`;
   if (newRaceName !== state.raceName) {
     state.raceName = newRaceName;
@@ -572,10 +574,25 @@ function syncSetupUI() {
   }
 }
 
+function onRoundFocus(sel) {
+  Array.from(sel.options).forEach(opt => {
+    if (opt.dataset.short) opt.textContent = opt.dataset.short;
+  });
+}
+function onRoundBlur(sel) {
+  Array.from(sel.options).forEach(opt => {
+    if (opt.dataset.full) opt.textContent = opt.dataset.full;
+  });
+}
+
 function onRoundChange() {
   const fetchStatus = document.getElementById('fetchStatus');
   if (fetchStatus) fetchStatus.innerHTML = '';
-  const n = parseInt(document.getElementById('roundSelect').value);
+  const sel = document.getElementById('roundSelect');
+  const n = parseInt(sel.value);
+  // 선택 즉시 풀네임으로 전환
+  onRoundBlur(sel);
+  sel.blur();
   if (!n) return;
   const round = ROUNDS.find(r => r.n === n);
   const newRaceName = `Round ${n} — ${round.name}`;
@@ -855,10 +872,10 @@ async function fetchStandings() {
     renderConstructors();
     if (window.fbSave) window.fbSave();
     status.innerHTML = `<span style="color:#00c864">✅ Updated! (After ${latestRaceName})</span>`;
-    btn.disabled = false; btn.innerHTML = 'Update Constructor<br>Standings';
+    btn.disabled = false; btn.innerHTML = 'Update Constructor Standings';
   } catch(e) {
     status.innerHTML = `<span style="color:#ff6b6b">❌ ${e.message}</span>`;
-    btn.disabled = false; btn.innerHTML = 'Update Constructor<br>Standings';
+    btn.disabled = false; btn.innerHTML = 'Update Constructor Standings';
   }
 }
 
@@ -1290,7 +1307,7 @@ function renderPaymentTable(scored, payments, net, showBreakdown) {
 
     if (showBreakdown) {
       return `
-      <div class="score-row ${cls}" style="display:grid;grid-template-columns:30px clamp(60px,9vw,90px) 1fr auto;align-items:center;gap:10px;">
+      <div class="score-row ${cls}" style="display:grid;grid-template-columns:24px clamp(44px,7vw,70px) 1fr auto;align-items:center;gap:8px;">
         <span class="score-rank" style="text-align:center;">${emoji}</span>
         <span class="score-name">${p.name}</span>
         <div class="score-breakdown" style="display:flex;flex-direction:column;gap:4px;">${lines}</div>
@@ -1543,11 +1560,11 @@ function renderSeason() {
   }).join('');
 
   el.innerHTML = `
-    <div class="card-title sn-rounds-title">🏆 시즌 누적 손익</div>
+    <div class="card-title sn-rounds-title raceweek-title">SEASON RECORD 🏆</div>
     <div class="card">
       <div class="sn-cum-list">${cumRows}</div>
     </div>
-    <div class="card-title sn-rounds-title">📋 라운드별 기록</div>
+    <div class="card-title sn-rounds-title raceweek-title">ROUND RECORD 📋</div>
     ${roundCards}`;
 
   // 첫 번째(가장 최근) 카드만 펼치고 나머지는 접기
