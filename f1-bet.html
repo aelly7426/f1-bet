@@ -926,7 +926,7 @@ function renderPredict() {
       <div style="background:${theme.headerBg};display:flex;justify-content:space-between;align-items:center;padding:18px 24px;cursor:pointer;" onclick="togglePredCard(${pi})">
         <span style="font-family:'Orbitron',sans-serif;font-size:20px;font-weight:900;letter-spacing:4px;color:${theme.nameFg};">${p.name}</span>
         <div style="display:flex;align-items:center;gap:10px;">
-          <span style="font-size:10px;padding:3px 10px;border-radius:10px;font-family:'Orbitron',sans-serif;white-space:nowrap;background:${allLocked ? 'rgba(0,200,100,0.25)' : 'rgba(255,255,255,0.18)'};color:${allLocked ? '#00ff88' : '#fff'};border:1px solid ${allLocked ? 'rgba(0,255,136,0.5)' : 'rgba(255,255,255,0.5)'};font-weight:700;letter-spacing:1px;">${allLocked ? '✓ ALL LOCKED' : 'PENDING'}</span>
+          <span style="font-size:10px;padding:3px 10px;border-radius:10px;font-family:'Orbitron',sans-serif;white-space:nowrap;background:${allLocked ? 'rgba(0,200,100,0.25)' : 'rgba(255,255,255,0.18)'};color:${allLocked ? '#00ff88' : '#fff'};border:1px solid ${allLocked ? 'rgba(0,255,136,0.5)' : 'rgba(255,255,255,0.5)'};font-weight:700;letter-spacing:1px;">${allLocked ? '✓ BET FINISHED' : 'YET TO BET'}</span>
           <span id="pred-arrow-${pi}" style="font-size:11px;color:rgba(255,255,255,0.5);transition:transform 0.2s;">▼</span>
         </div>
       </div>
@@ -1035,7 +1035,7 @@ function renderResult() {
           <span class="sess-label">${s.label}</span>
         </div>
         <div style="display:flex;align-items:center;gap:10px;">
-          ${allReady ? '<span style="font-size:10px;padding:2px 9px;border-radius:4px;background:rgba(0,200,100,0.12);color:#00c864;border:1px solid rgba(0,200,100,0.25);font-family:\'Orbitron\',sans-serif;">✓ 예측 완료</span>' : ''}
+          ${allReady ? '<span style="font-size:10px;padding:2px 9px;border-radius:4px;background:rgba(0,200,100,0.12);color:#00c864;border:1px solid rgba(0,200,100,0.25);font-family:\'Orbitron\',sans-serif;">✓ BET</span>' : ''}
           ${locked ? '<span style="font-size:10px;padding:3px 10px;border-radius:10px;font-family:\'Orbitron\',sans-serif;background:rgba(0,200,100,0.25);color:#00ff88;border:1px solid rgba(0,255,136,0.5);font-weight:700;letter-spacing:1px;">✓ LOCKED</span>' : ''}
           <span id="res-arrow-${s.key}" style="font-size:11px;color:rgba(255,255,255,0.5);transition:transform 0.2s;">▼</span>
         </div>
@@ -1275,15 +1275,15 @@ function renderPaymentTable(scored, payments, net, showBreakdown) {
     const lines = showBreakdown
       ? p.breakdown.map(b => {
           const hits = b.details.map(d =>
-            d.hit ? `<span class="hit-badge hit">P${d.pos}</span>`
-                  : `<span class="hit-badge miss">P${d.pos}</span>`
+            d.hit ? `<span class="hit-badge hit">P ${d.pos}</span>`
+                  : `<span class="hit-badge miss">P ${d.pos}</span>`
           ).join('');
           return `<div class="sess-breakdown-line"><span class="sess-breakdown-label">${b.label}</span>${hits}</div>`;
         }).join('')
       : p.breakdown.map(b => {
           const hits = b.details.map(d =>
-            d.hit ? `<span class="hit-badge hit">P${d.pos}</span>`
-                  : `<span class="hit-badge miss">P${d.pos}</span>`
+            d.hit ? `<span class="hit-badge hit">P ${d.pos}</span>`
+                  : `<span class="hit-badge miss">P ${d.pos}</span>`
           ).join('');
           return `<div class="sess-breakdown-line">${hits}</div>`;
         }).join('');
