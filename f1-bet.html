@@ -607,6 +607,8 @@ function onRoundChange() {
     state.weekendType = SPRINT_ROUNDS.has(n) ? 'sprint' : 'gp';
     loadRoundData(newRaceName);
     ensureSessions();
+    // 새 라운드 초기값(직전 라운드 컨스트럭터 포함)을 roundData에 즉시 저장
+    saveRoundData();
     renderConstructors();
     renderCurrentRoundBadge();
     if (window.fbSave) window.fbSave();
