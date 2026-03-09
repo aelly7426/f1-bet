@@ -579,17 +579,21 @@ function getDefaultConstructors() {
   // 없으면 DEFAULT_CONSTRUCTORS(2025 시즌 종료 순위) 반환
   const match = state.raceName.match(/Round (\d+)/);
   const n = match ? parseInt(match[1]) : null;
+  console.log('[getDefault] raceName:', state.raceName, 'n:', n);
   if (n && n > 1) {
     for (let prev = n - 1; prev >= 1; prev--) {
       const prevRound = ROUNDS.find(r => r.n === prev);
       if (!prevRound) continue;
       const prevName = `Round ${prev} — ${prevRound.name}`;
       const prevData = state.roundData[prevName];
+      console.log('[getDefault] checking prev:', prevName, 'locked:', prevData?.constructorLocked, 'hasConstructors:', !!(prevData?.constructors?.length));
       if (prevData && prevData.constructorLocked && prevData.constructors && prevData.constructors.length) {
+        console.log('[getDefault] FOUND locked prev:', prevName);
         return JSON.parse(JSON.stringify(prevData.constructors));
       }
     }
   }
+  console.log('[getDefault] using DEFAULT_CONSTRUCTORS');
   return [...DEFAULT_CONSTRUCTORS];
 }
 
@@ -1475,6 +1479,12 @@ window.applyFbData = function(data) {
     state.weekendType = data.state.weekendType || 'gp';
     state.roundData   = data.state.roundData   || {};
     if (Array.isArray(data.seasonLog)) window._seasonLog = data.seasonLog;
+
+    console.log('[FB] raceName:', state.raceName);
+    console.log('[FB] roundData keys:', Object.keys(state.roundData));
+    const rd = state.roundData[state.raceName];
+    console.log('[FB] current rd:', rd ? {constructors: rd.constructors, constructorLocked: rd.constructorLocked} : null);
+
     // 현재 라운드 데이터 로드 (getDefaultConstructors 포함)
     if (state.raceName) loadRoundData(state.raceName);
     else {
@@ -1482,6 +1492,8 @@ window.applyFbData = function(data) {
       if (data.state.constructors) state.constructors = JSON.parse(JSON.stringify(data.state.constructors));
       if (typeof data.state.constructorLocked === 'boolean') state.constructorLocked = data.state.constructorLocked;
     }
+
+    console.log('[FB] final constructors:', state.constructors);
   }
   if (Array.isArray(data.seasonLog)) window._seasonLog = data.seasonLog;
   renderActiveTab();
