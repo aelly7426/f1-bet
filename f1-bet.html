@@ -100,8 +100,8 @@
   .score-rank{font-family:'Orbitron',sans-serif;font-size:clamp(14px,2vw,18px);font-weight:900;width:28px;text-align:center;flex-shrink:0;}
   .score-name{font-weight:700;font-size:clamp(13px,2vw,16px);font-family:'Orbitron',sans-serif;letter-spacing:clamp(1px,0.3vw,2px);width:clamp(54px,8vw,86px);flex-shrink:0;white-space:nowrap;}
   .score-breakdown{flex:1;display:flex;flex-direction:column;gap:5px;min-width:0;}
-  .sess-breakdown-line{display:flex;flex-wrap:nowrap;gap:6px;align-items:center;}
-  .sess-breakdown-label{font-size:clamp(9px,1.2vw,10px);color:var(--muted);width:clamp(44px,8vw,72px);flex-shrink:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-right:8px;}
+  .sess-breakdown-line{display:flex;flex-wrap:nowrap;gap:6px;align-items:center;justify-content:flex-end;}
+  .sess-breakdown-label{font-size:clamp(9px,1.2vw,10px);color:var(--muted);width:clamp(62px,9vw,82px);flex-shrink:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-right:4px;}
   .hit-badge{font-size:clamp(8px,1.1vw,9px);padding:2px 8px;border-radius:3px;font-family:'Orbitron',sans-serif;white-space:nowrap;}
   .hit-badge.hit{background:rgba(0,200,100,0.15);color:#00c864;border:1px solid rgba(0,200,100,0.3);}
   .hit-badge.miss{background:rgba(255,255,255,0.04);color:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.07);}
@@ -1083,8 +1083,8 @@ function renderResult() {
     </div>`;
   }).join('') + `
   <div id="combined-wrap" style="display:none;">
+    <div class="card-title sn-rounds-title raceweek-title">ROUND RESULT 💰</div>
     <div class="card">
-      <div class="card-title">🏆 전체 합산 결과</div>
       <div id="combined-board"></div>
     </div>
   </div>`;
@@ -1308,7 +1308,7 @@ function renderPaymentTable(scored, payments, net, showBreakdown) {
 
     if (showBreakdown) {
       return `
-      <div class="score-row ${cls}" style="display:grid;grid-template-columns:28px clamp(54px,8vw,86px) 1fr auto;align-items:center;gap:6px;">
+      <div class="score-row ${cls}" style="display:grid;grid-template-columns:28px clamp(54px,8vw,86px) 1fr auto;align-items:center;gap:6px 10px;">
         <span class="score-rank" style="text-align:center;">${emoji}</span>
         <span class="score-name">${p.name}</span>
         <div class="score-breakdown" style="display:flex;flex-direction:column;gap:4px;padding:0 5px 0 0;">${lines}</div>
@@ -1329,8 +1329,9 @@ function renderPaymentTable(scored, payments, net, showBreakdown) {
     ? `<div style="text-align:center;padding:16px;color:var(--muted);font-size:13px;">모두 동점 — 정산 없음</div>`
     : payments.map(pay => `
       <div style="display:flex;align-items:center;gap:12px;background:var(--surface2);border:1px solid rgba(255,255,255,0.07);border-radius:8px;padding:13px 18px;">
-        <span style="font-family:'Orbitron',sans-serif;font-size:14px;font-weight:700;color:#fff;min-width:32px">${scored[pay.from].name}</span>
-        <span style="font-size:14px;flex:1;color:#fff;">→&nbsp;<span style="font-family:'Orbitron',sans-serif;font-weight:700;">${scored[pay.to].name}</span></span>
+        <span style="font-family:'Orbitron',sans-serif;font-size:14px;font-weight:700;color:#fff;">${scored[pay.from].name}</span>
+        <span style="font-size:14px;color:rgba(255,255,255,0.4);">→</span>
+        <span style="font-family:'Orbitron',sans-serif;font-size:14px;font-weight:700;color:#fff;flex:1">${scored[pay.to].name}</span>
         <span style="font-family:'Orbitron',sans-serif;font-size:14px;font-weight:700;color:#fff">₩${pay.amount.toLocaleString()}</span>
       </div>`).join('');
 
