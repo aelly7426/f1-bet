@@ -101,7 +101,7 @@
   .score-name{font-weight:700;font-size:clamp(13px,2vw,16px);font-family:'Orbitron',sans-serif;letter-spacing:clamp(1px,0.3vw,2px);width:clamp(54px,8vw,86px);flex-shrink:0;white-space:nowrap;}
   .score-breakdown{flex:1;display:flex;flex-direction:column;gap:5px;min-width:0;}
   .sess-breakdown-line{display:flex;flex-wrap:nowrap;gap:6px;align-items:center;}
-  .sess-breakdown-label{font-size:clamp(9px,1.2vw,10px);color:var(--muted);width:clamp(44px,8vw,72px);flex-shrink:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .sess-breakdown-label{font-size:clamp(9px,1.2vw,10px);color:var(--muted);width:clamp(44px,8vw,72px);flex-shrink:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-right:8px;}
   .hit-badge{font-size:clamp(8px,1.1vw,9px);padding:2px 8px;border-radius:3px;font-family:'Orbitron',sans-serif;white-space:nowrap;}
   .hit-badge.hit{background:rgba(0,200,100,0.15);color:#00c864;border:1px solid rgba(0,200,100,0.3);}
   .hit-badge.miss{background:rgba(255,255,255,0.04);color:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.07);}
@@ -1047,6 +1047,7 @@ function renderResult() {
 
     return `
     <div class="card" id="sess-card-${s.key}" style="border-color:${locked ? 'rgba(0,200,100,0.4)' : 'var(--border)'};border-width:${locked ? '2px' : '1px'};padding:0;overflow:hidden;">
+      <style>#sess-card-${s.key}::before{display:none;}</style>
       <div style="display:flex;justify-content:space-between;align-items:center;padding:18px 24px;cursor:pointer;background:rgba(255,255,255,0.03);" onclick="toggleResultCard('${s.key}')">
         <div style="display:flex;align-items:center;gap:12px;">
           <span class="sess-label">${s.label}</span>
@@ -1310,7 +1311,7 @@ function renderPaymentTable(scored, payments, net, showBreakdown) {
       <div class="score-row ${cls}" style="display:grid;grid-template-columns:28px clamp(54px,8vw,86px) 1fr auto;align-items:center;gap:6px;">
         <span class="score-rank" style="text-align:center;">${emoji}</span>
         <span class="score-name">${p.name}</span>
-        <div class="score-breakdown" style="display:flex;flex-direction:column;gap:4px;padding:0 5px 0 20px;">${lines}</div>
+        <div class="score-breakdown" style="display:flex;flex-direction:column;gap:4px;padding:0 5px 0 0;">${lines}</div>
         <span style="font-family:'Orbitron',sans-serif;font-size:17px;font-weight:900;min-width:60px;text-align:right;color:${ptColor};padding-left:5px;">${p.totalPts}pt</span>
       </div>`;
     }
