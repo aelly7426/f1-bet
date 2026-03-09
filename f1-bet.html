@@ -208,7 +208,7 @@ img.emoji {
   <div class="tabs-sticky">
     <div class="tabs">
       <button class="tab active" onclick="switchTab('setup')">⚙️ Setup</button>
-      <button class="tab" onclick="switchTab('predict')">📝 Predictions</button>
+      <button class="tab" onclick="switchTab('predict')">🪙 Bets</button>
       <button class="tab" onclick="switchTab('result')">🏁 Results</button>
       <button class="tab" onclick="switchTab('season')">📈 Season</button>
     </div>
@@ -328,13 +328,33 @@ img.emoji {
       const rn = state.raceName;
       const rd = state.roundData[rn];
       if (rd) {
-        state.participants  = rd.participants;
-        state.results       = rd.results;
-        state.resultLocked  = rd.resultLocked || {};
+        state.participants     = rd.participants;
+        state.results          = rd.results;
+        state.resultLocked     = rd.resultLocked || {};
+        // 현재 라운드에 저장된 컨스트럭터가 있으면 우선 적용
+        if (rd.constructors && rd.constructors.length) {
+          state.constructors      = JSON.parse(JSON.stringify(rd.constructors));
+          state.constructorLocked = rd.constructorLocked || false;
+        }
       } else {
         state.participants  = data.state.participants  || state.participants;
         state.results       = data.state.results       || {};
         state.resultLocked  = data.state.resultLocked  || {};
+        // 새 라운드: 직전 라운드의 컨스트럭터를 기본값으로
+        const match2 = rn.match(/Round (\d+)/);
+        const n2 = match2 ? parseInt(match2[1]) : null;
+        if (n2 && n2 > 1) {
+          for (let prev = n2 - 1; prev >= 1; prev--) {
+            const prevRound = ROUNDS.find(r => r.n === prev);
+            if (!prevRound) continue;
+            const prevName = `Round ${prev} — ${prevRound.name}`;
+            const prevData = state.roundData[prevName];
+            if (prevData && prevData.constructors && prevData.constructors.length) {
+              state.constructors = JSON.parse(JSON.stringify(prevData.constructors));
+              break;
+            }
+          }
+        }
       }
     }
     if (Array.isArray(data.seasonLog)) window._seasonLog = data.seasonLog;
