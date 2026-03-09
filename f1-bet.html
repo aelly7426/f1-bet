@@ -765,11 +765,11 @@ async function fetchStandings() {
     const data = await champRes.json();
     if (!data || !data.length) throw new Error('순위 데이터가 없어요');
 
-    // 🔍 DEBUG: 실제 API 응답 표시 (확인 후 제거 예정)
+    // 🔍 DEBUG2: 모든 필드 표시
     data.sort((a, b) => (a.position_current||99) - (b.position_current||99));
     const debugLines = [`session_key=${latestSessionKey} (${latestRaceName})`, ''];
-    data.forEach(s => debugLines.push(`P${s.position_current} | "${s.team_name}" | ${s.points_current}pts`));
-    status.innerHTML = `<pre style="color:#ccc;font-size:10px;text-align:left;line-height:1.5;margin:8px 0">${debugLines.join('\n')}</pre>`;
+    data.forEach(s => debugLines.push(`P${s.position_current} | ${JSON.stringify(s)}`));
+    status.innerHTML = `<pre style="color:#ccc;font-size:9px;text-align:left;line-height:1.5;margin:8px 0;overflow:auto;max-height:300px">${debugLines.join('\n')}</pre>`;
     btn.disabled = false; btn.textContent = 'Update Constructor Standings';
   } catch(e) {
     status.innerHTML = `<span style="color:#ff6b6b">❌ ${e.message}</span>`;
