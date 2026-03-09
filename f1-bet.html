@@ -32,7 +32,7 @@
   /* TABS */
   .tabs-sticky{position:sticky;top:0;z-index:100;background:var(--bg);padding-top:8px;}
   .tabs{display:flex;gap:4px;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:4px;margin-bottom:0;}
-  .tab{flex:1;padding:clamp(7px,1.5vw,10px) clamp(4px,1vw,10px);border:none;background:transparent;color:#b4b4b4;font-family:'Orbitron',sans-serif;font-size:clamp(8.8px,1.32vw,12.1px);letter-spacing:clamp(0.5px,0.2vw,1.5px);text-transform:uppercase;cursor:pointer;border-radius:6px;transition:all .2s;}
+  .tab{flex:1;padding:clamp(7px,1.5vw,10px) clamp(4px,1vw,10px);border:none;background:transparent;color:#d8d8d8;font-family:'Orbitron',sans-serif;font-size:clamp(8.8px,1.32vw,12.1px);letter-spacing:clamp(0.5px,0.2vw,1.5px);text-transform:uppercase;cursor:pointer;border-radius:6px;transition:all .2s;}
   .tab.active{background:var(--red);color:#fff;box-shadow:0 0 16px rgba(225,6,0,0.4);}
   .tab:hover:not(.active){color:#fff;background:rgba(255,255,255,0.05);}
   .section{display:none;} .section.active{display:block;}
@@ -40,6 +40,7 @@
   /* CARD */
   .card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:clamp(14px,3vw,24px);margin-bottom:clamp(12px,2vw,20px);position:relative;overflow:hidden;}
   .card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--red),transparent);}
+  .pred-card::before{display:none;}
   .card-title{font-family:'Orbitron',sans-serif;font-size:clamp(10px,1.5vw,12px);letter-spacing:2px;color:var(--red);text-transform:uppercase;margin-bottom:clamp(12px,2vw,18px);}
 
   /* FORM */
@@ -696,10 +697,10 @@ function renderConstructors() {
 
       <span style="font-family:'Orbitron',sans-serif;font-size:11px;color:var(--muted);min-width:28px">P${i+1}</span>
       <div style="flex:1;display:flex;align-items:center;gap:6px;background:var(--surface2);border:1px solid rgba(255,255,255,0.1);border-radius:6px;padding:clamp(6px,1.2vw,8px) clamp(6px,1.2vw,10px);min-width:0;overflow:hidden;">
-        <span style="flex-shrink:0;line-height:0;">${TEAM_LOGO[team]||''}</span>
+        <span style="flex-shrink:0;line-height:0;font-size:120%;">${TEAM_LOGO[team]||''}</span>
         <select onchange="updateConstructor(${i},this.value)"
           ${locked ? 'disabled' : ''}
-          style="flex:1;background:transparent;border:none;color:var(--text);font-family:'Exo 2',sans-serif;font-size:clamp(11px,1.5vw,13px);outline:none;cursor:${locked?'default':'pointer'};-webkit-appearance:none;appearance:none;min-width:0;">
+          style="flex:1;background:transparent;border:none;color:var(--text);font-family:'Exo 2',sans-serif;font-size:clamp(13px,1.8vw,15.6px);outline:none;cursor:${locked?'default':'pointer'};-webkit-appearance:none;appearance:none;min-width:0;">
           ${DEFAULT_CONSTRUCTORS.map(t => `<option value="${t}"${t===team?' selected':''}>${t}</option>`).join('')}
         </select>
       </div>
@@ -1542,8 +1543,8 @@ function renderSeason() {
   }).join('');
 
   el.innerHTML = `
+    <div class="card-title sn-rounds-title">🏆 시즌 누적 손익</div>
     <div class="card">
-      <div class="card-title">🏆 시즌 누적 손익</div>
       <div class="sn-cum-list">${cumRows}</div>
     </div>
     <div class="card-title sn-rounds-title">📋 라운드별 기록</div>
