@@ -1506,9 +1506,11 @@ window.applyFbData = function(data) {
       if (typeof data.state.constructorLocked === 'boolean') state.constructorLocked = data.state.constructorLocked;
     }
 
+    console.log = window.dbg || console.log;
     dbg('[FB] final='+state.constructors.slice(0,3).join('|'));
   }
   if (Array.isArray(data.seasonLog)) window._seasonLog = data.seasonLog;
+  renderConstructors();
   renderActiveTab();
 };
 
