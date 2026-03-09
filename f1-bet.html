@@ -586,39 +586,43 @@ function saveRoundData() {
   };
 }
 
-function loadRoundData(raceName) {
-  // 해당 라운드 데이터 불러오기 (없으면 직전 라운드 컨스트럭터 기준)
-  const d = state.roundData[raceName];
-  if (d) {
-    state.participants = JSON.parse(JSON.stringify(d.participants));
-    state.results = JSON.parse(JSON.stringify(d.results));
-    state.resultLocked = JSON.parse(JSON.stringify(d.resultLocked || {}));
-    if (d.constructors) {
-      state.constructors = JSON.parse(JSON.stringify(d.constructors));
-    }
-    state.constructorLocked = d.constructorLocked || false;
-  } else {
-    state.participants = NAMES.map(name => ({ name, sessions: {} }));
-    state.results = {};
-    state.resultLocked = {};
-    state.constructorLocked = false;
-    // 새 라운드: 직전 라운드의 컨스트럭터를 기본값으로 사용
-    const match = raceName.match(/Round (\d+)/);
-    const n = match ? parseInt(match[1]) : null;
-    if (n && n > 1) {
-      // 직전 라운드들을 역순으로 탐색해서 저장된 데이터가 있으면 그 컨스트럭터 사용
-      for (let prev = n - 1; prev >= 1; prev--) {
-        const prevRound = ROUNDS.find(r => r.n === prev);
-        if (!prevRound) continue;
-        const prevName = `Round ${prev} — ${prevRound.name}`;
-        const prevData = state.roundData[prevName];
-        if (prevData && prevData.constructors && prevData.constructors.length) {
-          state.constructors = JSON.parse(JSON.stringify(prevData.constructors));
-          break;
-        }
+function getDefaultConstructors() {
+  // 앞 라운드 중 constructorLocked=true인 가장 최근 라운드의 컨스트럭터 반환
+  // 없으면 DEFAULT_CONSTRUCTORS(2025 시즌 종료 순위) 반환
+  const match = state.raceName.match(/Round (\d+)/);
+  const n = match ? parseInt(match[1]) : null;
+  if (n && n > 1) {
+    for (let prev = n - 1; prev >= 1; prev--) {
+      const prevRound = ROUNDS.find(r => r.n === prev);
+      if (!prevRound) continue;
+      const prevName = `Round ${prev} — ${prevRound.name}`;
+      const prevData = state.roundData[prevName];
+      if (prevData && prevData.constructorLocked && prevData.constructors && prevData.constructors.length) {
+        return JSON.parse(JSON.stringify(prevData.constructors));
       }
     }
-    // 직전 라운드 데이터도 없으면 현재 state.constructors(기본값) 유지
+  }
+  return [...DEFAULT_CONSTRUCTORS];
+}
+
+function loadRoundData(raceName) {
+  const d = state.roundData[raceName];
+  if (d) {
+    // 저장된 라운드 데이터 불러오기
+    state.participants      = JSON.parse(JSON.stringify(d.participants));
+    state.results           = JSON.parse(JSON.stringify(d.results));
+    state.resultLocked      = JSON.parse(JSON.stringify(d.resultLocked || {}));
+    state.constructors      = d.constructors && d.constructors.length
+                              ? JSON.parse(JSON.stringify(d.constructors))
+                              : getDefaultConstructors();
+    state.constructorLocked = d.constructorLocked || false;
+  } else {
+    // 새 라운드: 초기화 후 직전 LOCKED 라운드 컨스트럭터를 기본값으로
+    state.participants      = NAMES.map(name => ({ name, sessions: {} }));
+    state.results           = {};
+    state.resultLocked      = {};
+    state.constructorLocked = false;
+    state.constructors      = getDefaultConstructors();
   }
 }
 window.loadRoundData = loadRoundData;
