@@ -149,7 +149,7 @@
   <!-- ── SETUP ────────────────────────────────── -->
   <div class="section active" id="tab-setup">
     <div class="card">
-      <div class="card-title">🏎️ Race Info</div>
+      <div class="card-title">RACEWEEK 🏁</div>
       <div style="margin-bottom:14px;">
         <label>Round</label>
         <select id="roundSelect" onchange="onRoundChange()">
@@ -160,10 +160,10 @@
 
     <div class="card">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
-        <div class="card-title" style="margin-bottom:0">🏗️ Constructor Standings</div>
+        <div class="card-title" style="margin-bottom:0">Constructor Standings 🏆</div>
         <div style="display:flex;align-items:center;gap:10px;">
           <span id="fetchStatus" style="font-size:11px;"></span>
-          <button id="fetchBtn" class="btn sec" style="width:auto;padding:9px 16px;font-size:10px;" onclick="fetchStandings()">🔄 Update Constructor Standings</button>
+          <button id="fetchBtn" class="btn sec" style="width:auto;padding:9px 16px;font-size:10px;" onclick="fetchStandings()">Update Constructor Standings</button>
         </div>
       </div>
       <div id="constructorInputs" style="display:flex;flex-direction:column;gap:8px;"></div>
@@ -634,10 +634,10 @@ async function fetchStandings() {
     renderConstructors();
     if (window.fbSave) window.fbSave();
     status.innerHTML = '<span style="color:#00c864">✅ Updated!</span>';
-    btn.disabled = false; btn.textContent = '🔄 Update Constructor Standings';
+    btn.disabled = false; btn.textContent = 'Update Constructor Standings';
   } catch(e) {
     status.innerHTML = `<span style="color:#ff6b6b">❌ ${e.message}</span>`;
-    btn.disabled = false; btn.textContent = '🔄 Update Constructor Standings';
+    btn.disabled = false; btn.textContent = 'Update Constructor Standings';
   }
 }
 
