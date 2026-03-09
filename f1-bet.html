@@ -148,13 +148,17 @@
   .sn-round-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;flex-wrap:wrap;gap:8px;}
   .sn-round-badge{font-size:10px;padding:3px 10px;border-radius:4px;background:rgba(225,6,0,0.1);color:var(--red);border:1px solid rgba(225,6,0,0.2);font-family:'Orbitron',sans-serif;}
   .sn-pick-row{display:flex;gap:8px;align-items:center;font-size:12px;padding:4px 0;border-bottom:1px solid rgba(255,255,255,0.04);}
-  .sn-pick-name{font-family:'Orbitron',sans-serif;font-weight:700;color:#fff;min-width:30px;}
-  .sn-pick-picks{color:var(--muted);flex:1;}
-  .sn-pick-pts{font-family:'Orbitron',sans-serif;font-size:11px;color:rgba(255,255,255,0.5);}
-  .sn-net-bar{margin-top:8px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.07);display:flex;flex-wrap:wrap;gap:10px;align-items:center;}
-  .sn-net-label{font-size:10px;color:var(--muted);font-family:'Orbitron',sans-serif;letter-spacing:1px;}
+  .sn-pick-name{font-family:'Orbitron',sans-serif;font-weight:700;color:#fff;min-width:50px;}
+  .sn-pick-picks{color:var(--muted);flex:1;display:flex;gap:0;}
+  .sn-pick-p{display:inline-block;width:33.33%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .sn-pick-pts{font-family:'Orbitron',sans-serif;font-size:11px;color:rgba(255,255,255,0.5);min-width:32px;text-align:right;}
+  .sn-net-bar{margin-top:8px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.07);display:flex;flex-direction:column;gap:6px;}
+  .sn-net-label{font-size:10px;color:var(--muted);font-family:'Orbitron',sans-serif;letter-spacing:1px;margin-bottom:2px;}
+  .sn-net-row{display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:1px solid rgba(255,255,255,0.04);}
+  .sn-net-row:last-child{border-bottom:none;}
+  .sn-net-player{font-family:'Orbitron',sans-serif;font-size:11px;color:#fff;font-weight:700;}
   .sn-net-amount{font-family:'Orbitron',sans-serif;font-size:12px;}
-  .sn-net-sep{color:rgba(255,255,255,0.15);margin:0 6px;}
+  .sn-net-sep{display:none;}
   .sn-sess-block{margin-bottom:14px;}
   .sn-net-amount.pos{color:#00c864;} .sn-net-amount.neg{color:var(--red);} .sn-net-amount.zero{color:var(--muted);}
   .sn-rounds-title{margin:8px 0 16px;padding-left:4px;}
@@ -1064,6 +1068,13 @@ function unlockResult(key) {
   state.results[key] = ['','',''];
   state.resultLocked[key] = false;
 
+  // 시즌 누적에서 이 라운드 항목 삭제
+  const idx = window._seasonLog.findIndex(e => e.raceName === state.raceName);
+  if (idx >= 0) {
+    window._seasonLog.splice(idx, 1);
+    seasonLog = window._seasonLog;
+  }
+
   const card = document.getElementById(`sess-card-${key}`);
   if (card) {
     card.style.borderColor = 'var(--border)';
@@ -1320,6 +1331,16 @@ function saveToSeason() {
 }
 
 function editSeasonSave() {
+  // 시즌 누적에서 이 라운드 항목 삭제
+  const idx = window._seasonLog.findIndex(e => e.raceName === state.raceName);
+  if (idx >= 0) {
+    window._seasonLog.splice(idx, 1);
+    seasonLog = window._seasonLog;
+    if (window.saveRoundData) window.saveRoundData();
+    if (window.fbSave) window.fbSave();
+    renderSeason();
+  }
+
   // Re-enable the save button for editing
   const btn = document.getElementById('saveSeasonBtn');
   if (btn) {
@@ -1370,16 +1391,18 @@ function renderSeason() {
   }).join('');
 
   // ── Per-round history cards ──
+  const lastName = d => d ? d.trim().split(' ').pop() : d;
+
   const roundCards = [...seasonLog].reverse().map(entry => {
     const sessionRows = entry.sessions.map(s => {
       const actual = entry.results[s.key] || [];
       const actualStr = actual.filter(Boolean).length === 3
-        ? actual.map((d, i) => `P${i+1}: ${d}`).join(' / ')
+        ? actual.map((d, i) => `P${i+1}: ${lastName(d)}`).join(' / ')
         : '—';
 
       const pickRows = entry.participants.map(p => {
         const picks = p.sessions[s.key]?.picks || ['','',''];
-        const picksStr = picks.map((d, i) => d ? `P${i+1}: ${d}` : `P${i+1}: —`).join(' / ');
+        const picksStr = picks.map((d, i) => `<span class="sn-pick-p">P${i+1}: ${d ? lastName(d) : '—'}</span>`).join('');
         const sc = entry.scored.find(x => x.name === p.name);
         const bd = sc?.breakdown.find(b => b.key === s.key);
         const pts = bd ? `${bd.totalPts}pt` : '—';
@@ -1400,13 +1423,16 @@ function renderSeason() {
       </div>`;
     }).join('');
 
-    // Net summary for this round
+    // Net summary for this round — per-row
     const netSummary = entry.scored.map((p, i) => {
       const v = entry.net[i];
-      const color = v > 0 ? '#00c864' : v < 0 ? 'var(--red)' : 'var(--muted)';
       const sign = v < 0 ? '-' : '';
-      return `<span class="sn-net-amount ${v > 0 ? 'pos' : v < 0 ? 'neg' : 'zero'}">${p.name} ${sign}₩${Math.abs(v).toLocaleString()}</span>`;
-    }).join('<span class="sn-net-sep">·</span>');
+      const cls = v > 0 ? 'pos' : v < 0 ? 'neg' : 'zero';
+      return `<div class="sn-net-row">
+        <span class="sn-net-player">${p.name}</span>
+        <span class="sn-net-amount ${cls}">${sign}₩${Math.abs(v).toLocaleString()}</span>
+      </div>`;
+    }).join('');
 
     return `
     <div class="card">
