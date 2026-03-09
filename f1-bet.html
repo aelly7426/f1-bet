@@ -517,6 +517,17 @@ function applySelectStyle(sel) {
 }
 
 // ── Setup ────────────────────────────────────────────────
+// ── 디버그 패널 ───────────────────────────────────────────
+const _dbgLogs = [];
+function dbg(msg) {
+  const t = new Date().toTimeString().slice(0,8);
+  _dbgLogs.unshift('['+t+'] '+msg);
+  if (_dbgLogs.length > 30) _dbgLogs.pop();
+  const el = document.getElementById('_dbgPanel');
+  if (el) el.textContent = _dbgLogs.join('\n');
+}
+window.dbg = dbg;
+
 function init() {
   // Populate round dropdown
   const sel = document.getElementById('roundSelect');
@@ -579,21 +590,21 @@ function getDefaultConstructors() {
   // 없으면 DEFAULT_CONSTRUCTORS(2025 시즌 종료 순위) 반환
   const match = state.raceName.match(/Round (\d+)/);
   const n = match ? parseInt(match[1]) : null;
-  console.log('[getDefault] raceName:', state.raceName, 'n:', n);
+  dbg('raceName='+state.raceName+' n='+n);
   if (n && n > 1) {
     for (let prev = n - 1; prev >= 1; prev--) {
       const prevRound = ROUNDS.find(r => r.n === prev);
       if (!prevRound) continue;
       const prevName = `Round ${prev} — ${prevRound.name}`;
       const prevData = state.roundData[prevName];
-      console.log('[getDefault] checking prev:', prevName, 'locked:', prevData?.constructorLocked, 'hasConstructors:', !!(prevData?.constructors?.length));
+      dbg('prev'+prev+' locked='+prevData?.constructorLocked+' hasC='+!!(prevData?.constructors?.length));
       if (prevData && prevData.constructorLocked && prevData.constructors && prevData.constructors.length) {
-        console.log('[getDefault] FOUND locked prev:', prevName);
+        dbg('✅ FOUND locked: '+prevName);
         return JSON.parse(JSON.stringify(prevData.constructors));
       }
     }
   }
-  console.log('[getDefault] using DEFAULT_CONSTRUCTORS');
+  dbg('⚠️ using DEFAULT_CONSTRUCTORS');
   return [...DEFAULT_CONSTRUCTORS];
 }
 
@@ -1480,10 +1491,10 @@ window.applyFbData = function(data) {
     state.roundData   = data.state.roundData   || {};
     if (Array.isArray(data.seasonLog)) window._seasonLog = data.seasonLog;
 
-    console.log('[FB] raceName:', state.raceName);
-    console.log('[FB] roundData keys:', Object.keys(state.roundData));
+    dbg('[FB] raceName='+state.raceName);
+    dbg('[FB] roundData keys='+Object.keys(state.roundData).join(', '));
     const rd = state.roundData[state.raceName];
-    console.log('[FB] current rd:', rd ? {constructors: rd.constructors, constructorLocked: rd.constructorLocked} : null);
+    dbg('[FB] rd='+(rd?'locked='+rd.constructorLocked+' c='+rd.constructors?.length:'null'));
 
     // 현재 라운드 데이터 로드 (getDefaultConstructors 포함)
     if (state.raceName) loadRoundData(state.raceName);
@@ -1493,7 +1504,7 @@ window.applyFbData = function(data) {
       if (typeof data.state.constructorLocked === 'boolean') state.constructorLocked = data.state.constructorLocked;
     }
 
-    console.log('[FB] final constructors:', state.constructors);
+    dbg('[FB] final='+state.constructors.slice(0,3).join('|'));
   }
   if (Array.isArray(data.seasonLog)) window._seasonLog = data.seasonLog;
   renderActiveTab();
@@ -1519,5 +1530,15 @@ if (window._pendingFbData) {
   window._pendingFbData = null;
 }
 </script>
+<!-- 디버그 패널 (확인 후 삭제 예정) -->
+<div style="position:fixed;bottom:0;left:0;right:0;z-index:9999;background:rgba(0,0,0,0.92);border-top:1px solid #333;">
+  <div style="display:flex;justify-content:space-between;align-items:center;padding:4px 8px;">
+    <span style="font-size:9px;color:#ff6;font-family:monospace;letter-spacing:1px;">🔍 DEBUG</span>
+    <button onclick="document.getElementById('_dbgWrap').style.display=document.getElementById('_dbgWrap').style.display==='none'?'block':'none'" style="font-size:9px;background:none;border:1px solid #555;color:#aaa;padding:2px 6px;border-radius:3px;cursor:pointer;">토글</button>
+  </div>
+  <div id="_dbgWrap" style="display:block;max-height:180px;overflow-y:auto;padding:4px 8px;">
+    <pre id="_dbgPanel" style="font-size:9px;color:#0f0;font-family:monospace;margin:0;white-space:pre-wrap;word-break:break-all;"></pre>
+  </div>
+</div>
 </body>
 </html>
