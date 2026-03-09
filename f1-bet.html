@@ -308,24 +308,12 @@ img.emoji {
       return;
     }
 
-    // state 덮어쓰기 — loadRoundData()는 ROUNDS 정의 이후이므로 window 함수로 나중에 호출
-    if (data.state) {
-      state.raceName    = data.state.raceName    || '';
-      state.weekendType = data.state.weekendType || 'gp';
-      state.roundData   = data.state.roundData   || {};
-      // 기본값: Firebase 최상위 constructors
-      if (data.state.constructors) state.constructors = JSON.parse(JSON.stringify(data.state.constructors));
-      if (typeof data.state.constructorLocked === 'boolean') state.constructorLocked = data.state.constructorLocked;
-      state.participants = data.state.participants || state.participants;
-      state.results      = data.state.results      || {};
-      state.resultLocked = data.state.resultLocked || {};
-      // ROUNDS가 정의된 이후 실행되는 loadRoundData로 덮어쓰기
-      if (window.loadRoundData && state.raceName) window.loadRoundData(state.raceName);
+    // 메인 스크립트가 초기화됐으면 바로 처리, 아니면 pending에 저장
+    if (window.applyFbData) {
+      window.applyFbData(data);
+    } else {
+      window._pendingFbData = data;
     }
-    if (Array.isArray(data.seasonLog)) window._seasonLog = data.seasonLog;
-
-    // 현재 탭 리렌더
-    renderActiveTab();
 
     window.setFbStatus('🟢 실시간 연결됨');
   });
@@ -1479,6 +1467,26 @@ function renderActiveTab() {
 }
 window.renderActiveTab = renderActiveTab;
 
+// Firebase 데이터 적용 함수 — module 스크립트보다 나중에 실행되므로 ROUNDS 등 모두 사용 가능
+window.applyFbData = function(data) {
+  if (!data) return;
+  if (data.state) {
+    state.raceName    = data.state.raceName    || '';
+    state.weekendType = data.state.weekendType || 'gp';
+    state.roundData   = data.state.roundData   || {};
+    if (Array.isArray(data.seasonLog)) window._seasonLog = data.seasonLog;
+    // 현재 라운드 데이터 로드 (getDefaultConstructors 포함)
+    if (state.raceName) loadRoundData(state.raceName);
+    else {
+      // 라운드 미선택 시 최상위 값 사용
+      if (data.state.constructors) state.constructors = JSON.parse(JSON.stringify(data.state.constructors));
+      if (typeof data.state.constructorLocked === 'boolean') state.constructorLocked = data.state.constructorLocked;
+    }
+  }
+  if (Array.isArray(data.seasonLog)) window._seasonLog = data.seasonLog;
+  renderActiveTab();
+};
+
 function switchTab(tab) {
   const tabKeys = ['setup','predict','result','season'];
   document.querySelectorAll('.tab').forEach((t, i) =>
@@ -1493,6 +1501,11 @@ window.switchTab = switchTab;
 
 init();
 
+// 메인 스크립트 초기화 완료 후 pending Firebase 데이터 처리
+if (window._pendingFbData) {
+  window.applyFbData(window._pendingFbData);
+  window._pendingFbData = null;
+}
 </script>
 </body>
 </html>
