@@ -765,11 +765,50 @@ async function fetchStandings() {
     const data = await champRes.json();
     if (!data || !data.length) throw new Error('순위 데이터가 없어요');
 
-    // 🔍 DEBUG2: 모든 필드 표시
+    // position_current 기준 오름차순 정렬
     data.sort((a, b) => (a.position_current||99) - (b.position_current||99));
-    const debugLines = [`session_key=${latestSessionKey} (${latestRaceName})`, ''];
-    data.forEach(s => debugLines.push(`P${s.position_current} | ${JSON.stringify(s)}`));
-    status.innerHTML = `<pre style="color:#ccc;font-size:9px;text-align:left;line-height:1.5;margin:8px 0;overflow:auto;max-height:300px">${debugLines.join('\n')}</pre>`;
+
+    // OpenF1 버그: Mercedes·Ferrari·Williams가 team_name=null로 옴
+    // → points_current가 unique한 경우 포인트로 역추적, 아니면 position으로 처리
+    // null 팀들을 position 기준으로 보완 매핑
+    const NULL_FALLBACK = {}; // position → team 이름 (레이스 후 갱신 필요없이 순위로 처리)
+    // null인 항목들 중 team_name이 없는 것: 아직 매핑된 팀 외의 나머지를 순서대로 채움
+    const alreadyMapped = new Set(
+      data.filter(s => s.team_name).map(s => {
+        const raw = s.team_name;
+        return OPENF1_MAP[raw] || Object.entries(OPENF1_MAP).find(([k])=>raw.includes(k)||k.includes(raw))?.[1] || null;
+      }).filter(Boolean)
+    );
+    const unmappedTeams = DEFAULT_CONSTRUCTORS.filter(t => !alreadyMapped.has(t));
+    let unmappedIdx = 0;
+    for (const s of data) {
+      if (s.team_name === null && unmappedIdx < unmappedTeams.length) {
+        NULL_FALLBACK[s.position_current] = unmappedTeams[unmappedIdx++];
+      }
+    }
+
+    const ordered = [];
+    for (const s of data) {
+      let mapped = null;
+      if (s.team_name) {
+        mapped = OPENF1_MAP[s.team_name] || null;
+        if (!mapped) {
+          for (const [key, val] of Object.entries(OPENF1_MAP)) {
+            if (s.team_name.includes(key) || key.includes(s.team_name)) { mapped = val; break; }
+          }
+        }
+      } else {
+        mapped = NULL_FALLBACK[s.position_current] || null;
+      }
+      if (mapped && !ordered.includes(mapped)) ordered.push(mapped);
+    }
+
+    // 매핑 안 된 팀은 뒤에 추가
+    DEFAULT_CONSTRUCTORS.forEach(t => { if (!ordered.includes(t)) ordered.push(t); });
+    state.constructors = ordered.slice(0, 11);
+    renderConstructors();
+    if (window.fbSave) window.fbSave();
+    status.innerHTML = `<span style="color:#00c864">✅ Updated! (${latestRaceName} 기준)</span>`;
     btn.disabled = false; btn.textContent = 'Update Constructor Standings';
   } catch(e) {
     status.innerHTML = `<span style="color:#ff6b6b">❌ ${e.message}</span>`;
