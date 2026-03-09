@@ -32,7 +32,7 @@
   /* TABS */
   .tabs-sticky{position:sticky;top:0;z-index:100;background:var(--bg);padding-top:8px;}
   .tabs{display:flex;gap:4px;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:4px;margin-bottom:0;}
-  .tab{flex:1;padding:clamp(7px,1.5vw,10px) clamp(4px,1vw,10px);border:none;background:transparent;color:var(--muted);font-family:'Orbitron',sans-serif;font-size:clamp(8px,1.2vw,11px);letter-spacing:clamp(0.5px,0.2vw,1.5px);text-transform:uppercase;cursor:pointer;border-radius:6px;transition:all .2s;}
+  .tab{flex:1;padding:clamp(7px,1.5vw,10px) clamp(4px,1vw,10px);border:none;background:transparent;color:#b4b4b4;font-family:'Orbitron',sans-serif;font-size:clamp(8.8px,1.32vw,12.1px);letter-spacing:clamp(0.5px,0.2vw,1.5px);text-transform:uppercase;cursor:pointer;border-radius:6px;transition:all .2s;}
   .tab.active{background:var(--red);color:#fff;box-shadow:0 0 16px rgba(225,6,0,0.4);}
   .tab:hover:not(.active){color:#fff;background:rgba(255,255,255,0.05);}
   .section{display:none;} .section.active{display:block;}
@@ -96,11 +96,11 @@
   .score-row.winner::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(255,215,0,0.05),transparent);pointer-events:none;}
   .score-row.second{border-color:var(--silver);}
   .score-row.third{border-color:var(--bronze);}
-  .score-rank{font-family:'Orbitron',sans-serif;font-size:clamp(12px,2vw,15px);font-weight:900;width:clamp(22px,3vw,30px);text-align:center;}
-  .score-name{font-weight:700;font-size:clamp(12px,2vw,16px);font-family:'Orbitron',sans-serif;letter-spacing:clamp(1px,0.3vw,2px);min-width:44px;}
+  .score-rank{font-family:'Orbitron',sans-serif;font-size:clamp(12px,2vw,15px);font-weight:900;width:clamp(22px,3vw,30px);text-align:center;flex-shrink:0;}
+  .score-name{font-weight:700;font-size:clamp(12px,2vw,16px);font-family:'Orbitron',sans-serif;letter-spacing:clamp(1px,0.3vw,2px);width:clamp(60px,9vw,90px);flex-shrink:0;white-space:nowrap;}
   .score-breakdown{flex:1;display:flex;flex-direction:column;gap:5px;}
-  .sess-breakdown-line{display:flex;flex-wrap:wrap;gap:4px;align-items:center;}
-  .sess-breakdown-label{font-size:clamp(9px,1.2vw,10px);color:var(--muted);min-width:clamp(80px,12vw,110px);flex-shrink:0;}
+  .sess-breakdown-line{display:flex;flex-wrap:nowrap;gap:4px;align-items:center;}
+  .sess-breakdown-label{font-size:clamp(9px,1.2vw,10px);color:var(--muted);width:clamp(70px,11vw,100px);flex-shrink:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
   .hit-badge{font-size:clamp(9px,1.2vw,10px);padding:2px 7px;border-radius:3px;font-family:'Orbitron',sans-serif;white-space:nowrap;}
   .hit-badge.hit{background:rgba(0,200,100,0.15);color:#00c864;border:1px solid rgba(0,200,100,0.3);}
   .hit-badge.miss{background:rgba(255,255,255,0.04);color:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.07);}
@@ -1032,10 +1032,9 @@ function renderResult() {
       <div style="display:flex;justify-content:space-between;align-items:center;padding:18px 24px;cursor:pointer;background:rgba(255,255,255,0.03);" onclick="toggleResultCard('${s.key}')">
         <div style="display:flex;align-items:center;gap:12px;">
           <span class="sess-label">${s.label}</span>
-          <span class="sess-mult">×${s.mult}</span>
-          ${allReady ? '<span style="font-size:10px;padding:2px 9px;border-radius:4px;background:rgba(0,200,100,0.12);color:#00c864;border:1px solid rgba(0,200,100,0.25);font-family:\'Orbitron\',sans-serif;">✓ 예측 완료</span>' : ''}
         </div>
         <div style="display:flex;align-items:center;gap:10px;">
+          ${allReady ? '<span style="font-size:10px;padding:2px 9px;border-radius:4px;background:rgba(0,200,100,0.12);color:#00c864;border:1px solid rgba(0,200,100,0.25);font-family:\'Orbitron\',sans-serif;">✓ 예측 완료</span>' : ''}
           ${locked ? '<span style="font-size:10px;padding:3px 10px;border-radius:10px;font-family:\'Orbitron\',sans-serif;background:rgba(0,200,100,0.25);color:#00ff88;border:1px solid rgba(0,255,136,0.5);font-weight:700;letter-spacing:1px;">✓ LOCKED</span>' : ''}
           <span id="res-arrow-${s.key}" style="font-size:11px;color:rgba(255,255,255,0.5);transition:transform 0.2s;">▼</span>
         </div>
@@ -1275,25 +1274,28 @@ function renderPaymentTable(scored, payments, net, showBreakdown) {
     const lines = showBreakdown
       ? p.breakdown.map(b => {
           const hits = b.details.map(d =>
-            d.hit ? `<span class="hit-badge hit">P${d.pos} +${d.base}×${d.cm}</span>`
-                  : `<span class="hit-badge miss">P${d.pos} ✕</span>`
+            d.hit ? `<span class="hit-badge hit">P${d.pos}</span>`
+                  : `<span class="hit-badge miss">P${d.pos}</span>`
           ).join('');
-          const pts = b.correct > 0
-            ? `<span class="sess-pts">→ ×${b.correctMult}×${b.sessMult} = <strong style="color:#fff">${b.totalPts}pt</strong></span>`
-            : `<span class="sess-pts">0pt</span>`;
-          return `<div class="sess-breakdown-line"><span class="sess-breakdown-label">${b.label}</span>${hits}&nbsp;${pts}</div>`;
+          return `<div class="sess-breakdown-line"><span class="sess-breakdown-label">${b.label}</span>${hits}</div>`;
         }).join('')
       : p.breakdown.map(b => {
           const hits = b.details.map(d =>
-            d.hit ? `<span class="hit-badge hit">P${d.pos} +${d.base}×${d.cm}</span>`
-                  : `<span class="hit-badge miss">P${d.pos} ✕</span>`
+            d.hit ? `<span class="hit-badge hit">P${d.pos}</span>`
+                  : `<span class="hit-badge miss">P${d.pos}</span>`
           ).join('');
-          const pts = b.correct > 0
-            ? `<span class="sess-pts">→ <strong style="color:#fff">${b.totalPts}pt</strong></span>`
-            : `<span class="sess-pts">0pt</span>`;
-          return `<div class="sess-breakdown-line">${hits}&nbsp;${pts}</div>`;
+          return `<div class="sess-breakdown-line">${hits}</div>`;
         }).join('');
 
+    if (showBreakdown) {
+      return `
+      <div class="score-row ${cls}" style="display:grid;grid-template-columns:30px clamp(60px,9vw,90px) 1fr auto;align-items:center;gap:10px;">
+        <span class="score-rank" style="text-align:center;">${emoji}</span>
+        <span class="score-name">${p.name}</span>
+        <div class="score-breakdown" style="display:flex;flex-direction:column;gap:4px;">${lines}</div>
+        <span style="font-family:'Orbitron',sans-serif;font-size:17px;font-weight:900;min-width:60px;text-align:right;color:${ptColor}">${p.totalPts}pt</span>
+      </div>`;
+    }
     return `
     <div class="score-row ${cls}">
       <span class="score-rank">${emoji}</span>
