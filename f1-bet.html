@@ -960,6 +960,18 @@ function renderResult() {
     return;
   }
 
+  // 세션 중 하나라도 unlock 상태면 seasonLog에서 이 라운드 제거
+  const anyUnlocked = sessions().some(s => !state.resultLocked[s.key]);
+  if (anyUnlocked) {
+    const idx = window._seasonLog.findIndex(e => e.raceName === state.raceName);
+    if (idx >= 0) {
+      window._seasonLog.splice(idx, 1);
+      seasonLog = window._seasonLog;
+      if (window.saveRoundData) window.saveRoundData();
+      if (window.fbSave) window.fbSave();
+    }
+  }
+
   el.innerHTML = sessions().map(s => {
     const allReady = state.participants.every(p => p.sessions[s.key]?.locked);
     const res = state.results[s.key] || ['','',''];
@@ -1536,6 +1548,19 @@ window.applyFbData = function(data) {
     dbg('[FB] final='+state.constructors.slice(0,3).join('|'));
   }
   if (Array.isArray(data.seasonLog)) window._seasonLog = data.seasonLog;
+
+  // seasonLog 무결성 검사: unlock 상태인 라운드는 seasonLog에서 제거
+  const beforeLen = window._seasonLog.length;
+  window._seasonLog = window._seasonLog.filter(entry => {
+    const rd = state.roundData[entry.raceName];
+    if (!rd) return true;
+    const rSessions = entry.sessions || [];
+    return rSessions.every(s => rd.resultLocked && rd.resultLocked[s.key]);
+  });
+  seasonLog = window._seasonLog;
+  // 정리된 항목이 있으면 Firebase에 다시 저장
+  if (window._seasonLog.length !== beforeLen && window.fbSave) window.fbSave();
+
   renderConstructors();
   renderActiveTab();
 };
