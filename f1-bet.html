@@ -1310,8 +1310,8 @@ function renderPaymentTable(scored, payments, net, showBreakdown) {
       <div class="score-row ${cls}" style="display:grid;grid-template-columns:28px clamp(54px,8vw,86px) 1fr auto;align-items:center;gap:6px;">
         <span class="score-rank" style="text-align:center;">${emoji}</span>
         <span class="score-name">${p.name}</span>
-        <div class="score-breakdown" style="display:flex;flex-direction:column;gap:4px;padding:0 10px;">${lines}</div>
-        <span style="font-family:'Orbitron',sans-serif;font-size:17px;font-weight:900;min-width:60px;text-align:right;color:${ptColor};padding-left:10px;">${p.totalPts}pt</span>
+        <div class="score-breakdown" style="display:flex;flex-direction:column;gap:4px;padding:0 5px 0 20px;">${lines}</div>
+        <span style="font-family:'Orbitron',sans-serif;font-size:17px;font-weight:900;min-width:60px;text-align:right;color:${ptColor};padding-left:5px;">${p.totalPts}pt</span>
       </div>`;
     }
     return `
