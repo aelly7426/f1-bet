@@ -429,30 +429,30 @@ const SESSIONS = {
 // 2026 F1 Calendar — sprint rounds: 2, 6, 7, 11, 14, 18
 const SPRINT_ROUNDS = new Set([2, 6, 7, 11, 14, 18]);
 const ROUNDS = [
-  { n:1,  name: 'Australian GP',     flag: '🇦🇺' },
-  { n:2,  name: 'Chinese GP',        flag: '🇨🇳' },
-  { n:3,  name: 'Japanese GP',       flag: '🇯🇵' },
-  { n:4,  name: 'Bahrain GP',        flag: '🇧🇭' },
-  { n:5,  name: 'Saudi Arabian GP',  flag: '🇸🇦' },
-  { n:6,  name: 'Miami GP',          flag: '🇺🇸' },
-  { n:7,  name: 'Emilia Romagna GP', flag: '🇮🇹' },
-  { n:8,  name: 'Monaco GP',         flag: '🇲🇨' },
-  { n:9,  name: 'Spanish GP',        flag: '🇪🇸' },
-  { n:10, name: 'Canadian GP',       flag: '🇨🇦' },
-  { n:11, name: 'Austrian GP',       flag: '🇦🇹' },
-  { n:12, name: 'British GP',        flag: '🇬🇧' },
-  { n:13, name: 'Belgian GP',        flag: '🇧🇪' },
-  { n:14, name: 'Hungarian GP',      flag: '🇭🇺' },
-  { n:15, name: 'Dutch GP',          flag: '🇳🇱' },
-  { n:16, name: 'Italian GP',        flag: '🇮🇹' },
-  { n:17, name: 'Azerbaijan GP',     flag: '🇦🇿' },
-  { n:18, name: 'Singapore GP',      flag: '🇸🇬' },
-  { n:19, name: 'United States GP',  flag: '🇺🇸' },
-  { n:20, name: 'Mexico City GP',    flag: '🇲🇽' },
-  { n:21, name: 'São Paulo GP', flag: '🇧🇷' },
-  { n:22, name: 'Las Vegas GP',      flag: '🇺🇸' },
-  { n:23, name: 'Qatar GP',          flag: '🇶🇦' },
-  { n:24, name: 'Abu Dhabi GP',      flag: '🇦🇪' },
+  { n:1,  name: 'Australian GP',     flag: '🇦🇺', date: '2026-03-15' },
+  { n:2,  name: 'Chinese GP',        flag: '🇨🇳', date: '2026-03-22' },
+  { n:3,  name: 'Japanese GP',       flag: '🇯🇵', date: '2026-04-05' },
+  { n:4,  name: 'Bahrain GP',        flag: '🇧🇭', date: '2026-04-19' },
+  { n:5,  name: 'Saudi Arabian GP',  flag: '🇸🇦', date: '2026-04-26' },
+  { n:6,  name: 'Miami GP',          flag: '🇺🇸', date: '2026-05-10' },
+  { n:7,  name: 'Emilia Romagna GP', flag: '🇮🇹', date: '2026-05-24' },
+  { n:8,  name: 'Monaco GP',         flag: '🇲🇨', date: '2026-05-31' },
+  { n:9,  name: 'Spanish GP',        flag: '🇪🇸', date: '2026-06-14' },
+  { n:10, name: 'Canadian GP',       flag: '🇨🇦', date: '2026-06-21' },
+  { n:11, name: 'Austrian GP',       flag: '🇦🇹', date: '2026-07-05' },
+  { n:12, name: 'British GP',        flag: '🇬🇧', date: '2026-07-12' },
+  { n:13, name: 'Belgian GP',        flag: '🇧🇪', date: '2026-07-26' },
+  { n:14, name: 'Hungarian GP',      flag: '🇭🇺', date: '2026-08-02' },
+  { n:15, name: 'Dutch GP',          flag: '🇳🇱', date: '2026-08-30' },
+  { n:16, name: 'Italian GP',        flag: '🇮🇹', date: '2026-09-06' },
+  { n:17, name: 'Azerbaijan GP',     flag: '🇦🇿', date: '2026-09-20' },
+  { n:18, name: 'Singapore GP',      flag: '🇸🇬', date: '2026-10-04' },
+  { n:19, name: 'United States GP',  flag: '🇺🇸', date: '2026-10-18' },
+  { n:20, name: 'Mexico City GP',    flag: '🇲🇽', date: '2026-10-25' },
+  { n:21, name: 'São Paulo GP',      flag: '🇧🇷', date: '2026-11-08' },
+  { n:22, name: 'Las Vegas GP',      flag: '🇺🇸', date: '2026-11-21' },
+  { n:23, name: 'Qatar GP',          flag: '🇶🇦', date: '2026-11-29' },
+  { n:24, name: 'Abu Dhabi GP',      flag: '🇦🇪', date: '2026-12-06' },
 ];
 
 // ── State ────────────────────────────────────────────────
@@ -552,14 +552,23 @@ function init() {
 }
 
 function syncSetupUI() {
-  // Firebase에서 state를 받았을 때 Setup 탭 UI를 state에 맞게 동기화
-  if (!state.raceName) return;
-  // raceName 에서 라운드 번호 추출 e.g. "Round 3 — Japanese"
-  const match = state.raceName.match(/Round (\d+)/);
-  if (!match) return;
-  const n = parseInt(match[1]);
+  // 항상 오늘 기준 다음 라운드 자동 선택
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const next = ROUNDS.find(r => new Date(r.date) >= today) || ROUNDS[ROUNDS.length - 1];
   const sel = document.getElementById('roundSelect');
-  if (sel) sel.value = n;
+  if (sel) sel.value = next.n;
+  const newRaceName = `Round ${next.n} — ${next.name}`;
+  if (newRaceName !== state.raceName) {
+    state.raceName = newRaceName;
+    state.weekendType = SPRINT_ROUNDS.has(next.n) ? 'sprint' : 'gp';
+    loadRoundData(newRaceName);
+    ensureSessions();
+    saveRoundData();
+    renderConstructors();
+    renderCurrentRoundBadge();
+    if (window.fbSave) window.fbSave();
+  }
 }
 
 function onRoundChange() {
