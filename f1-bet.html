@@ -491,8 +491,19 @@ function syncSetupUI() {
 function onRoundChange() {
   const n = parseInt(document.getElementById('roundSelect').value);
   if (!n) return;
-  state.weekendType = SPRINT_ROUNDS.has(n) ? 'sprint' : 'gp';
-  ensureSessions();
+  const round = ROUNDS.find(r => r.n === n);
+  const newRaceName = `Round ${n} — ${round.name}`;
+
+  if (newRaceName !== state.raceName) {
+    // 현재 라운드 데이터 저장
+    saveRoundData();
+    // 새 라운드 데이터 불러오기
+    state.raceName = newRaceName;
+    state.weekendType = SPRINT_ROUNDS.has(n) ? 'sprint' : 'gp';
+    loadRoundData(newRaceName);
+    ensureSessions();
+    if (window.fbSave) window.fbSave();
+  }
 }
 
 function saveRoundData() {
@@ -533,21 +544,9 @@ function saveSetup() {
   if (!n) { alert('Please select a round!'); return; }
   const unique = new Set(state.constructors);
   if (unique.size < state.constructors.length) { alert('Duplicate teams in constructor standings!'); return; }
-  const round = ROUNDS.find(r => r.n === n);
-  const newRaceName = `Round ${n} — ${round.name}`;
-
-  if (newRaceName !== state.raceName) {
-    // 현재 라운드 데이터 저장
-    saveRoundData();
-    // 새 라운드 데이터 불러오기
-    state.raceName = newRaceName;
-    state.weekendType = SPRINT_ROUNDS.has(n) ? 'sprint' : 'gp';
-    loadRoundData(newRaceName);
-  } else {
-    state.weekendType = SPRINT_ROUNDS.has(n) ? 'sprint' : 'gp';
-  }
-
+  // onRoundChange에서 이미 라운드 전환 처리됨 — 여기선 저장만
   ensureSessions();
+  saveRoundData();
   if (window.fbSave) window.fbSave();
   alert(`✅ "${state.raceName}" saved!`);
   switchTab('predict');
