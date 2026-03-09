@@ -1511,7 +1511,7 @@ function renderCurrentRoundBadge() {
   if (!el) return;
   if (!state.raceName) { el.style.visibility = 'hidden'; return; }
   const isSprint = state.weekendType === 'sprint';
-  const gpTag = `<span class="gp-tag">GRAND PRIX</span>`;
+  const gpTag = `<span class="gp-tag">GP</span>`;
   const sprintTag = `<span class="sprint-tag${isSprint ? '' : ' inactive'}">SPRINT</span>`;
   const roundObj = ROUNDS.find(r => state.raceName.includes(r.name));
 
