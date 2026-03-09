@@ -158,7 +158,8 @@
   .sn-sess-block{margin-bottom:14px;}
   .sn-net-amount.pos{color:#00c864;} .sn-net-amount.neg{color:var(--red);} .sn-net-amount.zero{color:var(--muted);}
   .sn-rounds-title{margin:8px 0 16px;padding-left:4px;}
-  .sn-rounds-title{margin:8px 0 16px;padding-left:4px;}
+  .sn-round-toggle{display:flex;justify-content:space-between;align-items:center;cursor:pointer;user-select:none;}
+  .sn-round-body{margin-top:0;}
   @media(min-width:768px){
     .picks-grid{grid-template-columns:repeat(3,1fr);}
     .res-grid{grid-template-columns:repeat(3,1fr);}
@@ -898,15 +899,38 @@ function renderPredict() {
 
     return `
     <div class="card" style="border-color:${allLocked ? theme.lockedBorder : theme.border};border-width:2px;padding:0;overflow:hidden;">
-      <div style="background:${theme.headerBg};display:flex;justify-content:space-between;align-items:center;padding:18px 24px;">
+      <div style="background:${theme.headerBg};display:flex;justify-content:space-between;align-items:center;padding:18px 24px;cursor:pointer;" onclick="togglePredCard(${pi})">
         <span style="font-family:'Orbitron',sans-serif;font-size:clamp(13px,4vw,20px);font-weight:900;letter-spacing:clamp(1px,0.8vw,4px);color:${theme.nameFg};">${p.name}</span>
-        <span style="font-size:clamp(8px,2vw,10px);padding:3px 10px;border-radius:10px;font-family:'Orbitron',sans-serif;white-space:nowrap;background:${allLocked ? 'rgba(0,200,100,0.25)' : 'rgba(255,255,255,0.18)'};color:${allLocked ? '#00ff88' : '#fff'};border:1px solid ${allLocked ? 'rgba(0,255,136,0.5)' : 'rgba(255,255,255,0.5)'};font-weight:700;letter-spacing:1px;">${allLocked ? '✓ ALL LOCKED' : 'PENDING'}</span>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span style="font-size:clamp(8px,2vw,10px);padding:3px 10px;border-radius:10px;font-family:'Orbitron',sans-serif;white-space:nowrap;background:${allLocked ? 'rgba(0,200,100,0.25)' : 'rgba(255,255,255,0.18)'};color:${allLocked ? '#00ff88' : '#fff'};border:1px solid ${allLocked ? 'rgba(0,255,136,0.5)' : 'rgba(255,255,255,0.5)'};font-weight:700;letter-spacing:1px;">${allLocked ? '✓ ALL LOCKED' : 'PENDING'}</span>
+          <span id="pred-arrow-${pi}" style="font-size:clamp(9px,2.5vw,11px);color:rgba(255,255,255,0.5);transition:transform 0.2s;">▼</span>
+        </div>
       </div>
-      <div style="padding:24px;">
+      <div id="pred-body-${pi}" style="padding:24px;">
       ${sessBlocks}
       </div>
     </div>`;
   }).join('');
+
+  // allLocked 카드는 자동으로 접기
+  state.participants.forEach((p, pi) => {
+    const allLocked = sessions().every(s => p.sessions[s.key]?.locked);
+    if (allLocked) {
+      const body = document.getElementById(`pred-body-${pi}`);
+      const arrow = document.getElementById(`pred-arrow-${pi}`);
+      if (body) body.style.display = 'none';
+      if (arrow) arrow.style.transform = 'rotate(-90deg)';
+    }
+  });
+}
+
+function togglePredCard(pi) {
+  const body = document.getElementById(`pred-body-${pi}`);
+  const arrow = document.getElementById(`pred-arrow-${pi}`);
+  if (!body) return;
+  const isOpen = body.style.display !== 'none';
+  body.style.display = isOpen ? 'none' : 'block';
+  if (arrow) arrow.style.transform = isOpen ? 'rotate(-90deg)' : 'rotate(0deg)';
 }
 
 function onPick(pi, key, idx, val) {
@@ -969,34 +993,40 @@ function renderResult() {
       : '';
 
     return `
-    <div class="card" id="sess-card-${s.key}" style="border-color:${locked ? 'rgba(0,200,100,0.4)' : 'var(--border)'};border-width:${locked ? '2px' : '1px'};">
-      <div class="sess-head" style="margin-bottom:14px;">
-        <span class="sess-label">${s.label}</span>
-        <div style="display:flex;align-items:center;gap:8px;">
+    <div class="card" id="sess-card-${s.key}" style="border-color:${locked ? 'rgba(0,200,100,0.4)' : 'var(--border)'};border-width:${locked ? '2px' : '1px'};padding:0;overflow:hidden;">
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:18px 24px;cursor:pointer;background:rgba(255,255,255,0.03);" onclick="toggleResultCard('${s.key}')">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span class="sess-label">${s.label}</span>
           <span class="sess-mult">×${s.mult}</span>
           ${allReady ? '<span style="font-size:clamp(8px,2vw,10px);padding:2px 9px;border-radius:4px;background:rgba(0,200,100,0.12);color:#00c864;border:1px solid rgba(0,200,100,0.25);font-family:\'Orbitron\',sans-serif;">✓ 예측 완료</span>' : ''}
         </div>
-      </div>
-      ${lockNotice}
-      <div class="res-grid" style="${disabledStyle}">
-        <div class="res-slot p1"><div class="res-trophy">🥇</div>
-          <select id="res-${s.key}-0" class="${res[0]?'has-value':'has-placeholder'}" onchange="onResult('${s.key}',0,this.value)">${driverOpts(res[0],[res[1],res[2]])}</select>
-        </div>
-        <div class="res-slot p2"><div class="res-trophy">🥈</div>
-          <select id="res-${s.key}-1" class="${res[1]?'has-value':'has-placeholder'}" onchange="onResult('${s.key}',1,this.value)">${driverOpts(res[1],[res[0],res[2]])}</select>
-        </div>
-        <div class="res-slot p3"><div class="res-trophy">🥉</div>
-          <select id="res-${s.key}-2" class="${res[2]?'has-value':'has-placeholder'}" onchange="onResult('${s.key}',2,this.value)">${driverOpts(res[2],[res[0],res[1]])}</select>
+        <div style="display:flex;align-items:center;gap:10px;">
+          ${locked ? '<span style="font-size:clamp(8px,2vw,10px);padding:3px 10px;border-radius:10px;font-family:\'Orbitron\',sans-serif;background:rgba(0,200,100,0.25);color:#00ff88;border:1px solid rgba(0,255,136,0.5);font-weight:700;letter-spacing:1px;">✓ LOCKED</span>' : ''}
+          <span id="res-arrow-${s.key}" style="font-size:clamp(9px,2.5vw,11px);color:rgba(255,255,255,0.5);transition:transform 0.2s;">▼</span>
         </div>
       </div>
-      <div class="res-btn-wrap" style="display:flex;gap:8px;margin-top:14px;">
-        ${locked
-          ? `<button class="btn sec" style="font-size:clamp(8px,2vw,10px);padding:10px 18px;flex:0 0 auto;width:auto;" onclick="unlockResult('${s.key}')">✏️ Edit</button>
-             <div style="flex:1;display:flex;align-items:center;justify-content:center;background:rgba(0,200,100,0.07);border:1px solid rgba(0,200,100,0.2);border-radius:8px;font-size:clamp(9px,2.5vw,11px);color:#00c864;font-family:'Orbitron',sans-serif;letter-spacing:1px;">✓ LOCKED IN</div>`
-          : `<button class="btn grn" style="width:100%;font-size:clamp(8px,2vw,10px);padding:10px;" onclick="checkResult('${s.key}')">🏁 Check Result</button>`
-        }
+      <div id="res-body-${s.key}" style="padding:24px;">
+        ${lockNotice}
+        <div class="res-grid" style="${disabledStyle}">
+          <div class="res-slot p1"><div class="res-trophy">🥇</div>
+            <select id="res-${s.key}-0" class="${res[0]?'has-value':'has-placeholder'}" onchange="onResult('${s.key}',0,this.value)">${driverOpts(res[0],[res[1],res[2]])}</select>
+          </div>
+          <div class="res-slot p2"><div class="res-trophy">🥈</div>
+            <select id="res-${s.key}-1" class="${res[1]?'has-value':'has-placeholder'}" onchange="onResult('${s.key}',1,this.value)">${driverOpts(res[1],[res[0],res[2]])}</select>
+          </div>
+          <div class="res-slot p3"><div class="res-trophy">🥉</div>
+            <select id="res-${s.key}-2" class="${res[2]?'has-value':'has-placeholder'}" onchange="onResult('${s.key}',2,this.value)">${driverOpts(res[2],[res[0],res[1]])}</select>
+          </div>
+        </div>
+        <div class="res-btn-wrap" style="display:flex;gap:8px;margin-top:14px;">
+          ${locked
+            ? `<button class="btn sec" style="font-size:clamp(8px,2vw,10px);padding:10px 18px;flex:0 0 auto;width:auto;" onclick="unlockResult('${s.key}')">✏️ Edit</button>
+               <div style="flex:1;display:flex;align-items:center;justify-content:center;background:rgba(0,200,100,0.07);border:1px solid rgba(0,200,100,0.2);border-radius:8px;font-size:clamp(9px,2.5vw,11px);color:#00c864;font-family:'Orbitron',sans-serif;letter-spacing:1px;">✓ LOCKED IN</div>`
+            : `<button class="btn grn" style="width:100%;font-size:clamp(8px,2vw,10px);padding:10px;" onclick="checkResult('${s.key}')">🏁 Check Result</button>`
+          }
+        </div>
+        <div id="result-board-${s.key}" style="display:${locked ? 'block' : 'none'};margin-top:20px;"></div>
       </div>
-      <div id="result-board-${s.key}" style="display:${locked ? 'block' : 'none'};margin-top:20px;"></div>
     </div>`;
   }).join('') + `
   <div id="combined-wrap" style="display:none;">
@@ -1019,8 +1049,27 @@ function renderResult() {
     }
   });
 
+  // locked된 세션 카드는 자동으로 접기
+  sessions().forEach(s => {
+    if (state.resultLocked[s.key]) {
+      const body = document.getElementById(`res-body-${s.key}`);
+      const arrow = document.getElementById(`res-arrow-${s.key}`);
+      if (body) body.style.display = 'none';
+      if (arrow) arrow.style.transform = 'rotate(-90deg)';
+    }
+  });
+
   // 모든 세션 locked이면 combined 복원
   tryRenderCombined();
+}
+
+function toggleResultCard(key) {
+  const body = document.getElementById(`res-body-${key}`);
+  const arrow = document.getElementById(`res-arrow-${key}`);
+  if (!body) return;
+  const isOpen = body.style.display !== 'none';
+  body.style.display = isOpen ? 'none' : 'block';
+  if (arrow) arrow.style.transform = isOpen ? 'rotate(-90deg)' : 'rotate(0deg)';
 }
 
 // Check Result 누르면 → 계산 후 즉시 LOCKED IN 상태로 전환 (예측 탭 Lock In과 동일)
@@ -1409,15 +1458,20 @@ function renderSeason() {
     }).join('<span class="sn-net-sep">·</span>');
 
     return `
-    <div class="card">
-      <div class="sn-round-header">
-        <div class="card-title" style="margin-bottom:0">${entry.raceName}</div>
-        <span class="sn-round-badge">${entry.weekendType === 'sprint' ? '🟠 Sprint' : '⬜ GP'}</span>
+    <div class="card sn-round-card" style="padding:0;overflow:hidden;">
+      <div class="sn-round-toggle" onclick="toggleRoundCard(this)" style="padding:18px 24px;">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div class="card-title" style="margin-bottom:0">${entry.raceName}</div>
+          <span class="sn-round-badge">${entry.weekendType === 'sprint' ? '🟠 Sprint' : '⬜ GP'}</span>
+        </div>
+        <span class="sn-round-arrow">▼</span>
       </div>
-      ${sessionRows}
-      <div class="sn-net-bar">
-        <span class="sn-net-label">이번 라운드 손익</span>
-        ${netSummary}
+      <div class="sn-round-body" style="padding:0 24px 24px;">
+        ${sessionRows}
+        <div class="sn-net-bar">
+          <span class="sn-net-label">이번 라운드 손익</span>
+          ${netSummary}
+        </div>
       </div>
     </div>`;
   }).join('');
@@ -1429,9 +1483,30 @@ function renderSeason() {
     </div>
     <div class="card-title sn-rounds-title">📋 라운드별 기록</div>
     ${roundCards}`;
+
+  // 첫 번째(가장 최근) 카드만 펼치고 나머지는 접기
+  el.querySelectorAll('.sn-round-card').forEach((card, i) => {
+    const body = card.querySelector('.sn-round-body');
+    const arrow = card.querySelector('.sn-round-arrow');
+    if (i === 0) {
+      body.style.display = 'block';
+      arrow.style.transform = 'rotate(0deg)';
+    } else {
+      body.style.display = 'none';
+      arrow.style.transform = 'rotate(-90deg)';
+    }
+  });
 }
 
 // ── Tab switch ───────────────────────────────────────────
+function toggleRoundCard(toggleEl) {
+  const body = toggleEl.nextElementSibling;
+  const arrow = toggleEl.querySelector('.sn-round-arrow');
+  const isOpen = body.style.display !== 'none';
+  body.style.display = isOpen ? 'none' : 'block';
+  arrow.style.transform = isOpen ? 'rotate(-90deg)' : 'rotate(0deg)';
+}
+
 function renderCurrentRoundBadge() {
   const el = document.getElementById('currentRoundBadge');
   if (!el) return;
@@ -1534,15 +1609,6 @@ if (window._pendingFbData) {
   window._pendingFbData = null;
 }
 </script>
-<!-- 디버그 패널 (확인 후 삭제 예정) -->
-<div style="position:fixed;bottom:0;left:0;right:0;z-index:9999;background:rgba(0,0,0,0.92);border-top:1px solid #333;">
-  <div style="display:flex;justify-content:space-between;align-items:center;padding:4px 8px;">
-    <span style="font-size:9px;color:#ff6;font-family:monospace;letter-spacing:1px;">🔍 DEBUG</span>
-    <button onclick="document.getElementById('_dbgWrap').style.display=document.getElementById('_dbgWrap').style.display==='none'?'block':'none'" style="font-size:9px;background:none;border:1px solid #555;color:#aaa;padding:2px 6px;border-radius:3px;cursor:pointer;">토글</button>
-  </div>
-  <div id="_dbgWrap" style="display:block;max-height:180px;overflow-y:auto;padding:4px 8px;">
-    <pre id="_dbgPanel" style="font-size:9px;color:#0f0;font-family:monospace;margin:0;white-space:pre-wrap;word-break:break-all;"></pre>
-  </div>
-</div>
+
 </body>
 </html>
