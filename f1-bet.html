@@ -937,10 +937,10 @@ function tryRenderCombined() {
   document.getElementById('combined-board').innerHTML =
     renderPaymentTable(scored, payments, net, true) +
     `<div style="margin-top:20px;display:flex;gap:10px;">
-       <button id="saveSeasonBtn" class="btn${isSaved ? ' sec' : ' grn'}" style="${isSaved ? 'opacity:0.5;cursor:not-allowed;flex:1' : 'flex:1'}" onclick="saveToSeason()" ${isSaved ? 'disabled' : ''}>
+       <button id="saveSeasonBtn" class="btn${isSaved ? ' sec' : ' grn'}" style="${isSaved ? 'opacity:0.5;cursor:not-allowed;' : ''}flex:1" onclick="saveToSeason()" ${isSaved ? 'disabled' : ''}>
          ${isSaved ? '✅ 저장 완료' : '💾 최종 결과 저장'}
        </button>
-       ${isSaved ? `<button class="btn sec" style="width:auto;padding:14px 20px;" onclick="editSeasonSave()">✏️ EDIT</button>` : ''}
+       <button id="editSeasonBtn" class="btn sec" style="width:auto;padding:14px 20px;display:${isSaved ? 'block' : 'none'};" onclick="editSeasonSave()">✏️ EDIT</button>
      </div>`;
   const wrap = document.getElementById('combined-wrap');
   wrap.style.display = 'block';
@@ -1117,17 +1117,9 @@ function saveToSeason() {
     btn.style.cursor = 'not-allowed';
     btn.classList.remove('grn');
     btn.classList.add('sec');
-    // Add EDIT button if not already there
-    if (!document.getElementById('editSeasonBtn')) {
-      const editBtn = document.createElement('button');
-      editBtn.id = 'editSeasonBtn';
-      editBtn.className = 'btn sec';
-      editBtn.style.cssText = 'width:auto;padding:14px 20px;';
-      editBtn.textContent = '✏️ EDIT';
-      editBtn.onclick = editSeasonSave;
-      btn.parentElement.appendChild(editBtn);
-    }
   }
+  const editBtn = document.getElementById('editSeasonBtn');
+  if (editBtn) editBtn.style.display = 'block';
 
   renderSeason();
 }
@@ -1144,9 +1136,9 @@ function editSeasonSave() {
     btn.classList.add('grn');
     btn.onclick = saveToSeason;
   }
-  // Remove EDIT button
+  // Hide EDIT button
   const editBtn = document.getElementById('editSeasonBtn');
-  if (editBtn) editBtn.remove();
+  if (editBtn) editBtn.style.display = 'none';
 }
 
 function renderSeason() {
