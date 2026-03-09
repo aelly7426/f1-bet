@@ -765,27 +765,11 @@ async function fetchStandings() {
     const data = await champRes.json();
     if (!data || !data.length) throw new Error('순위 데이터가 없어요');
 
-    // position_current 기준 오름차순 정렬
-    data.sort((a, b) => a.position_current - b.position_current);
-
-    const ordered = [];
-    for (const s of data) {
-      const rawName = s.team_name || '';
-      let mapped = OPENF1_MAP[rawName] || null;
-      if (!mapped) {
-        for (const [key, val] of Object.entries(OPENF1_MAP)) {
-          if (rawName.includes(key) || key.includes(rawName)) { mapped = val; break; }
-        }
-      }
-      if (mapped && !ordered.includes(mapped)) ordered.push(mapped);
-    }
-
-    // 매핑 안 된 팀은 기존 순서 유지하며 뒤에 추가
-    DEFAULT_CONSTRUCTORS.forEach(t => { if (!ordered.includes(t)) ordered.push(t); });
-    state.constructors = ordered.slice(0, 11);
-    renderConstructors();
-    if (window.fbSave) window.fbSave();
-    status.innerHTML = `<span style="color:#00c864">✅ Updated! (${latestRaceName} 기준)</span>`;
+    // 🔍 DEBUG: 실제 API 응답 표시 (확인 후 제거 예정)
+    data.sort((a, b) => (a.position_current||99) - (b.position_current||99));
+    const debugLines = [`session_key=${latestSessionKey} (${latestRaceName})`, ''];
+    data.forEach(s => debugLines.push(`P${s.position_current} | "${s.team_name}" | ${s.points_current}pts`));
+    status.innerHTML = `<pre style="color:#ccc;font-size:10px;text-align:left;line-height:1.5;margin:8px 0">${debugLines.join('\n')}</pre>`;
     btn.disabled = false; btn.textContent = 'Update Constructor Standings';
   } catch(e) {
     status.innerHTML = `<span style="color:#ff6b6b">❌ ${e.message}</span>`;
