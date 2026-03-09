@@ -92,17 +92,17 @@
 
   /* SCOREBOARD */
   .scoreboard{display:flex;flex-direction:column;gap:8px;}
-  .score-row{display:flex;align-items:center;gap:8px;background:var(--surface2);border-radius:8px;padding:clamp(10px,2vw,14px) clamp(10px,2vw,16px);border:1px solid rgba(255,255,255,0.06);transition:all .3s;position:relative;overflow:hidden;}
+  .score-row{display:flex;align-items:center;gap:14px;background:var(--surface2);border-radius:8px;padding:clamp(12px,2vw,16px) clamp(12px,2vw,18px);border:1px solid rgba(255,255,255,0.06);transition:all .3s;position:relative;overflow:hidden;}
   .score-row.winner{border-color:var(--gold);box-shadow:0 0 20px rgba(255,215,0,0.15);}
   .score-row.winner::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(255,215,0,0.05),transparent);pointer-events:none;}
   .score-row.second{border-color:var(--silver);}
   .score-row.third{border-color:var(--bronze);}
-  .score-rank{font-family:'Orbitron',sans-serif;font-size:clamp(12px,2vw,15px);font-weight:900;width:24px;text-align:center;flex-shrink:0;}
-  .score-name{font-weight:700;font-size:clamp(12px,2vw,16px);font-family:'Orbitron',sans-serif;letter-spacing:clamp(1px,0.3vw,2px);width:clamp(44px,7vw,70px);flex-shrink:0;white-space:nowrap;}
+  .score-rank{font-family:'Orbitron',sans-serif;font-size:clamp(14px,2vw,18px);font-weight:900;width:28px;text-align:center;flex-shrink:0;}
+  .score-name{font-weight:700;font-size:clamp(13px,2vw,16px);font-family:'Orbitron',sans-serif;letter-spacing:clamp(1px,0.3vw,2px);width:clamp(54px,8vw,86px);flex-shrink:0;white-space:nowrap;}
   .score-breakdown{flex:1;display:flex;flex-direction:column;gap:5px;min-width:0;}
-  .sess-breakdown-line{display:flex;flex-wrap:nowrap;gap:3px;align-items:center;}
+  .sess-breakdown-line{display:flex;flex-wrap:nowrap;gap:6px;align-items:center;}
   .sess-breakdown-label{font-size:clamp(9px,1.2vw,10px);color:var(--muted);width:clamp(44px,8vw,72px);flex-shrink:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-  .hit-badge{font-size:clamp(9px,1.2vw,10px);padding:2px 7px;border-radius:3px;font-family:'Orbitron',sans-serif;white-space:nowrap;}
+  .hit-badge{font-size:clamp(10px,1.3vw,11px);padding:3px 10px;border-radius:3px;font-family:'Orbitron',sans-serif;white-space:nowrap;}
   .hit-badge.hit{background:rgba(0,200,100,0.15);color:#00c864;border:1px solid rgba(0,200,100,0.3);}
   .hit-badge.miss{background:rgba(255,255,255,0.04);color:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.07);}
   .sess-pts{font-size:clamp(9px,1.2vw,10px);color:rgba(255,255,255,0.3);white-space:nowrap;}
@@ -1307,7 +1307,7 @@ function renderPaymentTable(scored, payments, net, showBreakdown) {
 
     if (showBreakdown) {
       return `
-      <div class="score-row ${cls}" style="display:grid;grid-template-columns:24px clamp(44px,7vw,70px) 1fr auto;align-items:center;gap:8px;">
+      <div class="score-row ${cls}" style="display:grid;grid-template-columns:28px clamp(54px,8vw,86px) 1fr auto;align-items:center;gap:14px;">
         <span class="score-rank" style="text-align:center;">${emoji}</span>
         <span class="score-name">${p.name}</span>
         <div class="score-breakdown" style="display:flex;flex-direction:column;gap:4px;">${lines}</div>
@@ -1328,39 +1328,24 @@ function renderPaymentTable(scored, payments, net, showBreakdown) {
     ? `<div style="text-align:center;padding:16px;color:var(--muted);font-size:13px;">모두 동점 — 정산 없음</div>`
     : payments.map(pay => `
       <div style="display:flex;align-items:center;gap:12px;background:var(--surface2);border:1px solid rgba(255,255,255,0.07);border-radius:8px;padding:13px 18px;">
-        <span style="font-family:'Orbitron',sans-serif;font-size:14px;font-weight:700;color:var(--red);min-width:32px">${scored[pay.from].name}</span>
-        <span style="color:var(--muted);font-size:12px;flex:1">→&nbsp;<span style="color:#fff;font-weight:600">${scored[pay.to].name}</span>&nbsp;<span style="color:rgba(255,255,255,0.3);font-size:11px">(${pay.pts}pt 차)</span></span>
-        <span style="font-family:'Orbitron',sans-serif;font-size:15px;font-weight:700;color:#fff">₩${pay.amount.toLocaleString()}</span>
+        <span style="font-family:'Orbitron',sans-serif;font-size:14px;font-weight:700;color:#fff;min-width:32px">${scored[pay.from].name}</span>
+        <span style="font-size:14px;flex:1;color:#fff;">→&nbsp;<span style="font-family:'Orbitron',sans-serif;font-weight:700;">${scored[pay.to].name}</span>&nbsp;<span style="color:rgba(255,255,255,0.35);font-size:12px">(${pay.pts}pt 차)</span></span>
+        <span style="font-family:'Orbitron',sans-serif;font-size:14px;font-weight:700;color:#fff">₩${pay.amount.toLocaleString()}</span>
       </div>`).join('');
 
-  // Net rows
-  const netRows = scored.map((p, i) => {
-    const v = net[i];
-    const color = v > 0 ? '#00c864' : v < 0 ? 'var(--red)' : 'var(--muted)';
-    const sign  = v < 0 ? '-' : '';
-    return `
-      <div style="display:flex;align-items:center;gap:12px;background:var(--surface2);border:1px solid rgba(255,255,255,0.07);border-radius:8px;padding:13px 18px;">
-        <span style="font-family:'Orbitron',sans-serif;font-size:15px;font-weight:900;letter-spacing:3px;flex:1">${p.name}</span>
-        <span style="font-size:12px;color:var(--muted)">${p.totalPts}pt</span>
-        <span style="font-family:'Orbitron',sans-serif;font-size:16px;font-weight:700;color:${color};min-width:110px;text-align:right;">${sign}₩${Math.abs(v).toLocaleString()}</span>
-      </div>`;
-  }).join('');
+  const paymentSection = showBreakdown ? `
+    <hr style="border:none;border-top:1px solid rgba(255,255,255,0.07);margin:18px 0;">
+    <div style="margin-bottom:8px;">
+      <div style="font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:2px;color:var(--muted);margin-bottom:10px;text-transform:uppercase;">💸 1v1 정산</div>
+      <div style="display:flex;flex-direction:column;gap:8px;">${payRows}</div>
+    </div>` : '';
 
   return `
     <div style="margin-bottom:8px;">
       <div style="font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:2px;color:var(--muted);margin-bottom:10px;text-transform:uppercase;">📊 점수</div>
       <div class="scoreboard" style="margin-bottom:0;">${pointsRows}</div>
     </div>
-    <hr style="border:none;border-top:1px solid rgba(255,255,255,0.07);margin:18px 0;">
-    <div style="margin-bottom:8px;">
-      <div style="font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:2px;color:var(--muted);margin-bottom:10px;text-transform:uppercase;">💸 1v1 정산</div>
-      <div style="display:flex;flex-direction:column;gap:8px;">${payRows}</div>
-    </div>
-    <hr style="border:none;border-top:1px solid rgba(255,255,255,0.07);margin:18px 0;">
-    <div>
-      <div style="font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:2px;color:var(--muted);margin-bottom:10px;text-transform:uppercase;">🏦 총 손익</div>
-      <div style="display:flex;flex-direction:column;gap:8px;">${netRows}</div>
-    </div>`;
+    ${paymentSection}`;
 }
 
 // ── Season Tab ────────────────────────────────────────────
