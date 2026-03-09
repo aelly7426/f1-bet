@@ -933,7 +933,7 @@ function tryRenderCombined() {
   });
 
   const { payments, net } = computePayments(scored);
-  const isSaved = seasonLog.some(e => e.raceName === state.raceName);
+  const isSaved = window._seasonLog.some(e => e.raceName === state.raceName);
   document.getElementById('combined-board').innerHTML =
     renderPaymentTable(scored, payments, net, true) +
     `<div style="margin-top:20px;display:flex;gap:10px;">
