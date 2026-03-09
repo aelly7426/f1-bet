@@ -26,7 +26,7 @@
   header{text-align:center;padding:clamp(20px,4vw,40px) 0 clamp(16px,3vw,30px);}
   .hline{width:clamp(50px,8vw,80px);height:3px;background:var(--red);margin:0 auto clamp(12px,2vw,20px);box-shadow:0 0 12px var(--red);}
   header h1{font-family:'Orbitron',sans-serif;font-size:clamp(22px,5vw,52px);font-weight:900;letter-spacing:clamp(2px,0.5vw,4px);color:#fff;text-shadow:0 0 30px rgba(225,6,0,0.5);}
-  header h1 span{color:var(--red);}
+  header h1 span{color:#fff;}
   header p{color:var(--muted);font-size:clamp(10px,1.5vw,13px);letter-spacing:2px;text-transform:uppercase;margin-top:8px;}
 
   /* TABS */
@@ -170,24 +170,20 @@
   }
 
 /* fetchBtn 반응형 */
-.fetch-btn { width: 80px; font-size: 8.5px; }
-@media (min-width: 600px) {
-  .fetch-btn { width: 200px; font-size: 10.5px; }
-}
+.fetch-btn { width: 200px; font-size: 10.5px; }
 
 /* Constructor Standings 카드 제목 & RACEWEEK - 버튼 높이에 맞게 */
 .constructor-title { font-size: clamp(13px, 2vw, 17px) !important; line-height: 1.4; }
 .raceweek-title    { font-size: clamp(13px, 2vw, 17px) !important; letter-spacing: 3px; }
 
-/* Twemoji 국기 이미지 크기 */
-#currentRoundBadge img.emoji {
+/* Twemoji 국기 이미지 크기 - 전역 적용 */
+img.emoji {
   height: 1.1em;
   width: auto;
   vertical-align: -0.15em;
   display: inline;
 }
 </style>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/twemoji.min.js"></script>
 </head>
 <body>
 <div class="wrap">
@@ -235,7 +231,7 @@
       <div style="display:flex;align-items:flex-start;gap:12px;margin-bottom:14px;">
         <div class="card-title constructor-title" style="margin-bottom:0;flex:1;padding-top:2px;">Constructor<br>Standings 🏆</div>
         <div style="display:flex;flex-direction:column;align-items:center;gap:4px;flex-shrink:0;">
-          <button id="fetchBtn" style="padding:8px 6px;white-space:normal;line-height:1.5;text-align:center;" class="btn sec fetch-btn" onclick="fetchStandings()">Update Constructor Standings</button>
+          <button id="fetchBtn" style="padding:8px 6px;white-space:normal;line-height:1.5;text-align:center;" class="btn sec fetch-btn" onclick="fetchStandings()">Update Constructor<br>Standings</button>
           <div id="fetchStatus" style="font-size:10px;min-height:14px;text-align:center;white-space:nowrap;"></div>
         </div>
       </div>
@@ -604,7 +600,7 @@ function saveRoundData() {
 }
 
 function loadRoundData(raceName) {
-  // 해당 라운드 데이터 불러오기 (없으면 빈 상태)
+  // 해당 라운드 데이터 불러오기 (없으면 직전 라운드 컨스트럭터 기준)
   const d = state.roundData[raceName];
   if (d) {
     state.participants = JSON.parse(JSON.stringify(d.participants));
@@ -619,7 +615,23 @@ function loadRoundData(raceName) {
     state.results = {};
     state.resultLocked = {};
     state.constructorLocked = false;
-    // 새 라운드는 현재 constructors 그대로 유지
+    // 새 라운드: 직전 라운드의 컨스트럭터를 기본값으로 사용
+    const match = raceName.match(/Round (\d+)/);
+    const n = match ? parseInt(match[1]) : null;
+    if (n && n > 1) {
+      // 직전 라운드들을 역순으로 탐색해서 저장된 데이터가 있으면 그 컨스트럭터 사용
+      for (let prev = n - 1; prev >= 1; prev--) {
+        const prevRound = ROUNDS.find(r => r.n === prev);
+        if (!prevRound) continue;
+        const prevName = `Round ${prev} — ${prevRound.name}`;
+        const prevData = state.roundData[prevName];
+        if (prevData && prevData.constructors && prevData.constructors.length) {
+          state.constructors = JSON.parse(JSON.stringify(prevData.constructors));
+          break;
+        }
+      }
+    }
+    // 직전 라운드 데이터도 없으면 현재 state.constructors(기본값) 유지
   }
 }
 
@@ -761,7 +773,7 @@ const OPENF1_MAP = {
 async function fetchStandings() {
   const btn = document.getElementById('fetchBtn');
   const status = document.getElementById('fetchStatus');
-  btn.disabled = true; btn.innerHTML = '⏳ Updating...'; status.textContent = '';
+  btn.disabled = true; btn.innerHTML = '<span style="opacity:0.5">⏳ Updating...<br>&nbsp;</span>'; status.textContent = '';
   try {
     // Step 1: 올해 완료된 Race 세션 중 가장 최근 것의 session_key 조회
     const year = new Date().getFullYear();
@@ -827,11 +839,11 @@ async function fetchStandings() {
     state.constructors = ordered.slice(0, 11);
     renderConstructors();
     if (window.fbSave) window.fbSave();
-    status.innerHTML = `<span style="color:#00c864">✅ Updated! (${latestRaceName} 기준)</span>`;
-    btn.disabled = false; btn.innerHTML = 'Update Constructor Standings';
+    status.innerHTML = `<span style="color:#00c864">✅ Updated! (After ${latestRaceName})</span>`;
+    btn.disabled = false; btn.innerHTML = 'Update Constructor<br>Standings';
   } catch(e) {
     status.innerHTML = `<span style="color:#ff6b6b">❌ ${e.message}</span>`;
-    btn.disabled = false; btn.innerHTML = 'Update Constructor Standings';
+    btn.disabled = false; btn.innerHTML = 'Update Constructor<br>Standings';
   }
 }
 
@@ -1437,14 +1449,36 @@ function renderCurrentRoundBadge() {
   const sprintTag = state.weekendType === 'sprint'
     ? `<span class="sprint-tag">SPRINT</span>` : '';
   const roundObj = ROUNDS.find(r => state.raceName.includes(r.name));
-  let badgeText = state.raceName;
+
+  // Windows PC는 국기 이모지를 지원 안 함 → 약어 배지로 대체
+  // 모바일(iOS/Android)은 이모지 그대로 표시
+  const isWindows = /Windows/i.test(navigator.userAgent);
+  const COUNTRY_CODE = {
+    'Australian GP':'AU','Chinese GP':'CN','Japanese GP':'JP','Bahrain GP':'BH',
+    'Saudi Arabian GP':'SA','Miami GP':'US','Emilia Romagna GP':'IT','Monaco GP':'MC',
+    'Spanish GP':'ES','Canadian GP':'CA','Austrian GP':'AT','British GP':'GB',
+    'Belgian GP':'BE','Hungarian GP':'HU','Dutch GP':'NL','Italian GP':'IT',
+    'Azerbaijan GP':'AZ','Singapore GP':'SG','United States GP':'US',
+    'Mexico City GP':'MX','São Paulo GP':'BR','Las Vegas GP':'US',
+    'Qatar GP':'QA','Abu Dhabi GP':'AE'
+  };
+
+  let displayName = state.raceName;
   if (roundObj) {
-    // "Round N — Australian GP" → "Round N — 🇦🇺 Australian GP"
-    badgeText = state.raceName.replace(roundObj.name, roundObj.flag + ' ' + roundObj.name);
+    if (isWindows) {
+      // PC: 약어 배지
+      const code = COUNTRY_CODE[roundObj.name] || '';
+      const codeTag = code
+        ? `<span style="font-family:'Orbitron',sans-serif;font-size:9px;font-weight:900;letter-spacing:1px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);border-radius:3px;padding:2px 5px;color:#fff;">${code}</span>`
+        : '';
+      displayName = state.raceName.replace(roundObj.name, codeTag ? codeTag + ' ' + roundObj.name : roundObj.name);
+    } else {
+      // 모바일: 국기 이모지
+      displayName = state.raceName.replace(roundObj.name, roundObj.flag + ' ' + roundObj.name);
+    }
   }
-  el.innerHTML = `<span class="round-badge"><strong>${badgeText}</strong>${sprintTag}</span>`;
+  el.innerHTML = `<span class="round-badge"><strong>${displayName}</strong>${sprintTag}</span>`;
   el.style.visibility = 'visible';
-  if (window.twemoji) twemoji.parse(el, { folder: 'svg', ext: '.svg' });
 }
 
 function renderActiveTab() {
@@ -1473,6 +1507,7 @@ function switchTab(tab) {
 window.switchTab = switchTab;
 
 init();
+
 </script>
 </body>
 </html>
