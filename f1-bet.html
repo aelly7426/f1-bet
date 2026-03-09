@@ -563,6 +563,8 @@ function syncSetupUI() {
 }
 
 function onRoundChange() {
+  const fetchStatus = document.getElementById('fetchStatus');
+  if (fetchStatus) fetchStatus.innerHTML = '';
   const n = parseInt(document.getElementById('roundSelect').value);
   if (!n) return;
   const round = ROUNDS.find(r => r.n === n);
@@ -738,6 +740,8 @@ function lockConstructors() {
   if (unique.size < state.constructors.length) {
     alert('중복된 팀이 있어요! 확인해주세요.'); return;
   }
+  const fetchStatus = document.getElementById('fetchStatus');
+  if (fetchStatus) fetchStatus.innerHTML = '';
   state.constructorLocked = true;
   if (window.saveRoundData) window.saveRoundData();
   if (window.fbSave) window.fbSave();
@@ -1663,6 +1667,9 @@ function getCurrentTab() {
 }
 
 function switchTab(tab) {
+  // fetchStatus 메시지 초기화
+  const fetchStatus = document.getElementById('fetchStatus');
+  if (fetchStatus) fetchStatus.innerHTML = '';
   // 현재 탭 확인 후 잠금되지 않은 선택 초기화
   const prevTab = getCurrentTab();
   if (prevTab === 'predict' && tab !== 'predict') {
