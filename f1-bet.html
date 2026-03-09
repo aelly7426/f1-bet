@@ -127,11 +127,6 @@
 
   /* MOBILE REORDER BUTTONS */
   .reorder-row{display:flex;align-items:center;gap:8px;}
-  .reorder-btns{display:flex;flex-direction:column;gap:2px;}
-  .reorder-btn{width:24px;height:20px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:4px;color:rgba(255,255,255,0.5);font-size:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;}
-  .reorder-btn:hover{background:rgba(225,6,0,0.2);border-color:rgba(225,6,0,0.4);color:#fff;}
-  .reorder-btn:disabled{opacity:0.2;cursor:default;}
-  @media(max-width:599px){.reorder-btns{display:none;}}
   .sl-top,.sl-bot{display:block;width:clamp(10px,2.5vw,14px);height:clamp(10px,2.5vw,14px);border-radius:50%;transition:all .4s;}
   .sl-top{background:#2a0a0a;box-shadow:inset 0 0 4px rgba(0,0,0,0.5);}
   .sl-bot{background:#2a0a0a;box-shadow:inset 0 0 4px rgba(0,0,0,0.5);}
@@ -313,55 +308,19 @@ img.emoji {
       return;
     }
 
-    // state 덮어쓰기
+    // state 덮어쓰기 — loadRoundData()는 ROUNDS 정의 이후이므로 window 함수로 나중에 호출
     if (data.state) {
       state.raceName    = data.state.raceName    || '';
       state.weekendType = data.state.weekendType || 'gp';
       state.roundData   = data.state.roundData   || {};
-
-      // 현재 라운드 데이터를 roundData에서 불러오기 (컨스트럭터 포함)
-      const rn = state.raceName;
-      const rd = state.roundData[rn];
-      if (rd) {
-        state.participants  = rd.participants;
-        state.results       = rd.results;
-        state.resultLocked  = rd.resultLocked || {};
-        // 현재 라운드에 저장된 컨스트럭터 우선 적용
-        if (rd.constructors && rd.constructors.length) {
-          state.constructors      = JSON.parse(JSON.stringify(rd.constructors));
-          state.constructorLocked = rd.constructorLocked || false;
-        } else {
-          // rd는 있지만 constructors가 없는 경우 → 최상위값 사용
-          if (data.state.constructors) state.constructors = JSON.parse(JSON.stringify(data.state.constructors));
-          if (typeof data.state.constructorLocked === 'boolean') state.constructorLocked = data.state.constructorLocked;
-        }
-      } else {
-        state.participants = data.state.participants || state.participants;
-        state.results      = data.state.results      || {};
-        state.resultLocked = data.state.resultLocked || {};
-        // 새 라운드: 직전 라운드의 컨스트럭터를 기본값으로
-        const match2 = rn.match(/Round (\d+)/);
-        const n2 = match2 ? parseInt(match2[1]) : null;
-        let foundPrev = false;
-        if (n2 && n2 > 1) {
-          for (let prev = n2 - 1; prev >= 1; prev--) {
-            const prevRound = ROUNDS.find(r => r.n === prev);
-            if (!prevRound) continue;
-            const prevName = `Round ${prev} — ${prevRound.name}`;
-            const prevData = state.roundData[prevName];
-            if (prevData && prevData.constructors && prevData.constructors.length) {
-              state.constructors = JSON.parse(JSON.stringify(prevData.constructors));
-              foundPrev = true;
-              break;
-            }
-          }
-        }
-        // 직전 라운드도 없으면 Firebase 최상위 constructors 사용
-        if (!foundPrev && data.state.constructors) {
-          state.constructors = JSON.parse(JSON.stringify(data.state.constructors));
-        }
-        if (typeof data.state.constructorLocked === 'boolean') state.constructorLocked = data.state.constructorLocked;
-      }
+      // 기본값: Firebase 최상위 constructors
+      if (data.state.constructors) state.constructors = JSON.parse(JSON.stringify(data.state.constructors));
+      if (typeof data.state.constructorLocked === 'boolean') state.constructorLocked = data.state.constructorLocked;
+      state.participants = data.state.participants || state.participants;
+      state.results      = data.state.results      || {};
+      state.resultLocked = data.state.resultLocked || {};
+      // ROUNDS가 정의된 이후 실행되는 loadRoundData로 덮어쓰기
+      if (window.loadRoundData && state.raceName) window.loadRoundData(state.raceName);
     }
     if (Array.isArray(data.seasonLog)) window._seasonLog = data.seasonLog;
 
@@ -662,6 +621,8 @@ function loadRoundData(raceName) {
     // 직전 라운드 데이터도 없으면 현재 state.constructors(기본값) 유지
   }
 }
+window.loadRoundData = loadRoundData;
+window.saveRoundData = saveRoundData;
 
 function saveSetup() {
   const n = parseInt(document.getElementById('roundSelect').value);
@@ -701,24 +662,16 @@ function renderConstructors() {
   const n = state.constructors.length;
   c.innerHTML = state.constructors.map((team, i) => `
     <div class="reorder-row" data-idx="${i}">
-      ${!locked ? `
-      <div class="reorder-btns">
-        <button class="reorder-btn" ${i===0?'disabled':''} onclick="moveConstructor(${i},-1)" title="위로">▲</button>
-        <button class="reorder-btn" ${i===n-1?'disabled':''} onclick="moveConstructor(${i},1)" title="아래로">▼</button>
-      </div>` : ''}
+
       <span style="font-family:'Orbitron',sans-serif;font-size:11px;color:var(--muted);min-width:28px">P${i+1}</span>
-      ${locked
-        ? `<div style="flex:1;display:flex;align-items:center;gap:10px;background:var(--surface2);border:1px solid rgba(255,255,255,0.1);border-radius:6px;padding:clamp(8px,1.5vw,10px) clamp(10px,2vw,14px);">
-             <span style="flex-shrink:0;line-height:0;">${TEAM_LOGO[team]||''}</span>
-             <span style="font-family:'Exo 2',sans-serif;font-size:clamp(13px,1.8vw,14px);color:var(--text);">${team}</span>
-           </div>`
-        : `<div style="flex:1;display:flex;align-items:center;gap:10px;background:var(--surface2);border:1px solid rgba(255,255,255,0.1);border-radius:6px;padding:clamp(8px,1.5vw,10px) clamp(10px,2vw,14px);">
-             <span style="flex-shrink:0;line-height:0;">${TEAM_LOGO[team]||''}</span>
-             <select onchange="updateConstructor(${i},this.value)" style="flex:1;background:transparent;border:none;color:var(--text);font-family:'Exo 2',sans-serif;font-size:clamp(13px,1.8vw,14px);outline:none;cursor:pointer;">
-               ${DEFAULT_CONSTRUCTORS.map(t => `<option value="${t}"${t===team?' selected':''}>${t}</option>`).join('')}
-             </select>
-           </div>`
-      }
+      <div style="flex:1;display:flex;align-items:center;gap:10px;background:var(--surface2);border:1px solid rgba(255,255,255,0.1);border-radius:6px;padding:clamp(8px,1.5vw,10px) clamp(10px,2vw,14px);">
+        <span style="flex-shrink:0;line-height:0;">${TEAM_LOGO[team]||''}</span>
+        <select onchange="updateConstructor(${i},this.value)"
+          ${locked ? 'disabled' : ''}
+          style="flex:1;background:transparent;border:none;color:var(--text);font-family:'Exo 2',sans-serif;font-size:clamp(13px,1.8vw,14px);outline:none;cursor:${locked?'default':'pointer'};-webkit-appearance:none;appearance:none;">
+          ${DEFAULT_CONSTRUCTORS.map(t => `<option value="${t}"${t===team?' selected':''}>${t}</option>`).join('')}
+        </select>
+      </div>
       ${multBadge(i)}
     </div>`).join('');
 
