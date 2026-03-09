@@ -122,10 +122,8 @@
 
   /* SELECT PLACEHOLDER */
   select.has-placeholder{border-color:rgba(225,6,0,0.35);color:rgba(255,255,255,0.4);}
-  select.has-value{border-color:rgba(255,255,255,0.15);color:#fff;}
-  select option{color:#fff;background:var(--surface2);}
-  select option[value=""]{color:rgba(255,255,255,0.35);font-style:italic;background:var(--surface2);}
-  select option:disabled{color:#444;}
+  select.has-value{border-color:rgba(255,255,255,0.15);color:var(--text);}
+  select option[value=""]{color:#555;}
 
   /* MOBILE REORDER BUTTONS */
   .reorder-row{display:flex;align-items:center;gap:8px;}
@@ -149,18 +147,14 @@
   .sn-cum-list{display:flex;flex-direction:column;gap:8px;}
   .sn-round-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;flex-wrap:wrap;gap:8px;}
   .sn-round-badge{font-size:10px;padding:3px 10px;border-radius:4px;background:rgba(225,6,0,0.1);color:var(--red);border:1px solid rgba(225,6,0,0.2);font-family:'Orbitron',sans-serif;}
-  .sn-pick-grid{display:grid;grid-template-columns:4.5em repeat(3,minmax(0,1fr)) max-content;gap:0 6px;}
-  .sn-pick-row{display:contents;}
-  .sn-pick-row>*{font-size:12px;padding:4px 0;border-bottom:1px solid rgba(255,255,255,0.04);align-self:center;}
-  .sn-pick-name{font-family:'Orbitron',sans-serif;font-weight:700;color:#fff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-  .sn-pick-cell{color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-  .sn-pick-pts{font-family:'Orbitron',sans-serif;font-size:11px;color:rgba(255,255,255,0.5);text-align:right;white-space:nowrap;}
-  .sn-net-bar{margin-top:8px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.07);display:flex;flex-direction:column;gap:4px;}
-  .sn-net-label{font-size:10px;color:var(--muted);font-family:'Orbitron',sans-serif;letter-spacing:1px;margin-bottom:2px;}
-  .sn-net-row{display:flex;justify-content:space-between;align-items:center;}
-  .sn-net-name{font-family:'Orbitron',sans-serif;font-size:11px;color:#fff;font-weight:700;}
+  .sn-pick-row{display:flex;gap:8px;align-items:center;font-size:12px;padding:4px 0;border-bottom:1px solid rgba(255,255,255,0.04);}
+  .sn-pick-name{font-family:'Orbitron',sans-serif;font-weight:700;color:#fff;min-width:30px;}
+  .sn-pick-picks{color:var(--muted);flex:1;}
+  .sn-pick-pts{font-family:'Orbitron',sans-serif;font-size:11px;color:rgba(255,255,255,0.5);}
+  .sn-net-bar{margin-top:8px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.07);display:flex;flex-wrap:wrap;gap:10px;align-items:center;}
+  .sn-net-label{font-size:10px;color:var(--muted);font-family:'Orbitron',sans-serif;letter-spacing:1px;}
   .sn-net-amount{font-family:'Orbitron',sans-serif;font-size:12px;}
-  .sn-net-sep{display:none;}
+  .sn-net-sep{color:rgba(255,255,255,0.15);margin:0 6px;}
   .sn-sess-block{margin-bottom:14px;}
   .sn-net-amount.pos{color:#00c864;} .sn-net-amount.neg{color:var(--red);} .sn-net-amount.zero{color:var(--muted);}
   .sn-rounds-title{margin:8px 0 16px;padding-left:4px;}
@@ -508,10 +502,10 @@ function calcSession(picks, actual, sessMult) {
 }
 
 function driverOpts(selected = '', excluded = []) {
-  return `<option value="" style="color:rgba(255,255,255,0.35);font-style:italic;background:var(--surface2)">${selected ? 'Select driver' : '— Select driver —'}</option>` +
+  return `<option value="" style="color:#555;font-style:italic;">${selected ? 'Select driver' : '— Select driver —'}</option>` +
     DRIVERS.map(d => {
       const isExcluded = excluded.includes(d) && d !== selected;
-      return `<option value="${d}"${d === selected ? ' selected' : ''}${isExcluded ? ' disabled style="color:#444;background:var(--surface2)"' : ' style="color:#fff;background:var(--surface2)"'}>${DRIVER_NUM[d]}. ${d}</option>`;
+      return `<option value="${d}"${d === selected ? ' selected' : ''}${isExcluded ? ' disabled style="color:#444"' : ''}>${DRIVER_NUM[d]}. ${d}</option>`;
     }).join('');
 }
 
@@ -523,7 +517,16 @@ function applySelectStyle(sel) {
 }
 
 // ── Setup ────────────────────────────────────────────────
-function dbg() {}
+// ── 디버그 패널 ───────────────────────────────────────────
+const _dbgLogs = [];
+function dbg(msg) {
+  const t = new Date().toTimeString().slice(0,8);
+  _dbgLogs.unshift('['+t+'] '+msg);
+  if (_dbgLogs.length > 30) _dbgLogs.pop();
+  const el = document.getElementById('_dbgPanel');
+  if (el) el.textContent = _dbgLogs.join('\n');
+}
+window.dbg = dbg;
 
 function init() {
   // Populate round dropdown
@@ -534,7 +537,6 @@ function init() {
     opt.textContent = `${r.n}. ${r.name}`;
     sel.appendChild(opt);
   });
-  applySelectStyle(sel);
   renderConstructors();
 }
 
@@ -546,13 +548,11 @@ function syncSetupUI() {
   if (!match) return;
   const n = parseInt(match[1]);
   const sel = document.getElementById('roundSelect');
-  if (sel) { sel.value = n; applySelectStyle(sel); }
+  if (sel) sel.value = n;
 }
 
 function onRoundChange() {
-  const sel = document.getElementById('roundSelect');
-  applySelectStyle(sel);
-  const n = parseInt(sel.value);
+  const n = parseInt(document.getElementById('roundSelect').value);
   if (!n) return;
   const round = ROUNDS.find(r => r.n === n);
   const newRaceName = `Round ${n} — ${round.name}`;
@@ -1370,24 +1370,22 @@ function renderSeason() {
   }).join('');
 
   // ── Per-round history cards ──
-  const lastName = d => d ? d.trim().split(' ').pop() : d;
-
   const roundCards = [...seasonLog].reverse().map(entry => {
     const sessionRows = entry.sessions.map(s => {
       const actual = entry.results[s.key] || [];
       const actualStr = actual.filter(Boolean).length === 3
-        ? actual.map((d, i) => `P${i+1}: ${lastName(d)}`).join(' / ')
+        ? actual.map((d, i) => `P${i+1}: ${d}`).join(' / ')
         : '—';
 
       const pickRows = entry.participants.map(p => {
         const picks = p.sessions[s.key]?.picks || ['','',''];
-        const cells = picks.map((d, i) => `<span class="sn-pick-cell"><span style="color:rgba(255,255,255,0.3);font-size:10px">P${i+1}</span> ${d ? lastName(d) : '—'}</span>`).join('');
+        const picksStr = picks.map((d, i) => d ? `P${i+1}: ${d}` : `P${i+1}: —`).join(' / ');
         const sc = entry.scored.find(x => x.name === p.name);
         const bd = sc?.breakdown.find(b => b.key === s.key);
         const pts = bd ? `${bd.totalPts}pt` : '—';
         return `<div class="sn-pick-row">
           <span class="sn-pick-name">${p.name}</span>
-          ${cells}
+          <span class="sn-pick-picks">${picksStr}</span>
           <span class="sn-pick-pts">${pts}</span>
         </div>`;
       }).join('');
@@ -1398,20 +1396,17 @@ function renderSeason() {
           <span class="sess-label">${s.label}</span>
           <span style="font-size:11px;color:var(--muted)">RESULT: <strong style="color:#fff">${actualStr}</strong></span>
         </div>
-        <div class="sn-pick-grid">${pickRows}</div>
+        ${pickRows}
       </div>`;
     }).join('');
 
     // Net summary for this round
     const netSummary = entry.scored.map((p, i) => {
       const v = entry.net[i];
-      const sign = v < 0 ? '-' : v > 0 ? '+' : '';
-      const cls = v > 0 ? 'pos' : v < 0 ? 'neg' : 'zero';
-      return `<div class="sn-net-row">
-        <span class="sn-net-name">${p.name}</span>
-        <span class="sn-net-amount ${cls}">${sign}₩${Math.abs(v).toLocaleString()}</span>
-      </div>`;
-    }).join('');
+      const color = v > 0 ? '#00c864' : v < 0 ? 'var(--red)' : 'var(--muted)';
+      const sign = v < 0 ? '-' : '';
+      return `<span class="sn-net-amount ${v > 0 ? 'pos' : v < 0 ? 'neg' : 'zero'}">${p.name} ${sign}₩${Math.abs(v).toLocaleString()}</span>`;
+    }).join('<span class="sn-net-sep">·</span>');
 
     return `
     <div class="card">
@@ -1519,7 +1514,37 @@ window.applyFbData = function(data) {
   renderActiveTab();
 };
 
+function getCurrentTab() {
+  const tabKeys = ['setup','predict','result','season'];
+  const tabs = document.querySelectorAll('.tab');
+  for (let i = 0; i < tabs.length; i++) {
+    if (tabs[i].classList.contains('active')) return tabKeys[i];
+  }
+  return null;
+}
+
 function switchTab(tab) {
+  // 현재 탭 확인 후 잠금되지 않은 선택 초기화
+  const prevTab = getCurrentTab();
+  if (prevTab === 'predict' && tab !== 'predict') {
+    // 베팅 탭을 벗어날 때: LOCK IN 안 된 선택 초기화
+    sessions().forEach(s => {
+      state.participants.forEach(p => {
+        const sess = p.sessions[s.key];
+        if (sess && !sess.locked) {
+          sess.picks = ['','',''];
+        }
+      });
+    });
+  } else if (prevTab === 'result' && tab !== 'result') {
+    // 결과 탭을 벗어날 때: LOCK IN 안 된 결과 초기화
+    sessions().forEach(s => {
+      if (!state.resultLocked[s.key]) {
+        state.results[s.key] = ['','',''];
+      }
+    });
+  }
+
   const tabKeys = ['setup','predict','result','season'];
   document.querySelectorAll('.tab').forEach((t, i) =>
     t.classList.toggle('active', tabKeys[i] === tab));
@@ -1539,6 +1564,15 @@ if (window._pendingFbData) {
   window._pendingFbData = null;
 }
 </script>
-
+<!-- 디버그 패널 (확인 후 삭제 예정) -->
+<div style="position:fixed;bottom:0;left:0;right:0;z-index:9999;background:rgba(0,0,0,0.92);border-top:1px solid #333;">
+  <div style="display:flex;justify-content:space-between;align-items:center;padding:4px 8px;">
+    <span style="font-size:9px;color:#ff6;font-family:monospace;letter-spacing:1px;">🔍 DEBUG</span>
+    <button onclick="document.getElementById('_dbgWrap').style.display=document.getElementById('_dbgWrap').style.display==='none'?'block':'none'" style="font-size:9px;background:none;border:1px solid #555;color:#aaa;padding:2px 6px;border-radius:3px;cursor:pointer;">토글</button>
+  </div>
+  <div id="_dbgWrap" style="display:block;max-height:180px;overflow-y:auto;padding:4px 8px;">
+    <pre id="_dbgPanel" style="font-size:9px;color:#0f0;font-family:monospace;margin:0;white-space:pre-wrap;word-break:break-all;"></pre>
+  </div>
+</div>
 </body>
 </html>
