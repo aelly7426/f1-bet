@@ -720,23 +720,23 @@ function editConstructors() {
 }
 
 // Ergast팀명 → 앱 팀명 매핑
-const ERGAST_MAP = {
-  'McLaren':           'McLaren Mastercard F1 Team',
-  'Mercedes':          'Mercedes-AMG Petronas F1 Team',
-  'Red Bull':          'Oracle Red Bull Racing',
-  'Ferrari':           'Scuderia Ferrari HP',
-  'Williams':          'Atlassian Williams F1 Team',
-  'RB F1 Team':        'Visa Cash App Racing Bulls',
-  'Racing Bulls':      'Visa Cash App Racing Bulls',
-  'Aston Martin':      'Aston Martin Aramco F1 Team',
-  'Haas F1 Team':      'MoneyGram Haas F1 Team',
-  'Haas':              'MoneyGram Haas F1 Team',
-  'Sauber':            'Audi Revolut F1 Team',
-  'Kick Sauber':       'Audi Revolut F1 Team',
-  'Audi':              'Audi Revolut F1 Team',
-  'Alpine F1 Team':    'BWT Alpine F1 Team',
-  'Alpine':            'BWT Alpine F1 Team',
-  'Cadillac':          'Cadillac F1 Team',
+// OpenF1 team_name → 앱 내 팀 이름 매핑
+const OPENF1_MAP = {
+  'McLaren':        'McLaren Mastercard F1 Team',
+  'Mercedes':       'Mercedes-AMG Petronas F1 Team',
+  'Red Bull Racing':'Oracle Red Bull Racing',
+  'Ferrari':        'Scuderia Ferrari HP',
+  'Williams':       'Atlassian Williams F1 Team',
+  'RB':             'Visa Cash App Racing Bulls',
+  'Racing Bulls':   'Visa Cash App Racing Bulls',
+  'Aston Martin':   'Aston Martin Aramco F1 Team',
+  'Haas F1 Team':   'MoneyGram Haas F1 Team',
+  'Haas':           'MoneyGram Haas F1 Team',
+  'Sauber':         'Audi Revolut F1 Team',
+  'Kick Sauber':    'Audi Revolut F1 Team',
+  'Audi':           'Audi Revolut F1 Team',
+  'Alpine':         'BWT Alpine F1 Team',
+  'Cadillac':       'Cadillac F1 Team',
 };
 
 async function fetchStandings() {
@@ -744,25 +744,35 @@ async function fetchStandings() {
   const status = document.getElementById('fetchStatus');
   btn.disabled = true; btn.textContent = '⏳ Fetching...'; status.textContent = '';
   try {
-    // 2026 시즌 컨스트럭터 순위 (시즌 중엔 실시간, 시즌 전엔 이전 시즌)
-    const res = await fetch('https://api.jolpi.ca/ergast/f1/2025/constructorstandings.json');
+    // OpenF1 API: 최신 레이스 세션의 팀 챔피언십 순위
+    const res = await fetch('https://api.openf1.org/v1/championship_teams?session_key=latest');
     if (!res.ok) throw new Error('Network error');
     const data = await res.json();
-    const standings = data?.MRData?.StandingsTable?.StandingsLists?.[0]?.ConstructorStandings;
-    if (!standings || !standings.length) throw new Error('데이터를 찾을 수 없어요');
+    if (!data || !data.length) throw new Error('데이터를 찾을 수 없어요');
+
+    // position_current 기준 오름차순 정렬
+    data.sort((a, b) => a.position_current - b.position_current);
 
     const ordered = [];
-    for (const s of standings) {
-      const mapped = ERGAST_MAP[s.Constructor.name] || null;
+    for (const s of data) {
+      // team_name에서 부분 매칭
+      const rawName = s.team_name || '';
+      let mapped = OPENF1_MAP[rawName] || null;
+      // 직접 매칭 안 되면 부분 문자열로 시도
+      if (!mapped) {
+        for (const [key, val] of Object.entries(OPENF1_MAP)) {
+          if (rawName.includes(key) || key.includes(rawName)) { mapped = val; break; }
+        }
+      }
       if (mapped && !ordered.includes(mapped)) ordered.push(mapped);
     }
-    // 매핑 안 된 팀(Cadillac 등)은 뒤에 추가
+
+    // 매핑 안 된 팀은 기존 순서 유지하며 뒤에 추가
     DEFAULT_CONSTRUCTORS.forEach(t => { if (!ordered.includes(t)) ordered.push(t); });
-    const final11 = ordered.slice(0, 11);
-    state.constructors = final11;
+    state.constructors = ordered.slice(0, 11);
     renderConstructors();
     if (window.fbSave) window.fbSave();
-    status.innerHTML = '<span style="color:#00c864">✅ Updated!</span>';
+    status.innerHTML = '<span style="color:#00c864">✅ Updated! (via OpenF1)</span>';
     btn.disabled = false; btn.textContent = 'Update Constructor Standings';
   } catch(e) {
     status.innerHTML = `<span style="color:#ff6b6b">❌ ${e.message}</span>`;
