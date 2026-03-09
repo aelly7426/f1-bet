@@ -118,7 +118,9 @@
   /* CURRENT ROUND BADGE */
   .round-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(225,6,0,0.08);border:1px solid rgba(225,6,0,0.25);border-radius:20px;padding:5px 16px;font-family:'Orbitron',sans-serif;font-size:clamp(9px,1.3vw,11px);letter-spacing:1.5px;color:rgba(255,255,255,0.7);}
   .round-badge strong{color:#fff;font-weight:700;}
-  .round-badge .sprint-tag{font-size:9px;padding:2px 7px;border-radius:10px;background:rgba(255,128,0,0.2);color:#FF8000;border:1px solid rgba(255,128,0,0.3);}
+  .round-badge .gp-tag{font-size:9px;padding:2px 7px;border-radius:10px;background:rgba(0,200,100,0.15);color:#00c864;border:1px solid rgba(0,200,100,0.35);letter-spacing:1px;}
+  .round-badge .sprint-tag{font-size:9px;padding:2px 7px;border-radius:10px;background:rgba(255,128,0,0.2);color:#FF8000;border:1px solid rgba(255,128,0,0.3);letter-spacing:1px;}
+  .round-badge .sprint-tag.inactive{background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.25);border:1px solid rgba(255,255,255,0.1);}
 
   /* SELECT PLACEHOLDER */
   select.has-placeholder{border-color:rgba(225,6,0,0.35);color:rgba(255,255,255,0.4);}
@@ -1406,6 +1408,12 @@ function renderSeason() {
 
   // ── Per-round history cards ──
   const lastName = d => d ? d.trim().split(' ').pop().slice(0,3).toUpperCase() : d;
+  const sessEmoji = { quali: '⏱', sq: '⏱', race: '🏁', sprint: '🏁' };
+  const fmtLabel = s => {
+    const base = s.label.replace(/[⏱🏁]/gu, '').trim();
+    const emoji = sessEmoji[s.key] || '';
+    return emoji ? `${base} ${emoji}` : base;
+  };
 
   const roundCards = [...seasonLog].reverse().map(entry => {
     const sessionRows = entry.sessions.map(s => {
@@ -1430,7 +1438,7 @@ function renderSeason() {
       return `
       <div class="sn-sess-block">
         <div class="sess-head">
-          <span class="sess-label">${s.label}</span>
+          <span class="sess-label">${fmtLabel(s)}</span>
           <span style="font-size:11px;color:var(--muted)">RESULT: <strong style="color:#fff">${actualStr}</strong></span>
         </div>
         ${pickRows}
@@ -1502,8 +1510,9 @@ function renderCurrentRoundBadge() {
   const el = document.getElementById('currentRoundBadge');
   if (!el) return;
   if (!state.raceName) { el.style.visibility = 'hidden'; return; }
-  const sprintTag = state.weekendType === 'sprint'
-    ? `<span class="sprint-tag">SPRINT</span>` : '';
+  const isSprint = state.weekendType === 'sprint';
+  const gpTag = `<span class="gp-tag">GRAND PRIX</span>`;
+  const sprintTag = `<span class="sprint-tag${isSprint ? '' : ' inactive'}">SPRINT</span>`;
   const roundObj = ROUNDS.find(r => state.raceName.includes(r.name));
 
   // Windows PC는 국기 이모지를 지원 안 함 → 약어 배지로 대체
@@ -1533,7 +1542,7 @@ function renderCurrentRoundBadge() {
       displayName = state.raceName.replace(roundObj.name, roundObj.flag + ' ' + roundObj.name);
     }
   }
-  el.innerHTML = `<span class="round-badge"><strong>${displayName}</strong>${sprintTag}</span>`;
+  el.innerHTML = `<span class="round-badge"><strong>${displayName}</strong>${gpTag}${sprintTag}</span>`;
   el.style.visibility = 'visible';
 }
 
