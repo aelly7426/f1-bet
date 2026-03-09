@@ -1564,15 +1564,6 @@ if (window._pendingFbData) {
   window._pendingFbData = null;
 }
 </script>
-<!-- 디버그 패널 (확인 후 삭제 예정) -->
-<div style="position:fixed;bottom:0;left:0;right:0;z-index:9999;background:rgba(0,0,0,0.92);border-top:1px solid #333;">
-  <div style="display:flex;justify-content:space-between;align-items:center;padding:4px 8px;">
-    <span style="font-size:9px;color:#ff6;font-family:monospace;letter-spacing:1px;">🔍 DEBUG</span>
-    <button onclick="document.getElementById('_dbgWrap').style.display=document.getElementById('_dbgWrap').style.display==='none'?'block':'none'" style="font-size:9px;background:none;border:1px solid #555;color:#aaa;padding:2px 6px;border-radius:3px;cursor:pointer;">토글</button>
-  </div>
-  <div id="_dbgWrap" style="display:block;max-height:180px;overflow-y:auto;padding:4px 8px;">
-    <pre id="_dbgPanel" style="font-size:9px;color:#0f0;font-family:monospace;margin:0;white-space:pre-wrap;word-break:break-all;"></pre>
-  </div>
-</div>
+
 </body>
 </html>
