@@ -117,11 +117,16 @@
   .total-bar-prize{font-family:'Orbitron',sans-serif;font-size:clamp(16px,3vw,20px);font-weight:900;color:var(--red);text-shadow:0 0 16px rgba(225,6,0,0.4);}
 
   /* CURRENT ROUND BADGE */
-  .round-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(225,6,0,0.08);border:1px solid rgba(225,6,0,0.25);border-radius:20px;padding:5px 16px;font-family:'Orbitron',sans-serif;font-size:clamp(9px,1.3vw,11px);letter-spacing:1.5px;color:rgba(255,255,255,0.7);}
+  .round-badge{display:flex;align-items:center;justify-content:center;gap:8px;background:rgba(225,6,0,0.08);border:1px solid rgba(225,6,0,0.25);border-radius:20px;padding:5px 16px;font-family:'Orbitron',sans-serif;font-size:clamp(9px,1.3vw,11px);letter-spacing:1.5px;color:rgba(255,255,255,0.7);white-space:nowrap;overflow:hidden;}
   .round-badge strong{color:#fff;font-weight:700;}
   .round-badge .gp-tag{font-size:9px;padding:2px 7px;border-radius:10px;background:rgba(0,200,100,0.15);color:#00c864;border:1px solid rgba(0,200,100,0.35);letter-spacing:1px;}
   .round-badge .sprint-tag{font-size:9px;padding:2px 7px;border-radius:10px;background:rgba(255,128,0,0.2);color:#FF8000;border:1px solid rgba(255,128,0,0.3);letter-spacing:1px;}
-  .round-badge .sprint-tag.inactive{background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.25);border:1px solid rgba(255,255,255,0.1);}
+  .round-badge .sprint-tag.inactive{display:none;}
+  .round-season{font-family:'Orbitron',sans-serif;font-size:clamp(9px,1.3vw,11px);font-weight:700;letter-spacing:2px;color:rgba(255,255,255,0.45);}
+  .round-type-tag{font-family:'Orbitron',sans-serif;font-size:clamp(9px,1.3vw,10px);font-weight:900;letter-spacing:1.5px;padding:3px 7px;border-radius:6px;}
+  .round-type-tag.is-gp{color:#00c864;background:rgba(0,200,100,0.1);border:1px solid rgba(0,200,100,0.3);}
+  .round-type-tag.is-sp-active{color:#FF8000;background:rgba(255,128,0,0.1);border:1px solid rgba(255,128,0,0.3);}
+  .round-type-tag.is-sp-inactive{color:rgba(255,255,255,0.2);background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);}
 
   /* SELECT PLACEHOLDER */
   select.has-placeholder{border-color:rgba(225,6,0,0.35);color:rgba(255,255,255,0.4);}
@@ -219,7 +224,7 @@ img.emoji {
       <button class="tab" onclick="switchTab('result')">🏁 Results</button>
       <button class="tab" onclick="switchTab('season')">📈 Season</button>
     </div>
-    <div id="currentRoundBadge" style="text-align:center;margin:6px 0 clamp(12px,2vw,20px);visibility:hidden;height:36px;display:flex;align-items:center;justify-content:center;"></div>
+    <div id="currentRoundBadge" style="margin:6px 0 clamp(12px,2vw,20px);visibility:hidden;height:36px;display:grid;grid-template-columns:clamp(44px,10vw,80px) 1fr clamp(60px,14vw,110px);align-items:center;"></div>
   </div>
 
   <!-- ── SETUP ────────────────────────────────── -->
@@ -243,6 +248,17 @@ img.emoji {
       <div id="constructorInputs" style="display:flex;flex-direction:column;gap:8px;"></div>
       <div style="margin-top:14px;display:flex;gap:10px;align-items:center;" id="constructorLockRow">
         <button id="constructorLockBtn" class="btn grn" style="flex:1" onclick="lockConstructors()">🔒 Lock In</button>
+      </div>
+    </div>
+
+    <div class="card-title raceweek-title" style="margin:8px 0 10px;padding-left:4px;">SEASON 📅</div>
+    <div class="card">
+      <div class="sn-sess-block">
+        <label>Season</label>
+        <select id="seasonSelect" onchange="onSeasonChange()">
+          <option value="2026" selected>2026</option>
+          <option value="2025">2025</option>
+        </select>
       </div>
     </div>
 
@@ -426,8 +442,36 @@ const SESSIONS = {
 };
 
 // 2026 F1 Calendar — sprint rounds: 2, 6, 7, 11, 14, 18
-const SPRINT_ROUNDS = new Set([2, 6, 7, 11, 14, 18]);
-const ROUNDS = [
+const SPRINT_ROUNDS_2025 = new Set([2, 6, 12, 19, 21, 23]);
+const ROUNDS_2025 = [
+  { n:1,  name: 'Australian GP',      flag: '🇦🇺', date: '2025-03-16', fullName: 'FORMULA 1 LOUIS VUITTON AUSTRALIAN GRAND PRIX 2025' },
+  { n:2,  name: 'Chinese GP',         flag: '🇨🇳', date: '2025-03-23', fullName: 'FORMULA 1 HEINEKEN CHINESE GRAND PRIX 2025' },
+  { n:3,  name: 'Japanese GP',        flag: '🇯🇵', date: '2025-04-06', fullName: 'FORMULA 1 LENOVO JAPANESE GRAND PRIX 2025' },
+  { n:4,  name: 'Bahrain GP',         flag: '🇧🇭', date: '2025-04-13', fullName: 'FORMULA 1 GULF AIR BAHRAIN GRAND PRIX 2025' },
+  { n:5,  name: 'Saudi Arabian GP',   flag: '🇸🇦', date: '2025-04-20', fullName: 'FORMULA 1 STC SAUDI ARABIAN GRAND PRIX 2025' },
+  { n:6,  name: 'Miami GP',           flag: '🇺🇸', date: '2025-05-04', fullName: 'FORMULA 1 CRYPTO.COM MIAMI GRAND PRIX 2025' },
+  { n:7,  name: 'Emilia Romagna GP',  flag: '🇮🇹', date: '2025-05-18', fullName: 'FORMULA 1 AWS GRAN PREMIO DEL MADE IN ITALY E DELL\'EMILIA-ROMAGNA 2025' },
+  { n:8,  name: 'Monaco GP',          flag: '🇲🇨', date: '2025-05-25', fullName: 'FORMULA 1 TAG HEUER GRAND PRIX DE MONACO 2025' },
+  { n:9,  name: 'Spanish GP',         flag: '🇪🇸', date: '2025-06-01', fullName: 'FORMULA 1 ARAMCO GRAN PREMIO DE ESPAÑA 2025' },
+  { n:10, name: 'Canadian GP',        flag: '🇨🇦', date: '2025-06-15', fullName: 'FORMULA 1 PIRELLI GRAND PRIX DU CANADA 2025' },
+  { n:11, name: 'Austrian GP',        flag: '🇦🇹', date: '2025-06-29', fullName: 'FORMULA 1 LENOVO AUSTRIAN GRAND PRIX 2025' },
+  { n:12, name: 'British GP',         flag: '🇬🇧', date: '2025-07-06', fullName: 'FORMULA 1 PIRELLI BRITISH GRAND PRIX 2025' },
+  { n:13, name: 'Belgian GP',         flag: '🇧🇪', date: '2025-07-27', fullName: 'FORMULA 1 MOËT & CHANDON BELGIAN GRAND PRIX 2025' },
+  { n:14, name: 'Hungarian GP',       flag: '🇭🇺', date: '2025-08-03', fullName: 'FORMULA 1 AWS HUNGARIAN GRAND PRIX 2025' },
+  { n:15, name: 'Dutch GP',           flag: '🇳🇱', date: '2025-08-31', fullName: 'FORMULA 1 HEINEKEN DUTCH GRAND PRIX 2025' },
+  { n:16, name: 'Italian GP',         flag: '🇮🇹', date: '2025-09-07', fullName: 'FORMULA 1 PIRELLI GRAN PREMIO D\'ITALIA 2025' },
+  { n:17, name: 'Azerbaijan GP',      flag: '🇦🇿', date: '2025-09-21', fullName: 'FORMULA 1 QATAR AIRWAYS AZERBAIJAN GRAND PRIX 2025' },
+  { n:18, name: 'Singapore GP',       flag: '🇸🇬', date: '2025-10-05', fullName: 'FORMULA 1 SINGAPORE AIRLINES SINGAPORE GRAND PRIX 2025' },
+  { n:19, name: 'United States GP',   flag: '🇺🇸', date: '2025-10-19', fullName: 'FORMULA 1 MSC CRUISES UNITED STATES GRAND PRIX 2025' },
+  { n:20, name: 'Mexico City GP',     flag: '🇲🇽', date: '2025-10-26', fullName: 'FORMULA 1 GRAN PREMIO DE LA CIUDAD DE MÉXICO 2025' },
+  { n:21, name: 'São Paulo GP',       flag: '🇧🇷', date: '2025-11-09', fullName: 'FORMULA 1 MSC CRUISES GRANDE PRÊMIO DE SÃO PAULO 2025' },
+  { n:22, name: 'Las Vegas GP',       flag: '🇺🇸', date: '2025-11-22', fullName: 'FORMULA 1 HEINEKEN LAS VEGAS GRAND PRIX 2025' },
+  { n:23, name: 'Qatar GP',           flag: '🇶🇦', date: '2025-11-30', fullName: 'FORMULA 1 QATAR AIRWAYS QATAR GRAND PRIX 2025' },
+  { n:24, name: 'Abu Dhabi GP',       flag: '🇦🇪', date: '2025-12-07', fullName: 'FORMULA 1 ETIHAD AIRWAYS ABU DHABI GRAND PRIX 2025' },
+];
+
+const SPRINT_ROUNDS_2026 = new Set([2, 6, 7, 11, 14, 18]);
+const ROUNDS_2026 = [
   { n:1,  name: 'Australian GP',     flag: '🇦🇺', date: '2026-03-06', fullName: 'FORMULA 1 QATAR AIRWAYS AUSTRALIAN GRAND PRIX 2026' },
   { n:2,  name: 'Chinese GP',        flag: '🇨🇳', date: '2026-03-13', fullName: 'FORMULA 1 HEINEKEN CHINESE GRAND PRIX 2026' },
   { n:3,  name: 'Japanese GP',       flag: '🇯🇵', date: '2026-03-27', fullName: 'FORMULA 1 ARAMCO JAPANESE GRAND PRIX 2026' },
@@ -453,6 +497,10 @@ const ROUNDS = [
   { n:23, name: 'Qatar GP',          flag: '🇶🇦', date: '2026-11-27', fullName: 'FORMULA 1 QATAR AIRWAYS QATAR GRAND PRIX 2026' },
   { n:24, name: 'Abu Dhabi GP',      flag: '🇦🇪', date: '2026-12-04', fullName: 'FORMULA 1 ETIHAD AIRWAYS ABU DHABI GRAND PRIX 2026' },
 ];
+
+// 기본값: 2026 시즌 (기존 코드 호환용 별칭)
+let ROUNDS = ROUNDS_2026;
+let SPRINT_ROUNDS = SPRINT_ROUNDS_2026;
 
 // ── State ────────────────────────────────────────────────
 const NAMES = ['ROKU', 'SEHEE', 'SEJIN'];
@@ -574,6 +622,34 @@ function syncSetupUI() {
   }
 }
 
+function onSeasonChange() {
+  const season = document.getElementById('seasonSelect').value;
+  if (season === '2025') {
+    ROUNDS = ROUNDS_2025;
+    SPRINT_ROUNDS = SPRINT_ROUNDS_2025;
+  } else {
+    ROUNDS = ROUNDS_2026;
+    SPRINT_ROUNDS = SPRINT_ROUNDS_2026;
+  }
+  // 라운드 드롭다운 다시 채우기
+  const sel = document.getElementById('roundSelect');
+  sel.innerHTML = '<option value="">Select round...</option>';
+  ROUNDS.forEach(r => {
+    const opt = document.createElement('option');
+    opt.value = r.n;
+    opt.dataset.short = `${r.n}. ${r.name}`;
+    opt.dataset.full  = `${r.n}. ${r.fullName}`;
+    opt.textContent = opt.dataset.full;
+    sel.appendChild(opt);
+  });
+  // 오버레이 초기화
+  const display = document.getElementById('roundDisplay');
+  if (display) {
+    display.textContent = 'Select round...';
+    display.style.color = 'rgba(255,255,255,0.4)';
+  }
+}
+
 function onRoundFocus(sel) {
   Array.from(sel.options).forEach(opt => {
     if (opt.dataset.short) opt.textContent = opt.dataset.short;
@@ -593,7 +669,11 @@ function onRoundChange() {
   // 선택 즉시 풀네임으로 전환
   onRoundBlur(sel);
   sel.blur();
-  if (!n) return;
+  if (!n) {
+    const el = document.getElementById('currentRoundBadge');
+    if (el) el.style.visibility = 'hidden';
+    return;
+  }
   const round = ROUNDS.find(r => r.n === n);
   const newRaceName = `Round ${n} — ${round.name}`;
 
@@ -1612,42 +1692,45 @@ function renderCurrentRoundBadge() {
   const el = document.getElementById('currentRoundBadge');
   if (!el) return;
   if (!state.raceName) { el.style.visibility = 'hidden'; return; }
-  const isSprint = state.weekendType === 'sprint';
-  const gpTag = `<span class="gp-tag">GP</span>`;
-  const sprintTag = `<span class="sprint-tag${isSprint ? '' : ' inactive'}">SPRINT</span>`;
-  const roundObj = ROUNDS.find(r => state.raceName.includes(r.name));
 
-  // Windows PC는 국기 이모지를 지원 안 함 → 약어 배지로 대체
-  // 모바일(iOS/Android)은 이모지 그대로 표시
+  const isSprint = state.weekendType === 'sprint';
+  const roundObj = ROUNDS.find(r => state.raceName.includes(r.name));
+  const season = document.getElementById('seasonSelect')?.value || '2026';
+
   const isWindows = /Windows/i.test(navigator.userAgent);
   const COUNTRY_CODE = {
     'Australian GP':'AU','Chinese GP':'CN','Japanese GP':'JP','Bahrain GP':'BH',
-    'Saudi Arabian GP':'SA','Miami GP':'US','Canadian GP':'CA','Monaco GP':'MC',
-    'Spanish GP':'ES','Austrian GP':'AT','British GP':'GB',
+    'Saudi Arabian GP':'SA','Miami GP':'US','Emilia Romagna GP':'IT','Canadian GP':'CA',
+    'Monaco GP':'MC','Spanish GP':'ES','Austrian GP':'AT','British GP':'GB',
     'Belgian GP':'BE','Hungarian GP':'HU','Dutch GP':'NL','Italian GP':'IT',
     'Madrid GP':'ES','Azerbaijan GP':'AZ','Singapore GP':'SG','United States GP':'US',
     'Mexico City GP':'MX','São Paulo GP':'BR','Las Vegas GP':'US',
     'Qatar GP':'QA','Abu Dhabi GP':'AE'
   };
 
-  let displayName = state.raceName;
+  let centerText = state.raceName;
   if (roundObj) {
     if (isWindows) {
-      // PC: 약어 배지
       const code = COUNTRY_CODE[roundObj.name] || '';
-      const codeTag = code
-        ? `<span style="font-family:'Orbitron',sans-serif;font-size:9px;font-weight:900;letter-spacing:1px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);border-radius:3px;padding:2px 5px;color:#fff;">${code}</span>`
-        : '';
-      displayName = state.raceName.replace(roundObj.name, codeTag ? codeTag + ' ' + roundObj.name : roundObj.name);
+      const codeTag = code ? `<span style="font-size:9px;font-weight:900;letter-spacing:1px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);border-radius:3px;padding:2px 5px;color:#fff;">${code}</span> ` : '';
+      centerText = codeTag + state.raceName;
     } else {
-      // 모바일: 국기 이모지
-      displayName = state.raceName.replace(roundObj.name, roundObj.flag + ' ' + roundObj.name);
+      centerText = roundObj.flag + ' ' + state.raceName;
     }
   }
-  el.innerHTML = `<span class="round-badge"><strong>${displayName}</strong>${gpTag}${sprintTag}</span>`;
+
+  const gpTag   = `<span class="round-type-tag is-gp">GP</span>`;
+  const spTag   = isSprint
+    ? `<span class="round-type-tag is-sp-active">SP</span>`
+    : `<span class="round-type-tag is-sp-inactive">SP</span>`;
+
+  el.innerHTML = `
+    <span class="round-season">${season}</span>
+    <span class="round-badge"><strong>${centerText}</strong></span>
+    <span style="display:flex;justify-content:flex-end;gap:4px;">${gpTag}${spTag}</span>
+  `;
   el.style.visibility = 'visible';
 }
-
 function renderActiveTab() {
   renderCurrentRoundBadge();
   const tabKeys = ['setup','predict','result','season'];
