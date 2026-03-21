@@ -15,7 +15,7 @@
     --border:rgba(225,6,0,0.3); --text:#f0f0f0; --muted:#888;
   }
   *{margin:0;padding:0;box-sizing:border-box;}
-  html{font-size:clamp(13px,1.8vw,16px);}
+  html{font-size:clamp(12px,2.2vw,15px);}
   body{font-family:'Exo 2',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;}
   body::before{content:'';position:fixed;inset:0;
     background-image:linear-gradient(rgba(225,6,0,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(225,6,0,0.03) 1px,transparent 1px);
@@ -33,7 +33,7 @@
   /* TABS */
   .tabs-sticky{position:sticky;top:0;z-index:100;background:var(--bg);padding-top:8px;}
   .tabs{display:flex;gap:4px;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:4px;margin-bottom:0;}
-  .tab{flex:1;padding:clamp(7px,1.5vw,10px) clamp(4px,1vw,10px);border:none;background:transparent;color:#d8d8d8;font-family:'Orbitron',sans-serif;font-size:clamp(8.8px,1.32vw,12.1px);letter-spacing:clamp(0.5px,0.2vw,1.5px);text-transform:uppercase;cursor:pointer;border-radius:6px;transition:all .2s;}
+  .tab{flex:1;padding:clamp(7px,1.5vw,10px) clamp(4px,1vw,10px);border:none;background:transparent;color:#d8d8d8;font-family:'Orbitron',sans-serif;font-size:clamp(9px,1.4vw,11.5px);letter-spacing:clamp(0.5px,0.2vw,1.5px);text-transform:uppercase;cursor:pointer;border-radius:6px;transition:all .2s;}
   .tab.active{background:var(--red);color:#fff;box-shadow:0 0 16px rgba(225,6,0,0.4);}
   .tab:hover:not(.active){color:#fff;background:rgba(255,255,255,0.05);}
   .section{display:none;} .section.active{display:block;}
@@ -42,18 +42,18 @@
   .card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:clamp(14px,3vw,24px);margin-bottom:clamp(12px,2vw,20px);position:relative;overflow:hidden;}
   .card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--red),transparent);}
   .pred-card::before{display:none;}
-  .card-title{font-family:'Orbitron',sans-serif;font-size:clamp(10px,1.5vw,12px);letter-spacing:2px;color:var(--red);text-transform:uppercase;margin-bottom:clamp(12px,2vw,18px);}
+  .card-title{font-family:'Orbitron',sans-serif;font-size:clamp(9px,1.4vw,11px);letter-spacing:2px;color:var(--red);text-transform:uppercase;margin-bottom:clamp(12px,2vw,18px);}
 
   /* FORM */
   .form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
   @media(max-width:500px){.form-row{grid-template-columns:1fr;}}
-  label{display:block;font-size:clamp(10px,1.3vw,11px);letter-spacing:1.5px;color:var(--muted);text-transform:uppercase;margin-bottom:6px;}
-  input,select{width:100%;background:var(--surface2);border:1px solid rgba(255,255,255,0.1);border-radius:6px;padding:clamp(8px,1.5vw,10px) clamp(10px,2vw,14px);color:var(--text);font-family:'Exo 2',sans-serif;font-size:clamp(13px,1.8vw,14px);transition:border-color .2s;appearance:none;}
+  label{display:block;font-size:clamp(9px,1.3vw,10.5px);letter-spacing:1.5px;color:var(--muted);text-transform:uppercase;margin-bottom:6px;}
+  input,select{width:100%;background:var(--surface2);border:1px solid rgba(255,255,255,0.1);border-radius:6px;padding:clamp(8px,1.5vw,10px) clamp(10px,2vw,14px);color:var(--text);font-family:'Exo 2',sans-serif;font-size:clamp(12px,1.8vw,13.5px);transition:border-color .2s;appearance:none;}
   input:focus,select:focus{outline:none;border-color:var(--red);box-shadow:0 0 0 2px rgba(225,6,0,0.15);}
-  select option{background:#1a1a26;}
+  select option{background:#1a1a26;color:#f0f0f0;}
 
   /* BUTTONS */
-  .btn{width:100%;padding:clamp(10px,2vw,14px);background:var(--red);border:none;border-radius:8px;color:#fff;font-family:'Orbitron',sans-serif;font-size:clamp(10px,1.5vw,13px);letter-spacing:clamp(1px,0.3vw,2px);text-transform:uppercase;cursor:pointer;transition:all .2s;box-shadow:0 4px 20px rgba(225,6,0,0.3);}
+  .btn{width:100%;padding:clamp(10px,2vw,14px);background:var(--red);border:none;border-radius:8px;color:#fff;font-family:'Orbitron',sans-serif;font-size:clamp(9px,1.4vw,11.5px);letter-spacing:clamp(0.5px,0.2vw,1.5px);text-transform:uppercase;cursor:pointer;transition:all .2s;box-shadow:0 4px 20px rgba(225,6,0,0.3);}
   .btn:hover{background:#ff1a00;box-shadow:0 4px 28px rgba(225,6,0,0.5);transform:translateY(-1px);}
   .btn:active{transform:translateY(0);}
   .btn.sec{background:transparent;border:1px solid var(--border);box-shadow:none;color:var(--muted);}
@@ -72,7 +72,7 @@
 
   /* SESSION SUB-HEADER */
   .sess-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,0.07);}
-  .sess-label{font-family:'Orbitron',sans-serif;font-size:clamp(13px,2vw,16px);letter-spacing:2px;color:rgba(255,255,255,0.85);text-transform:uppercase;}
+  .sess-label{font-family:'Orbitron',sans-serif;font-size:clamp(10px,1.6vw,13px);letter-spacing:2px;color:rgba(255,255,255,0.85);text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
   .sess-mult{font-size:clamp(9px,1.2vw,10px);padding:2px 9px;border-radius:4px;background:rgba(225,6,0,0.1);color:var(--red);border:1px solid rgba(225,6,0,0.25);font-family:'Orbitron',sans-serif;}
   .sess-block{margin-bottom:clamp(12px,2vw,18px);}
   .sess-block:last-child{margin-bottom:0;}
@@ -98,16 +98,16 @@
   .score-row.winner::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(255,215,0,0.05),transparent);pointer-events:none;}
   .score-row.second{border-color:var(--silver);}
   .score-row.third{border-color:var(--bronze);}
-  .score-rank{font-family:'Orbitron',sans-serif;font-size:clamp(14px,2vw,18px);font-weight:900;width:28px;text-align:center;flex-shrink:0;}
-  .score-name{font-weight:700;font-size:clamp(11px,1.8vw,14px);font-family:'Orbitron',sans-serif;letter-spacing:clamp(1px,0.2vw,1.5px);width:clamp(44px,7vw,70px);flex-shrink:0;white-space:nowrap;}
+  .score-rank{font-family:'Orbitron',sans-serif;font-size:clamp(10px,2.2vw,20px);font-weight:900;width:28px;text-align:center;flex-shrink:0;}
+  .score-name{font-weight:700;font-size:clamp(9px,2vw,15px);font-family:'Orbitron',sans-serif;letter-spacing:clamp(1px,0.2vw,1.5px);width:clamp(44px,7vw,70px);flex-shrink:0;white-space:nowrap;}
   .score-breakdown{flex:1;display:flex;flex-direction:column;gap:5px;min-width:0;overflow:hidden;}
-  .sess-breakdown-line{display:flex;flex-wrap:nowrap;gap:4px;align-items:center;justify-content:flex-end;}
-  .sess-breakdown-label{font-size:clamp(9px,1.2vw,10px);color:var(--muted);width:clamp(52px,8vw,72px);flex-shrink:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-right:2px;}
-  .hit-badge{font-size:clamp(8px,1.1vw,9px);padding:2px 8px;border-radius:3px;font-family:'Orbitron',sans-serif;white-space:nowrap;}
+  .sess-breakdown-line{display:flex;flex-wrap:nowrap;gap:clamp(4px,0.6vw,8px);align-items:center;justify-content:flex-end;}
+  .sess-breakdown-label{font-size:clamp(10px,1.8vw,18px);color:#fff;width:clamp(60px,11vw,120px);flex-shrink:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-right:4px;padding-left:clamp(6px,1vw,12px);}
+  .hit-badge{font-size:clamp(10px,1.8vw,18px);padding:2px;line-height:1;border-radius:3px;font-family:'Orbitron',sans-serif;white-space:nowrap;display:inline-flex;align-items:center;}
   .hit-badge.hit{background:rgba(0,200,100,0.15);color:#00c864;border:1px solid rgba(0,200,100,0.3);}
   .hit-badge.miss{background:rgba(255,255,255,0.04);color:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.07);}
   .sess-pts{font-size:clamp(9px,1.2vw,10px);color:rgba(255,255,255,0.3);white-space:nowrap;}
-  .score-prize{font-family:'Orbitron',sans-serif;font-size:clamp(11px,1.8vw,13px);font-weight:700;text-align:right;min-width:clamp(56px,10vw,76px);}
+  .score-prize{font-family:'Orbitron',sans-serif;font-size:clamp(9px,2vw,15px);font-weight:700;text-align:right;min-width:clamp(50px,9vw,80px);}
   .score-row.winner .score-prize{color:var(--gold);}
   .score-row.second .score-prize{color:var(--silver);}
   .score-row.third .score-prize{color:var(--bronze);}
@@ -115,16 +115,16 @@
   /* TOTAL BAR */
   .total-bar{background:linear-gradient(135deg,rgba(225,6,0,0.12),rgba(225,6,0,0.04));border:1px solid rgba(225,6,0,0.3);border-radius:10px;padding:clamp(12px,2vw,16px) clamp(14px,3vw,22px);margin-top:10px;display:flex;justify-content:space-between;align-items:center;}
   .total-bar-label{font-family:'Orbitron',sans-serif;font-size:clamp(9px,1.2vw,10px);letter-spacing:2px;color:var(--muted);}
-  .total-bar-prize{font-family:'Orbitron',sans-serif;font-size:clamp(16px,3vw,20px);font-weight:900;color:var(--red);text-shadow:0 0 16px rgba(225,6,0,0.4);}
+  .total-bar-prize{font-family:'Orbitron',sans-serif;font-size:clamp(14px,2.5vw,17px);font-weight:900;color:var(--red);text-shadow:0 0 16px rgba(225,6,0,0.4);}
 
   /* CURRENT ROUND BADGE */
-  .round-badge{display:flex;align-items:center;justify-content:center;gap:8px;background:rgba(225,6,0,0.08);border:1px solid rgba(225,6,0,0.25);border-radius:20px;padding:5px 12px;font-family:'Orbitron',sans-serif;font-size:clamp(9px,1.3vw,11px);letter-spacing:1.5px;color:rgba(255,255,255,0.7);min-width:0;overflow:hidden;}
-  .round-badge strong{color:#fff;font-weight:700;white-space:nowrap;min-width:0;}
+  .round-badge{display:flex;align-items:center;justify-content:center;gap:4px;background:rgba(225,6,0,0.08);border:1px solid rgba(225,6,0,0.25);border-radius:20px;padding:5px 8px;font-family:'Orbitron',sans-serif;font-size:clamp(8px,1.3vw,11px);letter-spacing:1px;color:rgba(255,255,255,0.7);min-width:0;overflow:hidden;width:100%;}
+  .round-badge strong{color:#fff;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;max-width:100%;display:block;text-align:center;}
   .round-badge .gp-tag{font-size:9px;padding:2px 7px;border-radius:10px;background:rgba(0,200,100,0.15);color:#00c864;border:1px solid rgba(0,200,100,0.35);letter-spacing:1px;}
   .round-badge .sprint-tag{font-size:9px;padding:2px 7px;border-radius:10px;background:rgba(255,128,0,0.2);color:#FF8000;border:1px solid rgba(255,128,0,0.3);letter-spacing:1px;}
   .round-badge .sprint-tag.inactive{display:none;}
-  .round-season{font-family:'Orbitron',sans-serif;font-size:clamp(9px,1.3vw,11px);font-weight:700;letter-spacing:2px;color:rgba(255,255,255,0.45);}
-  .round-type-tag{font-family:'Orbitron',sans-serif;font-size:clamp(9px,1.3vw,10px);font-weight:900;letter-spacing:1.5px;padding:3px 7px;border-radius:6px;}
+  .round-season{font-family:'Orbitron',sans-serif;font-size:clamp(11px,1.8vw,16px);font-weight:700;letter-spacing:2px;color:rgba(255,255,255,0.45);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .round-type-tag{font-family:'Orbitron',sans-serif;font-size:clamp(9px,1.3vw,10px);font-weight:900;letter-spacing:1.5px;padding:3px 7px;border-radius:6px;white-space:nowrap;}
   .round-type-tag.is-gp{color:#00c864;background:rgba(0,200,100,0.1);border:1px solid rgba(0,200,100,0.3);}
   .round-type-tag.is-sp-active{color:#FF8000;background:rgba(255,128,0,0.1);border:1px solid rgba(255,128,0,0.3);}
   .round-type-tag.is-sp-inactive{color:rgba(255,255,255,0.2);background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);}
@@ -143,30 +143,30 @@
   .sl-bot.green{background:#00c864;box-shadow:0 0 8px #00c864,0 0 16px rgba(0,200,100,0.4);}
 
   /* NOTICE */
-  .notice{background:rgba(225,6,0,0.08);border:1px solid rgba(225,6,0,0.2);border-radius:8px;padding:clamp(10px,2vw,12px) clamp(12px,2.5vw,16px);font-size:clamp(11px,1.5vw,12px);color:rgba(255,150,150,0.9);margin-bottom:16px;line-height:1.5;}
+  .notice{background:rgba(225,6,0,0.08);border:1px solid rgba(225,6,0,0.2);border-radius:8px;padding:clamp(10px,2vw,12px) clamp(12px,2.5vw,16px);font-size:clamp(10px,1.4vw,11.5px);color:rgba(255,150,150,0.9);margin-bottom:16px;line-height:1.5;}
 
   /* PC 넓은 화면 */
 
   /* Season tab */
   .sn-cum-row{display:flex;align-items:center;gap:14px;background:var(--surface2);border:1px solid rgba(255,255,255,0.07);border-radius:8px;padding:16px 20px;}
-  .sn-cum-emoji{font-size:20px;}
-  .sn-cum-name{font-family:'Orbitron',sans-serif;font-size:18px;font-weight:900;letter-spacing:3px;flex:1;}
-  .sn-cum-amount{font-family:'Orbitron',sans-serif;font-size:18px;font-weight:700;}
+  .sn-cum-emoji{font-size:clamp(14px,2vw,18px);}
+  .sn-cum-name{font-family:'Orbitron',sans-serif;font-size:clamp(12px,2vw,15px);font-weight:900;letter-spacing:clamp(1px,0.4vw,2.5px);flex:1;}
+  .sn-cum-amount{font-family:'Orbitron',sans-serif;font-size:clamp(12px,2vw,15px);font-weight:700;}
   .sn-cum-amount.pos{color:#00c864;} .sn-cum-amount.neg{color:var(--red);} .sn-cum-amount.zero{color:var(--muted);}
   .sn-cum-list{display:flex;flex-direction:column;gap:8px;}
   .sn-round-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;flex-wrap:wrap;gap:8px;}
   .sn-round-badge{display:none;font-size:10px;padding:3px 10px;border-radius:4px;background:rgba(225,6,0,0.1);color:var(--red);border:1px solid rgba(225,6,0,0.2);font-family:'Orbitron',sans-serif;}
-  .sn-pick-row{display:flex;gap:8px;align-items:center;font-size:12px;padding:4px 0;border-bottom:1px solid rgba(255,255,255,0.04);}
+  .sn-pick-row{display:flex;gap:8px;align-items:center;font-size:clamp(10px,1.5vw,12px);padding:4px 0;border-bottom:1px solid rgba(255,255,255,0.04);}
   .sn-pick-name{font-family:'Orbitron',sans-serif;font-weight:700;color:#fff;min-width:50px;}
   .sn-pick-picks{color:var(--muted);flex:1;display:flex;gap:0;justify-content:center;}
   .sn-pick-p{display:inline-block;width:23.33%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-  .sn-pick-pts{font-family:'Orbitron',sans-serif;font-size:11px;color:rgba(255,255,255,0.5);min-width:32px;text-align:right;}
+  .sn-pick-pts{font-family:'Orbitron',sans-serif;font-size:clamp(9px,1.3vw,11px);color:rgba(255,255,255,0.5);width:clamp(40px,7vw,52px);min-width:52px;flex-shrink:0;text-align:right;white-space:nowrap;}
   .sn-net-bar{margin-top:8px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.07);display:flex;flex-direction:column;gap:6px;}
   .sn-net-label{font-size:10px;color:var(--muted);font-family:'Orbitron',sans-serif;letter-spacing:1px;margin-bottom:2px;}
   .sn-net-row{display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:1px solid rgba(255,255,255,0.04);}
   .sn-net-row:last-child{border-bottom:none;}
-  .sn-net-player{font-family:'Orbitron',sans-serif;font-size:11px;color:#fff;font-weight:700;}
-  .sn-net-amount{font-family:'Orbitron',sans-serif;font-size:12px;}
+  .sn-net-player{font-family:'Orbitron',sans-serif;font-size:clamp(9px,1.4vw,11px);color:#fff;font-weight:700;}
+  .sn-net-amount{font-family:'Orbitron',sans-serif;font-size:clamp(10px,1.5vw,12px);}
   .sn-net-sep{display:none;}
   .sn-sess-block{margin-bottom:14px;}
   .sn-net-amount.pos{color:#00c864;} .sn-net-amount.neg{color:var(--red);} .sn-net-amount.zero{color:var(--muted);}
@@ -183,8 +183,8 @@
 .fetch-btn { width: auto; font-size: 10.5px; }
 
 /* Constructor Standings 카드 제목 & RACEWEEK - 버튼 높이에 맞게 */
-.constructor-title { font-size: clamp(13px, 2vw, 17px) !important; line-height: 1.4; }
-.raceweek-title    { font-size: clamp(13px, 2vw, 17px) !important; letter-spacing: 3px; }
+.constructor-title { font-size: clamp(11px, 1.8vw, 14px) !important; line-height: 1.4; }
+.raceweek-title    { font-size: clamp(11px, 1.8vw, 14px) !important; letter-spacing: 3px; }
 
 /* Twemoji 국기 이미지 크기 - 전역 적용 */
 img.emoji {
@@ -225,7 +225,7 @@ img.emoji {
       <button class="tab" onclick="switchTab('result')">🏁 Results</button>
       <button class="tab" onclick="switchTab('season')">📈 Season</button>
     </div>
-    <div id="currentRoundBadge" style="margin:6px 0 clamp(12px,2vw,20px);visibility:hidden;height:36px;display:grid;grid-template-columns:clamp(32px,7vw,60px) 1fr clamp(68px,18vw,110px);align-items:center;gap:4px;min-width:0;"></div>
+    <div id="currentRoundBadge" style="margin:6px 0 clamp(12px,2vw,20px);visibility:hidden;height:36px;display:grid;grid-template-columns:1fr 2fr 1fr;align-items:center;gap:4px;min-width:0;overflow:hidden;"></div>
   </div>
 
   <!-- ── SETUP ────────────────────────────────── -->
@@ -307,6 +307,8 @@ img.emoji {
   // Firebase 저장 (debounce 300ms)
   let _saveTimer = null;
   window.fbSave = function() {
+    // 시즌 전환 중에는 저장 금지 (빈 state 덮어쓰기 방지)
+    if (window._seasonSwitching) return;
     clearTimeout(_saveTimer);
     const ts = Date.now();
     window._lastSavedTs = ts;
@@ -343,22 +345,28 @@ img.emoji {
   let _unsubscribeFb = null;
 
   // Firebase 모듈 전역 노출 (resetFirebase에서 사용)
-  window._fbModules = { getDatabase, ref, remove };
+  window._fbModules = { getDatabase, ref, remove, set };
 
   window.fbSubscribe = function(season) {
     if (_unsubscribeFb) { _unsubscribeFb(); _unsubscribeFb = null; }
     const path = 'f1bet/' + season;
+    // 현재 구독 시즌을 전역에 저장 — applyFbData에서 올바른 키셋 사용
+    window._subscribedSeason = season;
+    // 구독 시작 시점을 기록 — 이 이후 수신된 데이터는 반드시 복원
+    const subscribeTime = Date.now();
     _unsubscribeFb = onValue(ref(db, path), (snapshot) => {
       const data = snapshot.val();
-      if (!data) { window.setFbStatus('🟢 연결됨 (데이터 없음)'); return; }
-      if (data.ts && data.ts === window._lastSavedTs) {
+      if (!data) { window._seasonSwitching = false; window.setFbStatus('🟢 연결됨 (데이터 없음)'); return; }
+      // ts가 같아도 구독 시작 이후 첫 수신이면 반드시 복원 (시즌 전환 후 복원 보장)
+      const isFirstReceive = snapshot._firstReceive || (data.ts && data.ts <= subscribeTime + 5000);
+      if (data.ts && data.ts === window._lastSavedTs && !window._seasonSwitching) {
         window.setFbStatus('🟢 실시간 연결됨');
         return;
       }
 
       // 메인 스크립트가 초기화됐으면 바로 처리, 아니면 pending에 저장
       if (window.applyFbData) {
-        window.applyFbData(data);
+        window.applyFbData(data, season);
       } else {
         window._pendingFbData = data;
       }
@@ -385,6 +393,14 @@ img.emoji {
     }
   };
   window.setFbStatus('🔄 연결 중...');
+
+  // 오염된 seasonLog를 받았을 때 Firebase에 직접 재저장 (모듈 스코프 내 set 직접 사용)
+  window.fbCleanAndSave = function(season, cleanedData) {
+    const path = 'f1bet/' + season;
+    set(ref(db, path), cleanedData)
+      .then(() => console.log('[DEBUG] Firebase 재저장 완료 — 오염 데이터 제거됨'))
+      .catch(e => console.error('[DEBUG] 재저장 실패', e));
+  };
 </script>
 
 <script>
@@ -605,8 +621,8 @@ const CONSTRUCTORS_2025 = [
 ];
 
 // ── 2026 시즌 드라이버 & 컨스트럭터 (기존 데이터 별칭) ────────
-const DRIVER_NUM_2026 = DRIVER_NUM;
-const DRIVER_TEAM_2026 = DRIVER_TEAM;
+const DRIVER_NUM_2026 = Object.assign({}, DRIVER_NUM);
+const DRIVER_TEAM_2026 = Object.assign({}, DRIVER_TEAM);
 const CONSTRUCTORS_2026 = [...DEFAULT_CONSTRUCTORS]; // 독립 복사본 (참조 공유 방지)
 
 // ── 2025 시즌 사전 데이터 ─────────────────────────────────
@@ -3849,7 +3865,7 @@ function driverOpts(selected = '', excluded = []) {
   return `<option value="" style="color:#555;font-style:italic;">${selected ? 'Select driver' : '— Select driver —'}</option>` +
     driverList.map(d => {
       const isExcluded = excluded.includes(d) && d !== selected;
-      return `<option value="${d}"${d === selected ? ' selected' : ''}${isExcluded ? ' disabled style="color:#444"' : ''}>${DRIVER_NUM[d]}. ${d}</option>`;
+      return `<option value="${d}"${d === selected ? ' selected' : ''}${isExcluded ? ' disabled style="color:#444;background:#1a1a26"' : ' style="color:#f0f0f0;background:#1a1a26"'}>${DRIVER_NUM[d]}. ${d}</option>`;
     }).join('');
 }
 
@@ -3956,13 +3972,19 @@ function onSeasonChange() {
   state.results           = {};
   state.resultLocked      = {};
 
+  // 시즌 전환 중 fbSave 차단 (빈 state가 Firebase에 저장되는 것 방지)
+  window._seasonSwitching = true;
+  // seasonLog도 초기화 — 새 시즌 Firebase 데이터 수신 전까지 빈 상태 유지
+  window._seasonLog = [];
+  seasonLog = [];
+
   // UI 전체 갱신
   renderConstructors();
   renderPredict();
   renderResult();
   renderCurrentRoundBadge();
 
-  // Firebase 구독 경로 전환 (시즌별 분리)
+  // Firebase 구독 경로 전환 (시즌별 분리) — 수신 후 _seasonSwitching 해제됨
   if (window.fbSubscribe) window.fbSubscribe(season);
 }
 
@@ -4476,14 +4498,14 @@ function renderResult() {
     return `
     <div class="card" id="sess-card-${s.key}" style="border-color:${locked ? 'rgba(0,200,100,0.4)' : 'var(--border)'};border-width:${locked ? '2px' : '1px'};padding:0;overflow:hidden;">
       <style>#sess-card-${s.key}::before{display:none;}</style>
-      <div style="display:flex;justify-content:space-between;align-items:center;padding:18px 24px;cursor:pointer;background:rgba(255,255,255,0.03);" onclick="toggleResultCard('${s.key}')">
-        <div style="display:flex;align-items:center;gap:12px;">
-          <span class="sess-label">${s.label}</span>
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;cursor:pointer;background:rgba(255,255,255,0.03);flex-wrap:nowrap;gap:6px;" onclick="toggleResultCard('${s.key}')">
+        <div style="display:flex;align-items:center;min-width:0;flex-shrink:1;overflow:hidden;">
+          <span class="sess-label" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${s.label}</span>
         </div>
-        <div style="display:flex;align-items:center;gap:10px;">
-          ${allReady ? '<span style="font-size:10px;padding:2px 9px;border-radius:4px;background:rgba(0,200,100,0.12);color:#00c864;border:1px solid rgba(0,200,100,0.25);font-family:\'Orbitron\',sans-serif;">✓ BET</span>' : ''}
-          ${locked ? '<span style="font-size:10px;padding:3px 10px;border-radius:10px;font-family:\'Orbitron\',sans-serif;background:rgba(0,200,100,0.25);color:#00ff88;border:1px solid rgba(0,255,136,0.5);font-weight:700;letter-spacing:1px;">✓ LOCKED</span>' : ''}
-          <span id="res-arrow-${s.key}" style="font-size:11px;color:rgba(255,255,255,0.5);transition:transform 0.2s;">▼</span>
+        <div style="display:flex;align-items:center;gap:6px;flex-shrink:0;">
+          ${allReady ? '<span style="font-size:clamp(8px,1.2vw,10px);padding:2px 7px;border-radius:4px;background:rgba(0,200,100,0.12);color:#00c864;border:1px solid rgba(0,200,100,0.25);font-family:\'Orbitron\',sans-serif;white-space:nowrap;">✓ BET</span>' : ''}
+          ${locked ? '<span style="font-size:clamp(8px,1.2vw,10px);padding:2px 8px;border-radius:10px;font-family:\'Orbitron\',sans-serif;background:rgba(0,200,100,0.25);color:#00ff88;border:1px solid rgba(0,255,136,0.5);font-weight:700;letter-spacing:1px;white-space:nowrap;">✓ LOCKED</span>' : ''}
+          <span id="res-arrow-${s.key}" style="font-size:11px;color:rgba(255,255,255,0.5);transition:transform 0.2s;flex-shrink:0;">▼</span>
         </div>
       </div>
       <div id="res-body-${s.key}" style="padding:24px;">
@@ -4735,75 +4757,80 @@ function renderPaymentTable(scored, payments, net, showBreakdown) {
         }).join('');
 
     // showBreakdown용: 세션레이블 칸 / 뱃지 칸 분리
-    const labelLines = p.breakdown.map(b =>
-      `<div style="font-size:clamp(9px,1.2vw,10px);color:var(--muted);white-space:nowrap;line-height:2.4;">${b.label}</div>`
-    ).join('');
-    const badgeLines = p.breakdown.map(b => {
+    const sessionRows = p.breakdown.map(b => {
       const hits = b.details.map(d =>
         d.hit ? `<span class="hit-badge hit">P ${d.pos}</span>`
               : `<span class="hit-badge miss">P ${d.pos}</span>`
       ).join('');
-      return `<div style="display:flex;gap:4px;align-items:center;line-height:2.4;">${hits}</div>`;
+      return `<div style="display:flex;align-items:center;gap:clamp(6px,1vw,10px);padding:clamp(2px,0.3vw,4px) 0;">
+        <span style="font-size:clamp(10px,1.8vw,18px);color:#fff;white-space:nowrap;flex:1;padding-left:clamp(6px,1vw,12px);text-align:left;">${b.label}</span>
+        <div style="display:flex;gap:clamp(3px,0.5vw,6px);align-items:center;flex-shrink:0;">${hits}</div>
+      </div>`;
     }).join('');
 
     if (showBreakdown) {
       return `
-      <div class="score-row ${cls}" style="display:grid;grid-template-columns:1fr 2fr 2fr 3fr 2fr;align-items:center;gap:0;text-align:center;">
-        <span class="score-rank" style="text-align:center;">${emoji}</span>
-        <span class="score-name" style="width:auto;text-align:left;">${p.name}</span>
-        <div style="display:flex;flex-direction:column;text-align:left;gap:6px;">${labelLines}</div>
-        <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">${badgeLines}</div>
-        <span style="font-family:'Orbitron',sans-serif;font-size:17px;font-weight:900;text-align:right;color:${ptColor};">${p.totalPts}pt</span>
+      <div class="score-row ${cls}" style="display:grid;grid-template-columns:0.75fr 2.5fr 0.75fr;align-items:center;gap:clamp(6px,1vw,12px);text-align:center;">
+        <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(4px,0.8vw,10px);align-self:center;">
+          <span style="font-size:clamp(18px,3.5vw,36px);line-height:1;">${emoji}</span>
+          <span style="font-family:'Orbitron',sans-serif;font-size:clamp(11px,2vw,18px);font-weight:700;letter-spacing:clamp(1px,0.2vw,2px);">${p.name}</span>
+        </div>
+        <div style="display:flex;flex-direction:column;">${sessionRows}</div>
+        <span style="font-family:'Orbitron',sans-serif;font-size:clamp(11px,2.5vw,22px);font-weight:900;text-align:right;color:${ptColor};">${p.totalPts}pt</span>
       </div>`;
     }
     return `
-    <div class="score-row ${cls}">
-      <span class="score-rank">${emoji}</span>
-      <span class="score-name">${p.name}</span>
-      <div class="score-breakdown">${lines}</div>
-      <span style="font-family:'Orbitron',sans-serif;font-size:17px;font-weight:900;text-align:right;color:${ptColor}">${p.totalPts}pt</span>
+    <div class="score-row ${cls}" style="display:grid;grid-template-columns:0.75fr 1.5fr 1fr 0.75fr;align-items:center;gap:clamp(6px,1vw,12px);">
+      <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(4px,0.8vw,10px);align-self:center;">
+        <span style="font-size:clamp(14px,2.5vw,26px);line-height:1;">${emoji}</span>
+        <span style="font-family:'Orbitron',sans-serif;font-size:clamp(9px,1.6vw,14px);font-weight:700;letter-spacing:clamp(1px,0.2vw,2px);">${p.name}</span>
+      </div>
+      <div class="score-breakdown" style="min-width:0;">${lines}</div>
+      <div></div>
+      <span style="font-family:'Orbitron',sans-serif;font-size:clamp(11px,2.5vw,22px);font-weight:900;text-align:right;color:${ptColor}">${p.totalPts}pt</span>
     </div>`;
   }).join('');
 
   // Payment rows
   const payRows = payments.length === 0
-    ? `<div style="text-align:center;padding:16px;color:var(--muted);font-size:13px;">모두 동점 — 정산 없음</div>`
+    ? `<div style="text-align:center;padding:16px;color:var(--muted);font-size:clamp(11px,2.2vw,18px);">모두 동점 — 정산 없음</div>`
     : payments.map(pay => `
-      <div style="display:flex;align-items:center;gap:8px;background:var(--surface2);border:1px solid rgba(255,255,255,0.07);border-radius:8px;padding:10px 12px;">
-        <span style="font-family:'Orbitron',sans-serif;font-size:13px;font-weight:700;color:#fff;">${scored[pay.from].name}</span>
-        <span style="font-size:13px;color:rgba(255,255,255,0.4);">→</span>
-        <span style="font-family:'Orbitron',sans-serif;font-size:13px;font-weight:700;color:#fff;flex:1">${scored[pay.to].name}</span>
-        <span style="font-family:'Orbitron',sans-serif;font-size:13px;font-weight:700;color:#fff">₩${pay.amount.toLocaleString()}</span>
+      <div style="display:grid;grid-template-columns:1fr auto 1fr 1fr;align-items:center;gap:clamp(6px,1vw,12px);background:var(--surface2);border:1px solid rgba(255,255,255,0.07);border-radius:8px;padding:10px 12px;">
+        <span style="font-family:'Orbitron',sans-serif;font-size:clamp(11px,2.2vw,18px);font-weight:700;color:#fff;letter-spacing:clamp(1px,0.2vw,2px);text-align:center;">${scored[pay.from].name}</span>
+        <span style="font-size:clamp(11px,2.2vw,18px);color:rgba(255,255,255,0.4);text-align:center;">→</span>
+        <span style="font-family:'Orbitron',sans-serif;font-size:clamp(11px,2.2vw,18px);font-weight:700;color:#fff;letter-spacing:clamp(1px,0.2vw,2px);text-align:center;">${scored[pay.to].name}</span>
+        <span style="font-family:'Orbitron',sans-serif;font-size:clamp(11px,2.2vw,18px);font-weight:700;color:#fff;text-align:right;white-space:nowrap;">₩${pay.amount.toLocaleString()}</span>
       </div>`).join('');
 
   // Net rows
   const netRows = scored.map((p, i) => {
     const v = net[i];
     const color = v > 0 ? '#00c864' : v < 0 ? 'var(--red)' : 'var(--muted)';
-    const sign  = v > 0 ? '+' : '';
+    const absV = Math.abs(v);
+    const signedStr = v < 0 ? `-₩${absV.toLocaleString()}` : `₩${absV.toLocaleString()}`;
     return `
       <div style="display:flex;align-items:center;gap:8px;background:var(--surface2);border:1px solid rgba(255,255,255,0.07);border-radius:8px;padding:10px 12px;">
-        <span style="font-family:'Orbitron',sans-serif;font-size:13px;font-weight:900;letter-spacing:2px;flex:1">${p.name}</span>
-        <span style="font-size:11px;color:var(--muted)">${p.totalPts}pt</span>
-        <span style="font-family:'Orbitron',sans-serif;font-size:13px;font-weight:700;color:${color};text-align:right;">${sign}₩${v.toLocaleString()}</span>
+        <span style="font-family:'Orbitron',sans-serif;font-size:clamp(11px,2.2vw,18px);font-weight:900;letter-spacing:clamp(1px,0.2vw,2px);flex:1;padding-left:clamp(16px,6vw,64px);">${p.name}</span>
+        <span style="font-size:clamp(10px,1.6vw,14px);color:var(--muted)">${p.totalPts}pt</span>
+        <span style="font-family:'Orbitron',sans-serif;font-size:clamp(11px,2.2vw,18px);font-weight:700;color:${color};text-align:right;">${signedStr}</span>
       </div>`;
   }).join('');
 
   const paymentSection = showBreakdown ? `
     <hr style="border:none;border-top:1px solid rgba(255,255,255,0.07);margin:18px 0;">
     <div style="margin-bottom:8px;">
-      <div style="font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:2px;color:var(--muted);margin-bottom:10px;text-transform:uppercase;">💸 1v1 정산</div>
+      <div style="font-family:'Orbitron',sans-serif;font-size:clamp(8px,1.4vw,12px);letter-spacing:2px;color:var(--muted);margin-bottom:10px;text-transform:uppercase;">💸 1v1 정산</div>
       <div style="display:flex;flex-direction:column;gap:8px;">${payRows}</div>
     </div>
     <hr style="border:none;border-top:1px solid rgba(255,255,255,0.07);margin:18px 0;">
     <div>
-      <div style="font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:2px;color:var(--muted);margin-bottom:10px;text-transform:uppercase;">🏦 총 손익</div>
+      <div style="font-family:'Orbitron',sans-serif;font-size:clamp(8px,1.4vw,12px);letter-spacing:2px;color:var(--muted);margin-bottom:10px;text-transform:uppercase;">🏦 총 손익</div>
       <div style="display:flex;flex-direction:column;gap:8px;">${netRows}</div>
     </div>` : '';
 
   return `
     <div style="margin-bottom:8px;">
-      <div style="font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:2px;color:var(--muted);margin-bottom:10px;text-transform:uppercase;">📊 점수</div>
+      <div style="font-family:'Orbitron',sans-serif;font-size:clamp(8px,1.4vw,12px);letter-spacing:2px;color:var(--muted);margin-bottom:10px;text-transform:uppercase;">📊 점수</div>
       <div class="scoreboard" style="margin-bottom:0;">${pointsRows}</div>
     </div>
     ${paymentSection}`;
@@ -4817,6 +4844,12 @@ let seasonLog = window._seasonLog;
 
 function saveToSeason() {
   seasonLog = window._seasonLog;  // 항상 최신 데이터 사용
+  // 저장 전 현재 시즌 키 검증 — 다른 시즌 entry 섞임 방지
+  const saveSeasonVal = document.getElementById('seasonSelect')?.value || '2026';
+  const saveRoundsArr = saveSeasonVal === '2025' ? ROUNDS_2025 : ROUNDS_2026;
+  const saveSeasonKeys = new Set(saveRoundsArr.map(r => 'Round ' + r.n + ' — ' + r.name));
+  seasonLog = seasonLog.filter(e => saveSeasonKeys.has(e.raceName));
+  window._seasonLog = seasonLog;
   // Build scored + payments from current state (same as tryRenderCombined)
   const scored = state.participants.map(p => {
     let totalPts = 0;
@@ -4833,8 +4866,10 @@ function saveToSeason() {
 
   // Check if this round already saved → update instead
   const existingIdx = seasonLog.findIndex(e => e.raceName === state.raceName);
+  const entrySeason = document.getElementById('seasonSelect')?.value || '2026';
   const entry = {
     raceName: state.raceName,
+    season: entrySeason,
     weekendType: state.weekendType,
     sessions: sessions().map(s => ({ key: s.key, label: s.label, mult: s.mult })),
     participants: state.participants.map(p => ({
@@ -4904,7 +4939,14 @@ function editSeasonSave() {
 }
 
 function renderSeason() {
-  seasonLog = window._seasonLog;  // Firebase 수신 후 최신 데이터 동기화
+  // seasonSelect 값 기반으로 현재 시즌 키셋 생성 (ROUNDS 전역변수에 의존하지 않음)
+  const renderSeasonVal = document.getElementById('seasonSelect')?.value || '2026';
+  const renderRounds = renderSeasonVal === '2025' ? ROUNDS_2025 : ROUNDS_2026;
+  const currentSeasonKeys = new Set(renderRounds.map(r => 'Round ' + r.n + ' — ' + r.name));
+  seasonLog = window._seasonLog.filter(e => {
+    if (e.season) return e.season === renderSeasonVal;
+    return currentSeasonKeys.has(e.raceName);
+  });
   const el = document.getElementById('seasonContent');
   if (!seasonLog.length) {
     el.innerHTML = `<div class="notice" style="text-align:center;padding:32px;">아직 저장된 결과가 없어요.<br>결과 탭에서 <strong>최종 결과 저장</strong>을 눌러주세요.</div>`;
@@ -4945,6 +4987,9 @@ function renderSeason() {
     return emoji ? `${base} ${emoji}` : base;
   };
 
+  // 참가자별 팀 컬러
+  const TEAM_COLORS = { 'ROKU': '#FF8000', 'SEHEE': '#DC0000', 'SEJIN': '#5a8eff' };
+
   const roundCards = [...seasonLog].reverse().map(entry => {
     const sessionRows = entry.sessions.map(s => {
       const actual = entry.results[s.key] || [];
@@ -4958,19 +5003,27 @@ function renderSeason() {
         const sc = entry.scored.find(x => x.name === p.name);
         const bd = sc?.breakdown.find(b => b.key === s.key);
         const pts = bd ? `${bd.totalPts}pt` : '—';
+        const nameColor = TEAM_COLORS[p.name.toUpperCase()] || '#fff';
         return `<div class="sn-pick-row">
-          <span class="sn-pick-name">${p.name}</span>
+          <span class="sn-pick-name" style="color:${nameColor}">${p.name}</span>
           <span class="sn-pick-picks">${picksStr}</span>
           <span class="sn-pick-pts">${pts}</span>
         </div>`;
       }).join('');
 
+      // Result 행을 참가자 목록 맨 위에 표시
+      const resultRow = `<div class="sn-pick-row" style="border-bottom:1px solid rgba(255,255,255,0.1);margin-bottom:4px;padding-bottom:4px;">
+          <span class="sn-pick-name" style="color:var(--muted);font-size:9px;letter-spacing:1px;">RESULT</span>
+          <span class="sn-pick-picks" style="color:#fff;font-weight:700;">${actual.filter(Boolean).length === 3 ? actual.map((d,i) => `<span class="sn-pick-p">P${i+1}: ${lastName(d)}</span>`).join('') : '<span style="color:var(--muted)">—</span>'}</span>
+          <span class="sn-pick-pts" style="color:transparent;">—</span>
+        </div>`;
+
       return `
       <div class="sn-sess-block">
         <div class="sess-head">
           <span class="sess-label">${fmtLabel(s)}</span>
-          <span style="font-size:11px;color:var(--muted)">RESULT: <strong style="color:#fff">${actualStr}</strong></span>
         </div>
+        ${resultRow}
         ${pickRows}
       </div>`;
     }).join('');
@@ -5011,7 +5064,8 @@ function renderSeason() {
       <div class="sn-cum-list">${cumRows}</div>
     </div>
     <div class="card-title sn-rounds-title raceweek-title">ROUND RECORD 📋</div>
-    ${roundCards}`;
+    ${roundCards}
+    `;
 
   // 첫 번째(가장 최근) 카드만 펼치고 나머지는 접기
   el.querySelectorAll('.sn-round-card').forEach((card, i) => {
@@ -5075,7 +5129,7 @@ function renderCurrentRoundBadge() {
   el.innerHTML = `
     <span class="round-season">${season}</span>
     <span class="round-badge"><strong>${centerText}</strong></span>
-    <span style="display:flex;justify-content:flex-end;gap:4px;">${gpTag}${spTag}</span>
+    <span style="display:flex;justify-content:flex-end;gap:4px;min-width:0;overflow:hidden;">${gpTag}${spTag}</span>
   `;
   el.style.visibility = 'visible';
 }
@@ -5093,11 +5147,41 @@ function renderActiveTab() {
 window.renderActiveTab = renderActiveTab;
 
 // Firebase 데이터 적용 함수 — module 스크립트보다 나중에 실행되므로 ROUNDS 등 모두 사용 가능
-window.applyFbData = function(data) {
+window.applyFbData = function(data, season) {
   if (!data) return;
+  // 시즌 전환 완료 — 이후 fbSave 허용
+  window._seasonSwitching = false;
+  // season 파라미터 없으면 구독 중인 시즌 사용 (ROUNDS 전역변수에 의존하지 않음)
+  const applySeason = season || window._subscribedSeason || (document.getElementById('seasonSelect')?.value) || '2026';
+  const applyRounds = applySeason === '2025' ? ROUNDS_2025 : ROUNDS_2026;
+  console.log('[DEBUG applyFbData] applySeason:', applySeason, '수신된 seasonLog:', JSON.stringify((data.seasonLog||[]).map(e=>e.raceName)));
+
+  // 전역 변수를 applySeason에 맞게 교체 (onSeasonChange 타이밍과 무관하게 보장)
+  if (applySeason === '2025') {
+    ROUNDS = ROUNDS_2025;
+    SPRINT_ROUNDS = SPRINT_ROUNDS_2025;
+    SESSIONS = SESSIONS_2025;
+    Object.keys(DRIVER_NUM).forEach(k => delete DRIVER_NUM[k]);
+    Object.assign(DRIVER_NUM, DRIVER_NUM_2025);
+    Object.keys(DRIVER_TEAM).forEach(k => delete DRIVER_TEAM[k]);
+    Object.assign(DRIVER_TEAM, DRIVER_TEAM_2025);
+    DEFAULT_CONSTRUCTORS.length = 0;
+    CONSTRUCTORS_2025.forEach(c => DEFAULT_CONSTRUCTORS.push(c));
+  } else {
+    ROUNDS = ROUNDS_2026;
+    SPRINT_ROUNDS = SPRINT_ROUNDS_2026;
+    SESSIONS = SESSIONS_2026;
+    Object.keys(DRIVER_NUM).forEach(k => delete DRIVER_NUM[k]);
+    Object.assign(DRIVER_NUM, DRIVER_NUM_2026);
+    Object.keys(DRIVER_TEAM).forEach(k => delete DRIVER_TEAM[k]);
+    Object.assign(DRIVER_TEAM, DRIVER_TEAM_2026);
+    DEFAULT_CONSTRUCTORS.length = 0;
+    CONSTRUCTORS_2026.forEach(c => DEFAULT_CONSTRUCTORS.push(c));
+  }
+
   if (data.state) {
-    // 현재 시즌의 유효한 라운드 키 목록
-    const validRoundKeys = new Set(ROUNDS.map(r => 'Round ' + r.n + ' — ' + r.name));
+    // 구독 경로의 시즌 기준으로 유효한 라운드 키 목록 생성 (ROUNDS 전역변수 무관)
+    const validRoundKeys = new Set(applyRounds.map(r => 'Round ' + r.n + ' — ' + r.name));
 
     // raceName이 현재 시즌 라운드가 아니면 무시
     const incomingRace = data.state.raceName || '';
@@ -5113,29 +5197,79 @@ window.applyFbData = function(data) {
       if (validRoundKeys.has(k)) state.roundData[k] = v;
     }
 
-    if (Array.isArray(data.seasonLog)) window._seasonLog = data.seasonLog;
+    // participants / results / resultLocked / constructors 복원
+    // (시즌 전환 시 onSeasonChange가 state를 초기화한 뒤 Firebase 데이터로 덮어써야 함)
+    if (data.state.participants && Object.keys(data.state.participants).length > 0) {
+      state.participants = data.state.participants;
+    }
+    if (data.state.results && Object.keys(data.state.results).length > 0) {
+      state.results = data.state.results;
+    }
+    if (data.state.resultLocked && Object.keys(data.state.resultLocked).length > 0) {
+      state.resultLocked = data.state.resultLocked;
+    }
+    if (data.state.constructors && data.state.constructors.length > 0) {
+      state.constructors = data.state.constructors;
+    }
+    state.constructorLocked = data.state.constructorLocked || false;
 
-    // 현재 라운드 데이터 로드 (getDefaultConstructors 포함)
-    if (state.raceName) loadRoundData(state.raceName);
-    else {
-      // 라운드 미선택: 현재 시즌 기본 컨스트럭터
-      state.constructors      = [...DEFAULT_CONSTRUCTORS];
-      state.constructorLocked = false;
+    if (Array.isArray(data.seasonLog)) {
+      // season 필드가 있으면 그걸로, 없으면 raceName 키셋으로 필터링
+      const filteredLog = data.seasonLog.filter(e => {
+        if (e.season) return e.season === applySeason;
+        return validRoundKeys.has(e.raceName);
+      });
+      // 오염 항목이 있었으면 Firebase에 직접 재저장 (fbSave 플래그 우회)
+      window._seasonLog = filteredLog;
+      if (filteredLog.length !== data.seasonLog.length) {
+        console.log('[DEBUG] 오염 항목', data.seasonLog.length - filteredLog.length, '개 제거 → Firebase 직접 재저장');
+        // fbCleanAndSave가 준비될 때까지 최대 5초 대기
+        const cleaned = Object.assign({}, data, { seasonLog: filteredLog, ts: Date.now() });
+        let _cleanTry = 0;
+        const _cleanInterval = setInterval(() => {
+          if (window.fbCleanAndSave) {
+            window.fbCleanAndSave(applySeason, cleaned);
+            clearInterval(_cleanInterval);
+          } else if (++_cleanTry > 50) {
+            clearInterval(_cleanInterval);
+            console.error('[DEBUG] fbCleanAndSave 준비 안됨 — 재저장 실패');
+          }
+        }, 100);
+      }
     }
 
-  }
-  if (Array.isArray(data.seasonLog)) window._seasonLog = data.seasonLog;
+    // 현재 라운드 데이터 로드
+    if (state.raceName) loadRoundData(state.raceName);
+    else {
+      // 라운드 미선택: 컨스트럭터 미잠금 시 기본값 사용
+      if (!state.constructorLocked) {
+        state.constructors = [...DEFAULT_CONSTRUCTORS];
+      }
+    }
 
-  // seasonLog 무결성 검사: unlock 상태인 라운드는 seasonLog에서 제거
+
+  }
+
+  // seasonLog 무결성 검사:
+  // 1) 현재 시즌 라운드가 아닌 entry 제거 (시즌 교차 오염 방지)
+  // 2) unlock 상태인 라운드 entry 제거
+  // ROUNDS 전역변수 대신 구독 시즌 기준 키셋 사용
+  const validRoundKeysForLog = new Set(applyRounds.map(r => 'Round ' + r.n + ' — ' + r.name));
   const beforeLen = window._seasonLog.length;
   window._seasonLog = window._seasonLog.filter(entry => {
+    // season 필드가 있으면 그걸로 판단 (가장 정확)
+    if (entry.season) return entry.season === applySeason;
+    // season 필드 없는 구버전 entry는 raceName 키셋으로 판단
+    if (!validRoundKeysForLog.has(entry.raceName)) return false;
+    // 현재 시즌 키인데 roundData가 없으면 (아직 로드 전) 유지
     const rd = state.roundData[entry.raceName];
     if (!rd) return true;
+    // roundData가 있으면 모든 세션이 locked일 때만 유지
     const rSessions = entry.sessions || [];
     return rSessions.every(s => rd.resultLocked && rd.resultLocked[s.key]);
   });
   seasonLog = window._seasonLog;
-  // 정리된 항목이 있으면 Firebase에 다시 저장
+  // 오염 항목이 제거됐으면 Firebase에 즉시 재저장해서 DB도 정리
   if (window._seasonLog.length !== beforeLen && window.fbSave) window.fbSave();
 
   renderConstructors();
