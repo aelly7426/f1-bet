@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -13,27 +13,27 @@
     --red:#E10600; --gold:#FFD700; --silver:#C0C0C0; --bronze:#CD7F32;
     --bg:#0a0a0f; --surface:#12121a; --surface2:#1a1a26;
     --border:rgba(225,6,0,0.3); --text:#f0f0f0; --muted:#888;
+    --font-orbitron:'Orbitron',sans-serif;
+    --font-exo:'Exo 2',sans-serif;
   }
   *{margin:0;padding:0;box-sizing:border-box;}
   html{font-size:clamp(12px,2.2vw,15px);}
-  body{font-family:'Exo 2',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;}
+  body{font-family:var(--font-exo);background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;}
   body::before{content:'';position:fixed;inset:0;
     background-image:linear-gradient(rgba(225,6,0,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(225,6,0,0.03) 1px,transparent 1px);
     background-size:40px 40px;pointer-events:none;z-index:0;}
   .wrap{max-width:880px;margin:0 auto;padding:clamp(12px,3vw,24px) clamp(12px,4vw,20px) 80px;position:relative;z-index:1;overflow-x:hidden;}
-  .card{max-width:100%;box-sizing:border-box;}
-
   /* HEADER */
   header{text-align:center;padding:clamp(20px,4vw,40px) 0 clamp(16px,3vw,30px);}
   .hline{width:clamp(50px,8vw,80px);height:3px;background:var(--red);margin:0 auto clamp(12px,2vw,20px);box-shadow:0 0 12px var(--red);}
-  header h1{font-family:'Orbitron',sans-serif;font-size:clamp(28px,6vw,52px);font-weight:900;letter-spacing:clamp(2px,0.5vw,4px);color:#fff;text-shadow:0 0 30px rgba(225,6,0,0.5);margin:0;line-height:1;}
+  header h1{font-family:var(--font-orbitron);font-size:clamp(28px,6vw,52px);font-weight:900;letter-spacing:clamp(2px,0.5vw,4px);color:#fff;text-shadow:0 0 30px rgba(225,6,0,0.5);margin:0;line-height:1;}
   header h1 span{color:#fff;}
   header p{color:var(--muted);font-size:clamp(10px,1.5vw,13px);letter-spacing:2px;text-transform:uppercase;margin-top:8px;}
 
   /* TABS */
   .tabs-sticky{position:sticky;top:0;z-index:100;background:var(--bg);padding-top:8px;}
   .tabs{display:flex;gap:4px;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:4px;margin-bottom:0;}
-  .tab{flex:1;padding:clamp(7px,1.5vw,10px) clamp(4px,1vw,10px);border:none;background:transparent;color:#d8d8d8;font-family:'Orbitron',sans-serif;font-size:clamp(9px,1.4vw,11.5px);letter-spacing:clamp(0.5px,0.2vw,1.5px);text-transform:uppercase;cursor:pointer;border-radius:6px;transition:all .2s;}
+  .tab{flex:1;padding:clamp(7px,1.5vw,10px) clamp(4px,1vw,10px);border:none;background:transparent;color:#d8d8d8;font-family:var(--font-orbitron);font-size:clamp(9px,1.4vw,11.5px);letter-spacing:clamp(0.5px,0.2vw,1.5px);text-transform:uppercase;cursor:pointer;border-radius:6px;transition:all .2s;}
   .tab.active{background:var(--red);color:#fff;box-shadow:0 0 16px rgba(225,6,0,0.4);}
   .tab:hover:not(.active){color:#fff;background:rgba(255,255,255,0.05);}
   .section{display:none;} .section.active{display:block;}
@@ -42,18 +42,18 @@
   .card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:clamp(14px,3vw,24px);margin-bottom:clamp(12px,2vw,20px);position:relative;overflow:hidden;}
   .card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--red),transparent);}
   .pred-card::before{display:none;}
-  .card-title{font-family:'Orbitron',sans-serif;font-size:clamp(9px,1.4vw,11px);letter-spacing:2px;color:var(--red);text-transform:uppercase;margin-bottom:clamp(12px,2vw,18px);}
+  .card-title{font-family:var(--font-orbitron);font-size:clamp(9px,1.4vw,11px);letter-spacing:2px;color:var(--red);text-transform:uppercase;margin-bottom:clamp(12px,2vw,18px);}
 
   /* FORM */
   .form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
   @media(max-width:500px){.form-row{grid-template-columns:1fr;}}
   label{display:block;font-size:clamp(9px,1.3vw,10.5px);letter-spacing:1.5px;color:var(--muted);text-transform:uppercase;margin-bottom:6px;}
-  input,select{width:100%;background:var(--surface2);border:1px solid rgba(255,255,255,0.1);border-radius:6px;padding:clamp(8px,1.5vw,10px) clamp(10px,2vw,14px);color:var(--text);font-family:'Exo 2',sans-serif;font-size:clamp(12px,1.8vw,13.5px);transition:border-color .2s;appearance:none;}
+  input,select{width:100%;background:var(--surface2);border:1px solid rgba(255,255,255,0.1);border-radius:6px;padding:clamp(8px,1.5vw,10px) clamp(10px,2vw,14px);color:var(--text);font-family:var(--font-exo);font-size:clamp(12px,1.8vw,13.5px);transition:border-color .2s;appearance:none;}
   input:focus,select:focus{outline:none;border-color:var(--red);box-shadow:0 0 0 2px rgba(225,6,0,0.15);}
   select option{background:#1a1a26;color:#f0f0f0;}
 
   /* BUTTONS */
-  .btn{width:100%;padding:clamp(10px,2vw,14px);background:var(--red);border:none;border-radius:8px;color:#fff;font-family:'Orbitron',sans-serif;font-size:clamp(9px,1.4vw,11.5px);letter-spacing:clamp(0.5px,0.2vw,1.5px);text-transform:uppercase;cursor:pointer;transition:all .2s;box-shadow:0 4px 20px rgba(225,6,0,0.3);}
+  .btn{width:100%;padding:clamp(10px,2vw,14px);background:var(--red);border:none;border-radius:8px;color:#fff;font-family:var(--font-orbitron);font-size:clamp(9px,1.4vw,11.5px);letter-spacing:clamp(0.5px,0.2vw,1.5px);text-transform:uppercase;cursor:pointer;transition:all .2s;box-shadow:0 4px 20px rgba(225,6,0,0.3);}
   .btn:hover{background:#ff1a00;box-shadow:0 4px 28px rgba(225,6,0,0.5);transform:translateY(-1px);}
   .btn:active{transform:translateY(0);}
   .btn.sec{background:transparent;border:1px solid var(--border);box-shadow:none;color:var(--muted);}
@@ -65,22 +65,22 @@
   .picks-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(6px,1.5vw,10px);}
   @media(max-width:480px){.picks-grid{grid-template-columns:1fr;}}
   .pick-slot label{display:flex;align-items:center;gap:6px;}
-  .medal{display:inline-block;width:clamp(16px,2.5vw,18px);height:clamp(16px,2.5vw,18px);border-radius:50%;font-size:clamp(9px,1.2vw,10px);font-weight:700;text-align:center;line-height:clamp(16px,2.5vw,18px);font-family:'Orbitron',sans-serif;}
+  .medal{display:inline-block;width:clamp(16px,2.5vw,18px);height:clamp(16px,2.5vw,18px);border-radius:50%;font-size:clamp(9px,1.2vw,10px);font-weight:700;text-align:center;line-height:clamp(16px,2.5vw,18px);font-family:var(--font-orbitron);}
   .medal.p1{background:var(--gold);color:#000;}
   .medal.p2{background:var(--silver);color:#000;}
   .medal.p3{background:var(--bronze);color:#000;}
 
   /* SESSION SUB-HEADER */
   .sess-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,0.07);}
-  .sess-label{font-family:'Orbitron',sans-serif;font-size:clamp(10px,1.6vw,13px);letter-spacing:2px;color:rgba(255,255,255,0.85);text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-  .sess-mult{font-size:clamp(9px,1.2vw,10px);padding:2px 9px;border-radius:4px;background:rgba(225,6,0,0.1);color:var(--red);border:1px solid rgba(225,6,0,0.25);font-family:'Orbitron',sans-serif;}
+  .sess-label{font-family:var(--font-orbitron);font-size:clamp(10px,1.6vw,13px);letter-spacing:2px;color:rgba(255,255,255,0.85);text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .sess-mult{font-size:clamp(9px,1.2vw,10px);padding:2px 9px;border-radius:4px;background:rgba(225,6,0,0.1);color:var(--red);border:1px solid rgba(225,6,0,0.25);font-family:var(--font-orbitron);}
   .sess-block{margin-bottom:clamp(12px,2vw,18px);}
   .sess-block:last-child{margin-bottom:0;}
   hr.divider{border:none;border-top:1px solid rgba(255,255,255,0.06);margin:clamp(12px,2vw,18px) 0;}
 
   /* BADGES */
-  .badge-locked{font-size:clamp(9px,1.2vw,10px);padding:3px 10px;border-radius:10px;background:rgba(0,200,100,0.15);color:#00c864;border:1px solid rgba(0,200,100,0.3);font-family:'Orbitron',sans-serif;white-space:nowrap;}
-  .badge-pending{font-size:clamp(9px,1.2vw,10px);padding:3px 10px;border-radius:10px;background:rgba(225,6,0,0.1);color:var(--red);border:1px solid rgba(225,6,0,0.2);font-family:'Orbitron',sans-serif;white-space:nowrap;}
+  .badge-locked{font-size:clamp(9px,1.2vw,10px);padding:3px 10px;border-radius:10px;background:rgba(0,200,100,0.15);color:#00c864;border:1px solid rgba(0,200,100,0.3);font-family:var(--font-orbitron);white-space:nowrap;}
+  .badge-pending{font-size:clamp(9px,1.2vw,10px);padding:3px 10px;border-radius:10px;background:rgba(225,6,0,0.1);color:var(--red);border:1px solid rgba(225,6,0,0.2);font-family:var(--font-orbitron);white-space:nowrap;}
 
   /* RESULTS INPUT */
   .res-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(8px,2vw,12px);margin-bottom:14px;}
@@ -98,33 +98,33 @@
   .score-row.winner::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(255,215,0,0.05),transparent);pointer-events:none;}
   .score-row.second{border-color:var(--silver);}
   .score-row.third{border-color:var(--bronze);}
-  .score-rank{font-family:'Orbitron',sans-serif;font-size:clamp(10px,2.2vw,20px);font-weight:900;width:28px;text-align:center;flex-shrink:0;}
-  .score-name{font-weight:700;font-size:clamp(9px,2vw,15px);font-family:'Orbitron',sans-serif;letter-spacing:clamp(1px,0.2vw,1.5px);width:clamp(44px,7vw,70px);flex-shrink:0;white-space:nowrap;}
+  .score-rank{font-family:var(--font-orbitron);font-size:clamp(10px,2.2vw,20px);font-weight:900;width:28px;text-align:center;flex-shrink:0;}
+  .score-name{font-weight:700;font-size:clamp(9px,2vw,15px);font-family:var(--font-orbitron);letter-spacing:clamp(1px,0.2vw,1.5px);width:clamp(44px,7vw,70px);flex-shrink:0;white-space:nowrap;}
   .score-breakdown{flex:1;display:flex;flex-direction:column;gap:5px;min-width:0;overflow:hidden;}
   .sess-breakdown-line{display:flex;flex-wrap:nowrap;gap:clamp(4px,0.6vw,8px);align-items:center;justify-content:flex-end;}
   .sess-breakdown-label{font-size:clamp(10px,1.8vw,18px);color:#fff;width:clamp(60px,11vw,120px);flex-shrink:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-right:4px;padding-left:clamp(6px,1vw,12px);}
-  .hit-badge{font-size:clamp(10px,1.8vw,18px);padding:2px;line-height:1;border-radius:3px;font-family:'Orbitron',sans-serif;white-space:nowrap;display:inline-flex;align-items:center;}
+  .hit-badge{font-size:clamp(10px,1.8vw,18px);padding:2px;line-height:1;border-radius:3px;font-family:var(--font-orbitron);white-space:nowrap;display:inline-flex;align-items:center;}
   .hit-badge.hit{background:rgba(0,200,100,0.15);color:#00c864;border:1px solid rgba(0,200,100,0.3);}
   .hit-badge.miss{background:rgba(255,255,255,0.04);color:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.07);}
   .sess-pts{font-size:clamp(9px,1.2vw,10px);color:rgba(255,255,255,0.3);white-space:nowrap;}
-  .score-prize{font-family:'Orbitron',sans-serif;font-size:clamp(9px,2vw,15px);font-weight:700;text-align:right;min-width:clamp(50px,9vw,80px);}
+  .score-prize{font-family:var(--font-orbitron);font-size:clamp(9px,2vw,15px);font-weight:700;text-align:right;min-width:clamp(50px,9vw,80px);}
   .score-row.winner .score-prize{color:var(--gold);}
   .score-row.second .score-prize{color:var(--silver);}
   .score-row.third .score-prize{color:var(--bronze);}
 
   /* TOTAL BAR */
   .total-bar{background:linear-gradient(135deg,rgba(225,6,0,0.12),rgba(225,6,0,0.04));border:1px solid rgba(225,6,0,0.3);border-radius:10px;padding:clamp(12px,2vw,16px) clamp(14px,3vw,22px);margin-top:10px;display:flex;justify-content:space-between;align-items:center;}
-  .total-bar-label{font-family:'Orbitron',sans-serif;font-size:clamp(9px,1.2vw,10px);letter-spacing:2px;color:var(--muted);}
-  .total-bar-prize{font-family:'Orbitron',sans-serif;font-size:clamp(14px,2.5vw,17px);font-weight:900;color:var(--red);text-shadow:0 0 16px rgba(225,6,0,0.4);}
+  .total-bar-label{font-family:var(--font-orbitron);font-size:clamp(9px,1.2vw,10px);letter-spacing:2px;color:var(--muted);}
+  .total-bar-prize{font-family:var(--font-orbitron);font-size:clamp(14px,2.5vw,17px);font-weight:900;color:var(--red);text-shadow:0 0 16px rgba(225,6,0,0.4);}
 
   /* CURRENT ROUND BADGE */
-  .round-badge{display:flex;align-items:center;justify-content:center;gap:4px;background:rgba(225,6,0,0.08);border:1px solid rgba(225,6,0,0.25);border-radius:20px;padding:5px 8px;font-family:'Orbitron',sans-serif;font-size:clamp(8px,1.3vw,11px);letter-spacing:1px;color:rgba(255,255,255,0.7);min-width:0;overflow:hidden;width:100%;}
+  .round-badge{display:flex;align-items:center;justify-content:center;gap:4px;background:rgba(225,6,0,0.08);border:1px solid rgba(225,6,0,0.25);border-radius:20px;padding:5px 8px;font-family:var(--font-orbitron);font-size:clamp(8px,1.3vw,11px);letter-spacing:1px;color:rgba(255,255,255,0.7);min-width:0;overflow:hidden;width:100%;}
   .round-badge strong{color:#fff;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;max-width:100%;display:block;text-align:center;}
   .round-badge .gp-tag{font-size:9px;padding:2px 7px;border-radius:10px;background:rgba(0,200,100,0.15);color:#00c864;border:1px solid rgba(0,200,100,0.35);letter-spacing:1px;}
   .round-badge .sprint-tag{font-size:9px;padding:2px 7px;border-radius:10px;background:rgba(255,128,0,0.2);color:#FF8000;border:1px solid rgba(255,128,0,0.3);letter-spacing:1px;}
   .round-badge .sprint-tag.inactive{display:none;}
-  .round-season{font-family:'Orbitron',sans-serif;font-size:clamp(11px,1.8vw,16px);font-weight:700;letter-spacing:2px;color:rgba(255,255,255,0.45);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-  .round-type-tag{font-family:'Orbitron',sans-serif;font-size:clamp(9px,1.3vw,10px);font-weight:900;letter-spacing:1.5px;padding:3px 7px;border-radius:6px;white-space:nowrap;}
+  .round-season{font-family:var(--font-orbitron);font-size:clamp(11px,1.8vw,16px);font-weight:700;letter-spacing:2px;color:rgba(255,255,255,0.45);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .round-type-tag{font-family:var(--font-orbitron);font-size:clamp(9px,1.3vw,10px);font-weight:900;letter-spacing:1.5px;padding:3px 7px;border-radius:6px;white-space:nowrap;}
   .round-type-tag.is-gp{color:#00c864;background:rgba(0,200,100,0.1);border:1px solid rgba(0,200,100,0.3);}
   .round-type-tag.is-sp-active{color:#FF8000;background:rgba(255,128,0,0.1);border:1px solid rgba(255,128,0,0.3);}
   .round-type-tag.is-sp-inactive{color:rgba(255,255,255,0.2);background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);}
@@ -150,23 +150,23 @@
   /* Season tab */
   .sn-cum-row{display:flex;align-items:center;gap:14px;background:var(--surface2);border:1px solid rgba(255,255,255,0.07);border-radius:8px;padding:16px 20px;}
   .sn-cum-emoji{font-size:clamp(14px,2vw,18px);}
-  .sn-cum-name{font-family:'Orbitron',sans-serif;font-size:clamp(12px,2vw,15px);font-weight:900;letter-spacing:clamp(1px,0.4vw,2.5px);flex:1;}
-  .sn-cum-amount{font-family:'Orbitron',sans-serif;font-size:clamp(12px,2vw,15px);font-weight:700;}
+  .sn-cum-name{font-family:var(--font-orbitron);font-size:clamp(12px,2vw,15px);font-weight:900;letter-spacing:clamp(1px,0.4vw,2.5px);flex:1;}
+  .sn-cum-amount{font-family:var(--font-orbitron);font-size:clamp(12px,2vw,15px);font-weight:700;}
   .sn-cum-amount.pos{color:#00c864;} .sn-cum-amount.neg{color:var(--red);} .sn-cum-amount.zero{color:var(--muted);}
   .sn-cum-list{display:flex;flex-direction:column;gap:8px;}
   .sn-round-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;flex-wrap:wrap;gap:8px;}
-  .sn-round-badge{display:none;font-size:10px;padding:3px 10px;border-radius:4px;background:rgba(225,6,0,0.1);color:var(--red);border:1px solid rgba(225,6,0,0.2);font-family:'Orbitron',sans-serif;}
+  .sn-round-badge{display:none;font-size:10px;padding:3px 10px;border-radius:4px;background:rgba(225,6,0,0.1);color:var(--red);border:1px solid rgba(225,6,0,0.2);font-family:var(--font-orbitron);}
   .sn-pick-row{display:flex;gap:8px;align-items:center;font-size:clamp(10px,1.5vw,12px);padding:4px 0;border-bottom:1px solid rgba(255,255,255,0.04);}
-  .sn-pick-name{font-family:'Orbitron',sans-serif;font-weight:700;color:#fff;min-width:50px;}
+  .sn-pick-name{font-family:var(--font-orbitron);font-weight:700;color:#fff;min-width:50px;}
   .sn-pick-picks{color:var(--muted);flex:1;display:flex;gap:0;justify-content:center;}
   .sn-pick-p{display:inline-block;width:23.33%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-  .sn-pick-pts{font-family:'Orbitron',sans-serif;font-size:clamp(9px,1.3vw,11px);color:rgba(255,255,255,0.5);width:clamp(40px,7vw,52px);min-width:52px;flex-shrink:0;text-align:right;white-space:nowrap;}
+  .sn-pick-pts{font-family:var(--font-orbitron);font-size:clamp(9px,1.3vw,11px);color:rgba(255,255,255,0.5);width:clamp(40px,7vw,52px);min-width:52px;flex-shrink:0;text-align:right;white-space:nowrap;}
   .sn-net-bar{margin-top:8px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.07);display:flex;flex-direction:column;gap:6px;}
-  .sn-net-label{font-size:10px;color:var(--muted);font-family:'Orbitron',sans-serif;letter-spacing:1px;margin-bottom:2px;}
+  .sn-net-label{font-size:10px;color:var(--muted);font-family:var(--font-orbitron);letter-spacing:1px;margin-bottom:2px;}
   .sn-net-row{display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:1px solid rgba(255,255,255,0.04);}
   .sn-net-row:last-child{border-bottom:none;}
-  .sn-net-player{font-family:'Orbitron',sans-serif;font-size:clamp(9px,1.4vw,11px);color:#fff;font-weight:700;}
-  .sn-net-amount{font-family:'Orbitron',sans-serif;font-size:clamp(10px,1.5vw,12px);}
+  .sn-net-player{font-family:var(--font-orbitron);font-size:clamp(9px,1.4vw,11px);color:#fff;font-weight:700;}
+  .sn-net-amount{font-family:var(--font-orbitron);font-size:clamp(10px,1.5vw,12px);}
   .sn-net-sep{display:none;}
   .sn-sess-block{margin-bottom:14px;}
   .sn-net-amount.pos{color:#00c864;} .sn-net-amount.neg{color:var(--red);} .sn-net-amount.zero{color:var(--muted);}
@@ -193,6 +193,22 @@ img.emoji {
   vertical-align: -0.15em;
   display: inline;
 }
+
+/* UTILITY — inline style 대체 클래스 */
+.grid--disabled{pointer-events:none;opacity:0.5;}
+.lock-indicator{flex:1;display:flex;align-items:center;justify-content:center;background:rgba(0,200,100,0.07);border:1px solid rgba(0,200,100,0.2);border-radius:8px;font-size:11px;color:#00c864;letter-spacing:1px;}
+.bet-badge--ready{font-size:clamp(8px,1.2vw,10px);padding:2px 7px;border-radius:4px;background:rgba(0,200,100,0.12);color:#00c864;border:1px solid rgba(0,200,100,0.25);white-space:nowrap;}
+.bet-badge--locked{font-size:clamp(8px,1.2vw,10px);padding:2px 8px;border-radius:10px;background:rgba(0,200,100,0.25);color:#00ff88;border:1px solid rgba(0,255,136,0.5);font-weight:700;letter-spacing:1px;white-space:nowrap;}
+/* TOAST */
+#toast-container{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:9999;display:flex;flex-direction:column;align-items:center;gap:8px;pointer-events:none;}
+.toast{padding:10px 20px;border-radius:10px;font-size:13px;font-family:var(--font-exo);font-weight:600;letter-spacing:.5px;opacity:0;transform:translateY(16px);transition:opacity .25s,transform .25s;pointer-events:none;white-space:nowrap;}
+.toast.show{opacity:1;transform:translateY(0);}
+.toast--success{background:rgba(0,200,100,0.18);border:1px solid rgba(0,200,100,0.4);color:#00ff88;}
+.toast--error{background:rgba(225,6,0,0.18);border:1px solid rgba(225,6,0,0.45);color:#ff6060;}
+.toast--info{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.18);color:#ccc;}
+/* HOVER — collapsible headers */
+.pred-card>div:first-child:hover{background:rgba(255,255,255,0.06)!important;}
+.sn-round-toggle:hover{background:rgba(255,255,255,0.05);border-radius:6px;}
 </style>
 <link rel="apple-touch-icon" href="data:image/png;base64,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AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH/2Q==">
 <link rel="icon" type="image/png" href="data:image/png;base64,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AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH/2Q==">
@@ -214,7 +230,7 @@ img.emoji {
         <!-- 하단 5개: 연결 상태 표시 -->
         <span class="sl-bot" id="sl-0"></span><span class="sl-bot" id="sl-1"></span><span class="sl-bot" id="sl-2"></span><span class="sl-bot" id="sl-3"></span><span class="sl-bot" id="sl-4"></span>
       </div>
-      <span style="font-size:9px;color:var(--muted);letter-spacing:2px;font-family:'Orbitron',sans-serif;text-transform:uppercase;">LIVE SYNC</span>
+      <span style="font-size:9px;color:var(--muted);letter-spacing:2px;font-family:var(--font-orbitron);text-transform:uppercase;">LIVE SYNC</span>
     </div>
   </header>
 
@@ -225,7 +241,7 @@ img.emoji {
       <button class="tab" onclick="switchTab('result')">🏁 Results</button>
       <button class="tab" onclick="switchTab('season')">📈 Season</button>
     </div>
-    <div id="currentRoundBadge" style="margin:6px 0 clamp(12px,2vw,20px);visibility:hidden;height:36px;display:grid;grid-template-columns:1fr 2fr 1fr;align-items:center;gap:4px;min-width:0;overflow:hidden;"></div>
+    <div id="currentRoundBadge" style="margin:6px 0 clamp(12px,2vw,20px);height:36px;display:grid;grid-template-columns:1fr 2fr 1fr;align-items:center;gap:4px;min-width:0;overflow:hidden;"></div>
   </div>
 
   <!-- ── SETUP ────────────────────────────────── -->
@@ -336,7 +352,11 @@ img.emoji {
         seasonLog: window._seasonLog.filter(e => seasonKeys.has(e.raceName)),
         ts
       };
-      set(ref(db, window.fbPath()), payload).catch(e => console.error('FB save error', e));
+      set(ref(db, window.fbPath()), payload).catch(e => {
+        console.error('FB save error', e);
+        if (window.showToast) window.showToast('⚠️ Save failed — check connection', 'error');
+        if (window.setFbStatus) window.setFbStatus('error');
+      });
     }, 300);
   };
 
@@ -398,14 +418,17 @@ img.emoji {
   window.fbCleanAndSave = function(season, cleanedData) {
     const path = 'f1bet/' + season;
     set(ref(db, path), cleanedData)
-      .then(() => console.log('[DEBUG] Firebase 재저장 완료 — 오염 데이터 제거됨'))
-      .catch(e => console.error('[DEBUG] 재저장 실패', e));
+      .catch(e => {
+        console.error('FB clean save error', e);
+        if (window.showToast) window.showToast('⚠️ Save failed — check connection', 'error');
+        if (window.setFbStatus) window.setFbStatus('error');
+      });
   };
 </script>
 
 <script>
 // ── Drivers & Teams ──────────────────────────────────────
-const DRIVER_NUM = {
+let DRIVER_NUM = {
   "Lando Norris":      1,
   "Oscar Piastri":     81,
   "George Russell":    63,
@@ -429,7 +452,7 @@ const DRIVER_NUM = {
   "Sergio Perez":      11,
   "Valtteri Bottas":   77,
 };
-const DRIVER_TEAM = {
+let DRIVER_TEAM = {
   "Lando Norris":      "McLaren Mastercard F1 Team",
   "Oscar Piastri":     "McLaren Mastercard F1 Team",
   "George Russell":    "Mercedes-AMG Petronas F1 Team",
@@ -455,7 +478,7 @@ const DRIVER_TEAM = {
 };
 const DRIVERS = Object.keys(DRIVER_TEAM);
 
-const DEFAULT_CONSTRUCTORS = [
+let DEFAULT_CONSTRUCTORS = [
   "McLaren Mastercard F1 Team",
   "Mercedes-AMG Petronas F1 Team",
   "Oracle Red Bull Racing",
@@ -625,3167 +648,22 @@ const DRIVER_NUM_2026 = Object.assign({}, DRIVER_NUM);
 const DRIVER_TEAM_2026 = Object.assign({}, DRIVER_TEAM);
 const CONSTRUCTORS_2026 = [...DEFAULT_CONSTRUCTORS]; // 독립 복사본 (참조 공유 방지)
 
-// ── 2025 시즌 사전 데이터 ─────────────────────────────────
-const DATA_2025_CONSTRUCTORS = {"1":["McLaren F1 Team","Scuderia Ferrari HP","Oracle Red Bull Racing","Mercedes-AMG Petronas F1 Team","Aston Martin Aramco F1 Team","BWT Alpine F1 Team","MoneyGram Haas F1 Team","Racing Bulls","Williams Racing","Kick Sauber F1 Team"],"2":["McLaren F1 Team","Mercedes-AMG Petronas F1 Team","Oracle Red Bull Racing","Williams Racing","Aston Martin Aramco F1 Team","Kick Sauber F1 Team","Scuderia Ferrari HP","BWT Alpine F1 Team","Racing Bulls","MoneyGram Haas F1 Team"],"3":["McLaren F1 Team","Mercedes-AMG Petronas F1 Team","Oracle Red Bull Racing","Williams Racing","Scuderia Ferrari HP","MoneyGram Haas F1 Team","Aston Martin Aramco F1 Team","Kick Sauber F1 Team","Racing Bulls","BWT Alpine F1 Team"],"4":["McLaren F1 Team","Mercedes-AMG Petronas F1 Team","Oracle Red Bull Racing","Scuderia Ferrari HP","Williams Racing","MoneyGram Haas F1 Team","Aston Martin Aramco F1 Team","Racing Bulls","Kick Sauber F1 Team","BWT Alpine F1 Team"],"5":["McLaren F1 Team","Mercedes-AMG Petronas F1 Team","Oracle Red Bull Racing","Scuderia Ferrari HP","MoneyGram Haas F1 Team","Williams Racing","Aston Martin Aramco F1 Team","Racing Bulls","BWT Alpine F1 Team","Kick Sauber F1 Team"],"6":["McLaren F1 Team","Mercedes-AMG Petronas F1 Team","Oracle Red Bull Racing","Scuderia Ferrari HP","Williams Racing","MoneyGram Haas F1 Team","Aston Martin Aramco F1 Team","Racing Bulls","BWT Alpine F1 Team","Kick Sauber F1 Team"],"7":["McLaren F1 Team","Mercedes-AMG Petronas F1 Team","Oracle Red Bull Racing","Scuderia Ferrari HP","Williams Racing","MoneyGram Haas F1 Team","Aston Martin Aramco F1 Team","Racing Bulls","BWT Alpine F1 Team","Kick Sauber F1 Team"],"8":["McLaren F1 Team","Mercedes-AMG Petronas F1 Team","Oracle Red Bull Racing","Scuderia Ferrari HP","Williams Racing","MoneyGram Haas F1 Team","Aston Martin Aramco F1 Team","BWT Alpine F1 Team","Kick Sauber F1 Team","Racing Bulls"],"9":["McLaren F1 Team","Mercedes-AMG Petronas F1 Team","Oracle Red Bull Racing","Scuderia Ferrari HP","Williams Racing","MoneyGram Haas F1 Team","Racing Bulls","Aston Martin Aramco F1 Team","BWT Alpine F1 Team","Kick Sauber F1 Team"],"10":["McLaren F1 Team","Scuderia Ferrari HP","Mercedes-AMG Petronas F1 Team","Oracle Red Bull Racing","Williams Racing","Racing Bulls","MoneyGram Haas F1 Team","Kick Sauber F1 Team","Aston Martin Aramco F1 Team","BWT Alpine F1 Team"],"11":["McLaren F1 Team","Mercedes-AMG Petronas F1 Team","Scuderia Ferrari HP","Oracle Red Bull Racing","Williams Racing","MoneyGram Haas F1 Team","Racing Bulls","Aston Martin Aramco F1 Team","Kick Sauber F1 Team","BWT Alpine F1 Team"],"12":["McLaren F1 Team","Mercedes-AMG Petronas F1 Team","Scuderia Ferrari HP","Oracle Red Bull Racing","Williams Racing","MoneyGram Haas F1 Team","Racing Bulls","Aston Martin Aramco F1 Team","Kick Sauber F1 Team","BWT Alpine F1 Team"],"13":["McLaren F1 Team","Scuderia Ferrari HP","Mercedes-AMG Petronas F1 Team","Oracle Red Bull Racing","Williams Racing","Kick Sauber F1 Team","Racing Bulls","Aston Martin Aramco F1 Team","MoneyGram Haas F1 Team","BWT Alpine F1 Team"],"14":["McLaren F1 Team","Scuderia Ferrari HP","Mercedes-AMG Petronas F1 Team","Oracle Red Bull Racing","Williams Racing","Kick Sauber F1 Team","Racing Bulls","Aston Martin Aramco F1 Team","MoneyGram Haas F1 Team","BWT Alpine F1 Team"],"15":["McLaren F1 Team","Scuderia Ferrari HP","Mercedes-AMG Petronas F1 Team","Oracle Red Bull Racing","Williams Racing","Aston Martin Aramco F1 Team","Kick Sauber F1 Team","Racing Bulls","MoneyGram Haas F1 Team","BWT Alpine F1 Team"],"16":["McLaren F1 Team","Scuderia Ferrari HP","Mercedes-AMG Petronas F1 Team","Oracle Red Bull Racing","Williams Racing","Aston Martin Aramco F1 Team","Racing Bulls","Kick Sauber F1 Team","MoneyGram Haas F1 Team","BWT Alpine F1 Team"],"17":["McLaren F1 Team","Scuderia Ferrari HP","Mercedes-AMG Petronas F1 Team","Oracle Red Bull Racing","Williams Racing","Aston Martin Aramco F1 Team","Racing Bulls","Kick Sauber F1 Team","MoneyGram Haas F1 Team","BWT Alpine F1 Team"],"18":["McLaren F1 Team","Mercedes-AMG Petronas F1 Team","Scuderia Ferrari HP","Oracle Red Bull Racing","Williams Racing","Racing Bulls","Aston Martin Aramco F1 Team","Kick Sauber F1 Team","MoneyGram Haas F1 Team","BWT Alpine F1 Team"],"19":["McLaren F1 Team","Mercedes-AMG Petronas F1 Team","Scuderia Ferrari HP","Oracle Red Bull Racing","Williams Racing","Racing Bulls","Aston Martin Aramco F1 Team","Kick Sauber F1 Team","MoneyGram Haas F1 Team","BWT Alpine F1 Team"],"20":["McLaren F1 Team","Mercedes-AMG Petronas F1 Team","Scuderia Ferrari HP","Oracle Red Bull Racing","Williams Racing","Racing Bulls","Aston Martin Aramco F1 Team","Kick Sauber F1 Team","MoneyGram Haas F1 Team","BWT Alpine F1 Team"],"21":["McLaren F1 Team","Scuderia Ferrari HP","Mercedes-AMG Petronas F1 Team","Oracle Red Bull Racing","Williams Racing","Racing Bulls","Aston Martin Aramco F1 Team","MoneyGram Haas F1 Team","Kick Sauber F1 Team","BWT Alpine F1 Team"],"22":["McLaren F1 Team","Mercedes-AMG Petronas F1 Team","Oracle Red Bull Racing","Scuderia Ferrari HP","Williams Racing","Racing Bulls","Aston Martin Aramco F1 Team","MoneyGram Haas F1 Team","Kick Sauber F1 Team","BWT Alpine F1 Team"],"23":["McLaren F1 Team","Mercedes-AMG Petronas F1 Team","Oracle Red Bull Racing","Scuderia Ferrari HP","Williams Racing","Racing Bulls","Aston Martin Aramco F1 Team","MoneyGram Haas F1 Team","Kick Sauber F1 Team","BWT Alpine F1 Team"],"24":["McLaren F1 Team","Mercedes-AMG Petronas F1 Team","Oracle Red Bull Racing","Scuderia Ferrari HP","Williams Racing","Racing Bulls","Aston Martin Aramco F1 Team","MoneyGram Haas F1 Team","Kick Sauber F1 Team","BWT Alpine F1 Team"]};
-const DATA_2025_SEASON_LOG = [
-  {
-    "n": 1,
-    "name": "Australian GP",
-    "type": "gp",
-    "pts": {
-      "ROKU": 0.0,
-      "SEHEE": 0.0,
-      "SEJIN": 1.0
-    },
-    "cumul": {
-      "ROKU": 0.0,
-      "SEHEE": 0.0,
-      "SEJIN": 1.0
-    }
-  },
-  {
-    "n": 2,
-    "name": "Chinese GP",
-    "type": "sprint",
-    "pts": {
-      "ROKU": 4.5,
-      "SEHEE": 4.5,
-      "SEJIN": 4.5
-    },
-    "cumul": {
-      "ROKU": 4.5,
-      "SEHEE": 4.5,
-      "SEJIN": 5.5
-    }
-  },
-  {
-    "n": 3,
-    "name": "Japanese GP",
-    "type": "gp",
-    "pts": {
-      "ROKU": 1.0,
-      "SEHEE": 2.0,
-      "SEJIN": 0.0
-    },
-    "cumul": {
-      "ROKU": 5.5,
-      "SEHEE": 6.5,
-      "SEJIN": 5.5
-    }
-  },
-  {
-    "n": 4,
-    "name": "Bahrain GP",
-    "type": "gp",
-    "pts": {
-      "ROKU": 18.0,
-      "SEHEE": 3.0,
-      "SEJIN": 37.0
-    },
-    "cumul": {
-      "ROKU": 23.5,
-      "SEHEE": 9.5,
-      "SEJIN": 42.5
-    }
-  },
-  {
-    "n": 5,
-    "name": "Saudi Arabian GP",
-    "type": "gp",
-    "pts": {
-      "ROKU": 12.0,
-      "SEHEE": 1.0,
-      "SEJIN": 3.0
-    },
-    "cumul": {
-      "ROKU": 35.5,
-      "SEHEE": 10.5,
-      "SEJIN": 45.5
-    }
-  },
-  {
-    "n": 6,
-    "name": "Miami GP",
-    "type": "sprint",
-    "pts": {
-      "ROKU": 3.0,
-      "SEHEE": 4.5,
-      "SEJIN": 4.0
-    },
-    "cumul": {
-      "ROKU": 38.5,
-      "SEHEE": 15.0,
-      "SEJIN": 49.5
-    }
-  },
-  {
-    "n": 7,
-    "name": "Emilia Romagna GP",
-    "type": "gp",
-    "pts": {
-      "ROKU": 3.0,
-      "SEHEE": 1.0,
-      "SEJIN": 6.0
-    },
-    "cumul": {
-      "ROKU": 41.5,
-      "SEHEE": 16.0,
-      "SEJIN": 55.5
-    }
-  },
-  {
-    "n": 8,
-    "name": "Monaco GP",
-    "type": "gp",
-    "pts": {
-      "ROKU": 12.0,
-      "SEHEE": 1.0,
-      "SEJIN": 13.0
-    },
-    "cumul": {
-      "ROKU": 53.5,
-      "SEHEE": 17.0,
-      "SEJIN": 68.5
-    }
-  },
-  {
-    "n": 9,
-    "name": "Spanish GP",
-    "type": "gp",
-    "pts": {
-      "ROKU": 3.0,
-      "SEHEE": 3.0,
-      "SEJIN": 0.0
-    },
-    "cumul": {
-      "ROKU": 56.5,
-      "SEHEE": 20.0,
-      "SEJIN": 68.5
-    }
-  },
-  {
-    "n": 10,
-    "name": "Canadian GP",
-    "type": "gp",
-    "pts": {
-      "ROKU": 0.0,
-      "SEHEE": 2.0,
-      "SEJIN": 0.0
-    },
-    "cumul": {
-      "ROKU": 56.5,
-      "SEHEE": 22.0,
-      "SEJIN": 68.5
-    }
-  },
-  {
-    "n": 11,
-    "name": "Austrian GP",
-    "type": "gp",
-    "pts": {
-      "ROKU": 2.0,
-      "SEHEE": 13.0,
-      "SEJIN": 13.0
-    },
-    "cumul": {
-      "ROKU": 58.5,
-      "SEHEE": 35.0,
-      "SEJIN": 81.5
-    }
-  },
-  {
-    "n": 12,
-    "name": "British GP",
-    "type": "gp",
-    "pts": {
-      "ROKU": 0.0,
-      "SEHEE": 0.0,
-      "SEJIN": 2.0
-    },
-    "cumul": {
-      "ROKU": 58.5,
-      "SEHEE": 35.0,
-      "SEJIN": 83.5
-    }
-  },
-  {
-    "n": 13,
-    "name": "Belgian GP",
-    "type": "sprint",
-    "pts": {
-      "ROKU": 13.0,
-      "SEHEE": 2.5,
-      "SEJIN": 31.0
-    },
-    "cumul": {
-      "ROKU": 71.5,
-      "SEHEE": 37.5,
-      "SEJIN": 114.5
-    }
-  },
-  {
-    "n": 14,
-    "name": "Hungarian GP",
-    "type": "gp",
-    "pts": {
-      "ROKU": 2.0,
-      "SEHEE": 2.0,
-      "SEJIN": 2.0
-    },
-    "cumul": {
-      "ROKU": 73.5,
-      "SEHEE": 39.5,
-      "SEJIN": 116.5
-    }
-  },
-  {
-    "n": 15,
-    "name": "Dutch GP",
-    "type": "gp",
-    "pts": {
-      "ROKU": 2.0,
-      "SEHEE": 3.0,
-      "SEJIN": 12.0
-    },
-    "cumul": {
-      "ROKU": 75.5,
-      "SEHEE": 42.5,
-      "SEJIN": 128.5
-    }
-  },
-  {
-    "n": 16,
-    "name": "Italian GP",
-    "type": "gp",
-    "pts": {
-      "ROKU": 1.0,
-      "SEHEE": 13.0,
-      "SEJIN": 36.0
-    },
-    "cumul": {
-      "ROKU": 76.5,
-      "SEHEE": 55.5,
-      "SEJIN": 164.5
-    }
-  },
-  {
-    "n": 17,
-    "name": "Azerbaijan GP",
-    "type": "gp",
-    "pts": {
-      "ROKU": 37.0,
-      "SEHEE": 3.0,
-      "SEJIN": 3.0
-    },
-    "cumul": {
-      "ROKU": 113.5,
-      "SEHEE": 58.5,
-      "SEJIN": 167.5
-    }
-  },
-  {
-    "n": 18,
-    "name": "Singapore GP",
-    "type": "gp",
-    "pts": {
-      "ROKU": 1.0,
-      "SEHEE": 0.0,
-      "SEJIN": 0.0
-    },
-    "cumul": {
-      "ROKU": 114.5,
-      "SEHEE": 58.5,
-      "SEJIN": 167.5
-    }
-  },
-  {
-    "n": 19,
-    "name": "United States GP",
-    "type": "sprint",
-    "pts": {
-      "ROKU": 20.5,
-      "SEHEE": 39.5,
-      "SEJIN": 37.5
-    },
-    "cumul": {
-      "ROKU": 135.0,
-      "SEHEE": 98.0,
-      "SEJIN": 205.0
-    }
-  },
-  {
-    "n": 20,
-    "name": "Mexico City GP",
-    "type": "gp",
-    "pts": {
-      "ROKU": 36.0,
-      "SEHEE": 13.0,
-      "SEJIN": 1.0
-    },
-    "cumul": {
-      "ROKU": 171.0,
-      "SEHEE": 111.0,
-      "SEJIN": 206.0
-    }
-  },
-  {
-    "n": 21,
-    "name": "São Paulo GP",
-    "type": "sprint",
-    "pts": {
-      "ROKU": 3.5,
-      "SEHEE": 11.0,
-      "SEJIN": 3.5
-    },
-    "cumul": {
-      "ROKU": 174.5,
-      "SEHEE": 122.0,
-      "SEJIN": 209.5
-    }
-  },
-  {
-    "n": 22,
-    "name": "Las Vegas GP",
-    "type": "gp",
-    "pts": {
-      "ROKU": 0.0,
-      "SEHEE": 2.0,
-      "SEJIN": 2.0
-    },
-    "cumul": {
-      "ROKU": 174.5,
-      "SEHEE": 124.0,
-      "SEJIN": 211.5
-    }
-  },
-  {
-    "n": 23,
-    "name": "Qatar GP",
-    "type": "sprint",
-    "pts": {
-      "ROKU": 33.0,
-      "SEHEE": 2.5,
-      "SEJIN": 20.5
-    },
-    "cumul": {
-      "ROKU": 207.5,
-      "SEHEE": 126.5,
-      "SEJIN": 232.0
-    }
-  },
-  {
-    "n": 24,
-    "name": "Abu Dhabi GP",
-    "type": "gp",
-    "pts": {
-      "ROKU": 0.0,
-      "SEHEE": 36.0,
-      "SEJIN": 12.0
-    },
-    "cumul": {
-      "ROKU": 207.5,
-      "SEHEE": 162.5,
-      "SEJIN": 244.0
-    }
-  }
-];
-const DATA_2025_ROUND_DATA = {
-  "Round 1 — Australian GP": {
-    "weekendType": "gp",
-    "sessions": [
-      {
-        "key": "quali",
-        "label": "Qualifying ⏱",
-        "mult": 1.0
-      },
-      {
-        "key": "race",
-        "label": "Race 🏁",
-        "mult": 2.0
-      }
-    ],
-    "participants": [
-      {
-        "name": "ROKU",
-        "sessions": {
-          "quali": {
-            "picks": [
-              "PIASTRI",
-              "VERSTAPPEN",
-              "LECLERC"
-            ],
-            "locked": true
-          },
-          "race": {
-            "picks": [
-              "VERSTAPPEN",
-              "PIASTRI",
-              "NORRIS"
-            ],
-            "locked": true
-          }
-        }
-      },
-      {
-        "name": "SEHEE",
-        "sessions": {
-          "quali": {
-            "picks": [
-              "LECLERC",
-              "VERSTAPPEN",
-              "HAMILTON"
-            ],
-            "locked": true
-          },
-          "race": {
-            "picks": [
-              "VERSTAPPEN",
-              "HAMILTON",
-              "LECLERC"
-            ],
-            "locked": true
-          }
-        }
-      },
-      {
-        "name": "SEJIN",
-        "sessions": {
-          "quali": {
-            "picks": [
-              "VERSTAPPEN",
-              "PIASTRI",
-              "LECLERC"
-            ],
-            "locked": true
-          },
-          "race": {
-            "picks": [
-              "VERSTAPPEN",
-              "PIASTRI",
-              "HAMILTON"
-            ],
-            "locked": true
-          }
-        }
-      }
-    ],
-    "results": {
-      "quali": [
-        "NORRIS",
-        "PIASTRI",
-        "VERSTAPPEN"
-      ],
-      "race": [
-        "NORRIS",
-        "VERSTAPPEN",
-        "RUSSELL"
-      ]
-    },
-    "resultLocked": {
-      "quali": true,
-      "race": true
-    },
-    "constructors": [],
-    "constructorLocked": false
-  },
-  "Round 2 — Chinese GP": {
-    "weekendType": "sprint",
-    "sessions": [
-      {
-        "key": "sq",
-        "label": "Sprint Qualifying ⏱",
-        "mult": 1.0
-      },
-      {
-        "key": "sprint",
-        "label": "Sprint 🏁",
-        "mult": 1.5
-      },
-      {
-        "key": "quali",
-        "label": "Qualifying ⏱",
-        "mult": 1.0
-      },
-      {
-        "key": "race",
-        "label": "Race 🏁",
-        "mult": 2.0
-      }
-    ],
-    "participants": [
-      {
-        "name": "ROKU",
-        "sessions": {
-          "sq": {
-            "picks": [
-              "NORRIS",
-              "PIASTRI",
-              "HAMILTON"
-            ],
-            "locked": true
-          },
-          "sprint": {
-            "picks": [
-              "VERSTAPPEN",
-              "PIASTRI",
-              "HAMILTON"
-            ],
-            "locked": true
-          },
-          "quali": {
-            "picks": [
-              "PIASTRI",
-              "VERSTAPPEN",
-              "HAMILTON"
-            ],
-            "locked": true
-          },
-          "race": {
-            "picks": [
-              "PIASTRI",
-              "VERSTAPPEN",
-              "HAMILTON"
-            ],
-            "locked": true
-          }
-        }
-      },
-      {
-        "name": "SEHEE",
-        "sessions": {
-          "sq": {
-            "picks": [
-              "NORRIS",
-              "VERSTAPPEN",
-              "LECLERC"
-            ],
-            "locked": true
-          },
-          "sprint": {
-            "picks": [
-              "HAMILTON",
-              "VERSTAPPEN",
-              "LECLERC"
-            ],
-            "locked": true
-          },
-          "quali": {
-            "picks": [
-              "HAMILTON",
-              "PIASTRI",
-              "LECLERC"
-            ],
-            "locked": true
-          },
-          "race": {
-            "picks": [
-              "PIASTRI",
-              "VERSTAPPEN",
-              "HAMILTON"
-            ],
-            "locked": true
-          }
-        }
-      },
-      {
-        "name": "SEJIN",
-        "sessions": {
-          "sq": {
-            "picks": [
-              "NORRIS",
-              "PIASTRI",
-              "VERSTAPPEN"
-            ],
-            "locked": true
-          },
-          "sprint": {
-            "picks": [
-              "VERSTAPPEN",
-              "PIASTRI",
-              "HAMILTON"
-            ],
-            "locked": true
-          },
-          "quali": {
-            "picks": [
-              "VERSTAPPEN",
-              "PIASTRI",
-              "NORRIS"
-            ],
-            "locked": true
-          },
-          "race": {
-            "picks": [
-              "PIASTRI",
-              "VERSTAPPEN",
-              "NORRIS"
-            ],
-            "locked": true
-          }
-        }
-      }
-    ],
-    "results": {
-      "sq": [
-        "HAMILTON",
-        "VERSTAPPEN",
-        "PIASTRI"
-      ],
-      "sprint": [
-        "HAMILTON",
-        "PIASTRI",
-        "VERSTAPPEN"
-      ],
-      "quali": [
-        "PIASTRI",
-        "RUSSELL",
-        "NORRIS"
-      ],
-      "race": [
-        "PIASTRI",
-        "NORRIS",
-        "RUSSELL"
-      ]
-    },
-    "resultLocked": {
-      "sq": true,
-      "sprint": true,
-      "quali": true,
-      "race": true
-    },
-    "constructors": [],
-    "constructorLocked": false
-  },
-  "Round 3 — Japanese GP": {
-    "weekendType": "gp",
-    "sessions": [
-      {
-        "key": "quali",
-        "label": "Qualifying ⏱",
-        "mult": 1.0
-      },
-      {
-        "key": "race",
-        "label": "Race 🏁",
-        "mult": 2.0
-      }
-    ],
-    "participants": [
-      {
-        "name": "ROKU",
-        "sessions": {
-          "quali": {
-            "picks": [
-              "NORRIS",
-              "RUSSELL",
-              "PIASTRI"
-            ],
-            "locked": true
-          },
-          "race": {
-            "picks": [
-              "NORRIS",
-              "PIASTRI",
-              "RUSSELL"
-            ],
-            "locked": true
-          }
-        }
-      },
-      {
-        "name": "SEHEE",
-        "sessions": {
-          "quali": {
-            "picks": [
-              "NORRIS",
-              "PIASTRI",
-              "LECLERC"
-            ],
-            "locked": true
-          },
-          "race": {
-            "picks": [
-              "VERSTAPPEN",
-              "PIASTRI",
-              "LECLERC"
-            ],
-            "locked": true
-          }
-        }
-      },
-      {
-        "name": "SEJIN",
-        "sessions": {
-          "quali": {
-            "picks": [
-              "NORRIS",
-              "VERSTAPPEN",
-              "RUSSELL"
-            ],
-            "locked": true
-          },
-          "race": {
-            "picks": [
-              "PIASTRI",
-              "VERSTAPPEN",
-              "NORRIS"
-            ],
-            "locked": true
-          }
-        }
-      }
-    ],
-    "results": {
-      "quali": [
-        "VERSTAPPEN",
-        "NORRIS",
-        "PIASTRI"
-      ],
-      "race": [
-        "VERSTAPPEN",
-        "NORRIS",
-        "PIASTRI"
-      ]
-    },
-    "resultLocked": {
-      "quali": true,
-      "race": true
-    },
-    "constructors": [],
-    "constructorLocked": false
-  },
-  "Round 4 — Bahrain GP": {
-    "weekendType": "gp",
-    "sessions": [
-      {
-        "key": "quali",
-        "label": "Qualifying ⏱",
-        "mult": 1.0
-      },
-      {
-        "key": "race",
-        "label": "Race 🏁",
-        "mult": 2.0
-      }
-    ],
-    "participants": [
-      {
-        "name": "ROKU",
-        "sessions": {
-          "quali": {
-            "picks": [
-              "PIASTRI",
-              "NORRIS",
-              "RUSSELL"
-            ],
-            "locked": true
-          },
-          "race": {
-            "picks": [
-              "PIASTRI",
-              "RUSSELL",
-              "VERSTAPPEN"
-            ],
-            "locked": true
-          }
-        }
-      },
-      {
-        "name": "SEHEE",
-        "sessions": {
-          "quali": {
-            "picks": [
-              "PIASTRI",
-              "NORRIS",
-              "LECLERC"
-            ],
-            "locked": true
-          },
-          "race": {
-            "picks": [
-              "PIASTRI",
-              "LECLERC",
-              "ANTONELLI"
-            ],
-            "locked": true
-          }
-        }
-      },
-      {
-        "name": "SEJIN",
-        "sessions": {
-          "quali": {
-            "picks": [
-              "PIASTRI",
-              "NORRIS",
-              "VERSTAPPEN"
-            ],
-            "locked": true
-          },
-          "race": {
-            "picks": [
-              "PIASTRI",
-              "RUSSELL",
-              "NORRIS"
-            ],
-            "locked": true
-          }
-        }
-      }
-    ],
-    "results": {
-      "quali": [
-        "PIASTRI",
-        "LECLERC",
-        "RUSSELL"
-      ],
-      "race": [
-        "PIASTRI",
-        "RUSSELL",
-        "NORRIS"
-      ]
-    },
-    "resultLocked": {
-      "quali": true,
-      "race": true
-    },
-    "constructors": [],
-    "constructorLocked": false
-  },
-  "Round 5 — Saudi Arabian GP": {
-    "weekendType": "gp",
-    "sessions": [
-      {
-        "key": "quali",
-        "label": "Qualifying ⏱",
-        "mult": 1.0
-      },
-      {
-        "key": "race",
-        "label": "Race 🏁",
-        "mult": 2.0
-      }
-    ],
-    "participants": [
-      {
-        "name": "ROKU",
-        "sessions": {
-          "quali": {
-            "picks": [
-              "PIASTRI",
-              "NORRIS",
-              "VERSTAPPEN"
-            ],
-            "locked": true
-          },
-          "race": {
-            "picks": [
-              "PIASTRI",
-              "VERSTAPPEN",
-              "RUSSELL"
-            ],
-            "locked": true
-          }
-        }
-      },
-      {
-        "name": "SEHEE",
-        "sessions": {
-          "quali": {
-            "picks": [
-              "NORRIS",
-              "PIASTRI",
-              "VERSTAPPEN"
-            ],
-            "locked": true
-          },
-          "race": {
-            "picks": [
-              "VERSTAPPEN",
-              "PIASTRI",
-              "ANTONELLI"
-            ],
-            "locked": true
-          }
-        }
-      },
-      {
-        "name": "SEJIN",
-        "sessions": {
-          "quali": {
-            "picks": [
-              "NORRIS",
-              "PIASTRI",
-              "VERSTAPPEN"
-            ],
-            "locked": true
-          },
-          "race": {
-            "picks": [
-              "VERSTAPPEN",
-              "PIASTRI",
-              "LECLERC"
-            ],
-            "locked": true
-          }
-        }
-      }
-    ],
-    "results": {
-      "quali": [
-        "VERSTAPPEN",
-        "PIASTRI",
-        "RUSSELL"
-      ],
-      "race": [
-        "PIASTRI",
-        "VERSTAPPEN",
-        "LECLERC"
-      ]
-    },
-    "resultLocked": {
-      "quali": true,
-      "race": true
-    },
-    "constructors": [],
-    "constructorLocked": false
-  },
-  "Round 6 — Miami GP": {
-    "weekendType": "sprint",
-    "sessions": [
-      {
-        "key": "sq",
-        "label": "Sprint Qualifying ⏱",
-        "mult": 1.0
-      },
-      {
-        "key": "sprint",
-        "label": "Sprint 🏁",
-        "mult": 1.5
-      },
-      {
-        "key": "quali",
-        "label": "Qualifying ⏱",
-        "mult": 1.0
-      },
-      {
-        "key": "race",
-        "label": "Race 🏁",
-        "mult": 2.0
-      }
-    ],
-    "participants": [
-      {
-        "name": "ROKU",
-        "sessions": {
-          "sq": {
-            "picks": [
-              "PIASTRI",
-              "VERSTAPPEN",
-              "NORRIS"
-            ],
-            "locked": true
-          },
-          "sprint": {
-            "picks": [
-              "PIASTRI",
-              "VERSTAPPEN",
-              "RUSSELL"
-            ],
-            "locked": true
-          },
-          "quali": {
-            "picks": [
-              "PIASTRI",
-              "VERSTAPPEN",
-              "NORRIS"
-            ],
-            "locked": true
-          },
-          "race": {
-            "picks": [
-              "PIASTRI",
-              "VERSTAPPEN",
-              "NORRIS"
-            ],
-            "locked": true
-          }
-        }
-      },
-      {
-        "name": "SEHEE",
-        "sessions": {
-          "sq": {
-            "picks": [
-              "PIASTRI",
-              "VERSTAPPEN",
-              "LECLERC"
-            ],
-            "locked": true
-          },
-          "sprint": {
-            "picks": [
-              "ANTONELLI",
-              "PIASTRI",
-              "VERSTAPPEN"
-            ],
-            "locked": true
-          },
-          "quali": {
-            "picks": [
-              "PIASTRI",
-              "VERSTAPPEN",
-              "ANTONELLI"
-            ],
-            "locked": true
-          },
-          "race": {
-            "picks": [
-              "VERSTAPPEN",
-              "NORRIS",
-              "PIASTRI"
-            ],
-            "locked": true
-          }
-        }
-      },
-      {
-        "name": "SEJIN",
-        "sessions": {
-          "sq": {
-            "picks": [
-              "VERSTAPPEN",
-              "PIASTRI",
-              "LECLERC"
-            ],
-            "locked": true
-          },
-          "sprint": {
-            "picks": [
-              "PIASTRI",
-              "ANTONELLI",
-              "VERSTAPPEN"
-            ],
-            "locked": true
-          },
-          "quali": {
-            "picks": [
-              "VERSTAPPEN",
-              "PIASTRI",
-              "NORRIS"
-            ],
-            "locked": true
-          },
-          "race": {
-            "picks": [
-              "VERSTAPPEN",
-              "NORRIS",
-              "PIASTRI"
-            ],
-            "locked": true
-          }
-        }
-      }
-    ],
-    "results": {
-      "sq": [
-        "ANTONELLI",
-        "PIASTRI",
-        "NORRIS"
-      ],
-      "sprint": [
-        "NORRIS",
-        "PIASTRI",
-        "HAMILTON"
-      ],
-      "quali": [
-        "VERSTAPPEN",
-        "NORRIS",
-        "ANTONELLI"
-      ],
-      "race": [
-        "PIASTRI",
-        "NORRIS",
-        "RUSSELL"
-      ]
-    },
-    "resultLocked": {
-      "sq": true,
-      "sprint": true,
-      "quali": true,
-      "race": true
-    },
-    "constructors": [],
-    "constructorLocked": false
-  },
-  "Round 7 — Emilia Romagna GP": {
-    "weekendType": "gp",
-    "sessions": [
-      {
-        "key": "quali",
-        "label": "Qualifying ⏱",
-        "mult": 1.0
-      },
-      {
-        "key": "race",
-        "label": "Race 🏁",
-        "mult": 2.0
-      }
-    ],
-    "participants": [
-      {
-        "name": "ROKU",
-        "sessions": {
-          "quali": {
-            "picks": [
-              "NORRIS",
-              "VERSTAPPEN",
-              "PIASTRI"
-            ],
-            "locked": true
-          },
-          "race": {
-            "picks": [
-              "PIASTRI",
-              "NORRIS",
-              "VERSTAPPEN"
-            ],
-            "locked": true
-          }
-        }
-      },
-      {
-        "name": "SEHEE",
-        "sessions": {
-          "quali": {
-            "picks": [
-              "PIASTRI",
-              "NORRIS",
-              "ANTONELLI"
-            ],
-            "locked": true
-          },
-          "race": {
-            "picks": [
-              "PIASTRI",
-              "VERSTAPPEN",
-              "RUSSELL"
-            ],
-            "locked": true
-          }
-        }
-      },
-      {
-        "name": "SEJIN",
-        "sessions": {
-          "quali": {
-            "picks": [
-              "PIASTRI",
-              "VERSTAPPEN",
-              "ANTONELLI"
-            ],
-            "locked": true
-          },
-          "race": {
-            "picks": [
-              "PIASTRI",
-              "VERSTAPPEN",
-              "NORRIS"
-            ],
-            "locked": true
-          }
-        }
-      }
-    ],
-    "results": {
-      "quali": [
-        "PIASTRI",
-        "VERSTAPPEN",
-        "RUSSELL"
-      ],
-      "race": [
-        "VERSTAPPEN",
-        "NORRIS",
-        "PIASTRI"
-      ]
-    },
-    "resultLocked": {
-      "quali": true,
-      "race": true
-    },
-    "constructors": [],
-    "constructorLocked": false
-  },
-  "Round 8 — Monaco GP": {
-    "weekendType": "gp",
-    "sessions": [
-      {
-        "key": "quali",
-        "label": "Qualifying ⏱",
-        "mult": 1.0
-      },
-      {
-        "key": "race",
-        "label": "Race 🏁",
-        "mult": 2.0
-      }
-    ],
-    "participants": [
-      {
-        "name": "ROKU",
-        "sessions": {
-          "quali": {
-            "picks": [
-              "PIASTRI",
-              "VERSTAPPEN",
-              "LECLERC"
-            ],
-            "locked": true
-          },
-          "race": {
-            "picks": [
-              "NORRIS",
-              "VERSTAPPEN",
-              "PIASTRI"
-            ],
-            "locked": true
-          }
-        }
-      },
-      {
-        "name": "SEHEE",
-        "sessions": {
-          "quali": {
-            "picks": [
-              "LECLERC",
-              "VERSTAPPEN",
-              "PIASTRI"
-            ],
-            "locked": true
-          },
-          "race": {
-            "picks": [
-              "LECLERC",
-              "PIASTRI",
-              "VERSTAPPEN"
-            ],
-            "locked": true
-          }
-        }
-      },
-      {
-        "name": "SEJIN",
-        "sessions": {
-          "quali": {
-            "picks": [
-              "VERSTAPPEN",
-              "LECLERC",
-              "NORRIS"
-            ],
-            "locked": true
-          },
-          "race": {
-            "picks": [
-              "VERSTAPPEN",
-              "LECLERC",
-              "PIASTRI"
-            ],
-            "locked": true
-          }
-        }
-      }
-    ],
-    "results": {
-      "quali": [
-        "NORRIS",
-        "LECLERC",
-        "PIASTRI"
-      ],
-      "race": [
-        "NORRIS",
-        "LECLERC",
-        "PIASTRI"
-      ]
-    },
-    "resultLocked": {
-      "quali": true,
-      "race": true
-    },
-    "constructors": [],
-    "constructorLocked": false
-  },
-  "Round 9 — Spanish GP": {
-    "weekendType": "gp",
-    "sessions": [
-      {
-        "key": "quali",
-        "label": "Qualifying ⏱",
-        "mult": 1.0
-      },
-      {
-        "key": "race",
-        "label": "Race 🏁",
-        "mult": 2.0
-      }
-    ],
-    "participants": [
-      {
-        "name": "ROKU",
-        "sessions": {
-          "quali": {
-            "picks": [
-              "PIASTRI",
-              "VERSTAPPEN",
-              "NORRIS"
-            ],
-            "locked": true
-          },
-          "race": {
-            "picks": [
-              "PIASTRI",
-              "VERSTAPPEN",
-              "NORRIS"
-            ],
-            "locked": true
-          }
-        }
-      },
-      {
-        "name": "SEHEE",
-        "sessions": {
-          "quali": {
-            "picks": [
-              "PIASTRI",
-              "VERSTAPPEN",
-              "NORRIS"
-            ],
-            "locked": true
-          },
-          "race": {
-            "picks": [
-              "PIASTRI",
-              "VERSTAPPEN",
-              "NORRIS"
-            ],
-            "locked": true
-          }
-        }
-      },
-      {
-        "name": "SEJIN",
-        "sessions": {
-          "quali": {
-            "picks": [
-              "VERSTAPPEN",
-              "PIASTRI",
-              "NORRIS"
-            ],
-            "locked": true
-          },
-          "race": {
-            "picks": [
-              "VERSTAPPEN",
-              "PIASTRI",
-              "NORRIS"
-            ],
-            "locked": true
-          }
-        }
-      }
-    ],
-    "results": {
-      "quali": [
-        "PIASTRI",
-        "NORRIS",
-        "VERSTAPPEN"
-      ],
-      "race": [
-        "PIASTRI",
-        "NORRIS",
-        "LECLERC"
-      ]
-    },
-    "resultLocked": {
-      "quali": true,
-      "race": true
-    },
-    "constructors": [],
-    "constructorLocked": false
-  },
-  "Round 10 — Canadian GP": {
-    "weekendType": "gp",
-    "sessions": [
-      {
-        "key": "quali",
-        "label": "Qualifying ⏱",
-        "mult": 1.0
-      },
-      {
-        "key": "race",
-        "label": "Race 🏁",
-        "mult": 2.0
-      }
-    ],
-    "participants": [
-      {
-        "name": "ROKU",
-        "sessions": {
-          "quali": {
-            "picks": [
-              "VERSTAPPEN",
-              "NORRIS",
-              "ALBON"
-            ],
-            "locked": true
-          },
-          "race": {
-            "picks": [
-              "VERSTAPPEN",
-              "RUSSELL",
-              "NORRIS"
-            ],
-            "locked": true
-          }
-        }
-      },
-      {
-        "name": "SEHEE",
-        "sessions": {
-          "quali": {
-            "picks": [
-              "VERSTAPPEN",
-              "NORRIS",
-              "ANTONELLI"
-            ],
-            "locked": true
-          },
-          "race": {
-            "picks": [
-              "VERSTAPPEN",
-              "PIASTRI",
-              "ANTONELLI"
-            ],
-            "locked": true
-          }
-        }
-      },
-      {
-        "name": "SEJIN",
-        "sessions": {
-          "quali": {
-            "picks": [
-              "VERSTAPPEN",
-              "PIASTRI",
-              "RUSSELL"
-            ],
-            "locked": true
-          },
-          "race": {
-            "picks": [
-              "VERSTAPPEN",
-              "PIASTRI",
-              "RUSSELL"
-            ],
-            "locked": true
-          }
-        }
-      }
-    ],
-    "results": {
-      "quali": [
-        "RUSSELL",
-        "VERSTAPPEN",
-        "PIASTRI"
-      ],
-      "race": [
-        "RUSSELL",
-        "VERSTAPPEN",
-        "ANTONELLI"
-      ]
-    },
-    "resultLocked": {
-      "quali": true,
-      "race": true
-    },
-    "constructors": [],
-    "constructorLocked": false
-  },
-  "Round 11 — Austrian GP": {
-    "weekendType": "gp",
-    "sessions": [
-      {
-        "key": "quali",
-        "label": "Qualifying ⏱",
-        "mult": 1.0
-      },
-      {
-        "key": "race",
-        "label": "Race 🏁",
-        "mult": 2.0
-      }
-    ],
-    "participants": [
-      {
-        "name": "ROKU",
-        "sessions": {
-          "quali": {
-            "picks": [
-              "PIASTRI",
-              "VERSTAPPEN",
-              "NORRIS"
-            ],
-            "locked": true
-          },
-          "race": {
-            "picks": [
-              "PIASTRI",
-              "NORRIS",
-              "LECLERC"
-            ],
-            "locked": true
-          }
-        }
-      },
-      {
-        "name": "SEHEE",
-        "sessions": {
-          "quali": {
-            "picks": [
-              "NORRIS",
-              "PIASTRI",
-              "VERSTAPPEN"
-            ],
-            "locked": true
-          },
-          "race": {
-            "picks": [
-              "NORRIS",
-              "PIASTRI",
-              "HAMILTON"
-            ],
-            "locked": true
-          }
-        }
-      },
-      {
-        "name": "SEJIN",
-        "sessions": {
-          "quali": {
-            "picks": [
-              "VERSTAPPEN",
-              "NORRIS",
-              "PIASTRI"
-            ],
-            "locked": true
-          },
-          "race": {
-            "picks": [
-              "NORRIS",
-              "PIASTRI",
-              "RUSSELL"
-            ],
-            "locked": true
-          }
-        }
-      }
-    ],
-    "results": {
-      "quali": [
-        "NORRIS",
-        "LECLERC",
-        "PIASTRI"
-      ],
-      "race": [
-        "NORRIS",
-        "PIASTRI",
-        "LECLERC"
-      ]
-    },
-    "resultLocked": {
-      "quali": true,
-      "race": true
-    },
-    "constructors": [],
-    "constructorLocked": false
-  },
-  "Round 12 — British GP": {
-    "weekendType": "gp",
-    "sessions": [
-      {
-        "key": "quali",
-        "label": "Qualifying ⏱",
-        "mult": 1.0
-      },
-      {
-        "key": "race",
-        "label": "Race 🏁",
-        "mult": 2.0
-      }
-    ],
-    "participants": [
-      {
-        "name": "ROKU",
-        "sessions": {
-          "quali": {
-            "picks": [
-              "NORRIS",
-              "HAMILTON",
-              "VERSTAPPEN"
-            ],
-            "locked": true
-          },
-          "race": {
-            "picks": [
-              "VERSTAPPEN",
-              "HAMILTON",
-              "PIASTRI"
-            ],
-            "locked": true
-          }
-        }
-      },
-      {
-        "name": "SEHEE",
-        "sessions": {
-          "quali": {
-            "picks": [
-              "NORRIS",
-              "LECLERC",
-              "HAMILTON"
-            ],
-            "locked": true
-          },
-          "race": {
-            "picks": [
-              "VERSTAPPEN",
-              "HAMILTON",
-              "NORRIS"
-            ],
-            "locked": true
-          }
-        }
-      },
-      {
-        "name": "SEJIN",
-        "sessions": {
-          "quali": {
-            "picks": [
-              "NORRIS",
-              "VERSTAPPEN",
-              "LECLERC"
-            ],
-            "locked": true
-          },
-          "race": {
-            "picks": [
-              "VERSTAPPEN",
-              "PIASTRI",
-              "RUSSELL"
-            ],
-            "locked": true
-          }
-        }
-      }
-    ],
-    "results": {
-      "quali": [
-        "VERSTAPPEN",
-        "PIASTRI",
-        "NORRIS"
-      ],
-      "race": [
-        "NORRIS",
-        "PIASTRI",
-        "HULKENBERG"
-      ]
-    },
-    "resultLocked": {
-      "quali": true,
-      "race": true
-    },
-    "constructors": [],
-    "constructorLocked": false
-  },
-  "Round 13 — Belgian GP": {
-    "weekendType": "sprint",
-    "sessions": [
-      {
-        "key": "sq",
-        "label": "Sprint Qualifying ⏱",
-        "mult": 1.0
-      },
-      {
-        "key": "sprint",
-        "label": "Sprint 🏁",
-        "mult": 1.5
-      },
-      {
-        "key": "quali",
-        "label": "Qualifying ⏱",
-        "mult": 1.0
-      },
-      {
-        "key": "race",
-        "label": "Race 🏁",
-        "mult": 2.0
-      }
-    ],
-    "participants": [
-      {
-        "name": "ROKU",
-        "sessions": {
-          "sq": {
-            "picks": [
-              "PIASTRI",
-              "NORRIS",
-              "VERSTAPPEN"
-            ],
-            "locked": true
-          },
-          "sprint": {
-            "picks": [
-              "PIASTRI",
-              "NORRIS",
-              "VERSTAPPEN"
-            ],
-            "locked": true
-          },
-          "quali": {
-            "picks": [
-              "PIASTRI",
-              "VERSTAPPEN",
-              "NORRIS"
-            ],
-            "locked": true
-          },
-          "race": {
-            "picks": [
-              "PIASTRI",
-              "NORRIS",
-              "VERSTAPPEN"
-            ],
-            "locked": true
-          }
-        }
-      },
-      {
-        "name": "SEHEE",
-        "sessions": {
-          "sq": {
-            "picks": [
-              "VERSTAPPEN",
-              "PIASTRI",
-              "HAMILTON"
-            ],
-            "locked": true
-          },
-          "sprint": {
-            "picks": [
-              "PIASTRI",
-              "VERSTAPPEN",
-              "NORRIS"
-            ],
-            "locked": true
-          },
-          "quali": {
-            "picks": [
-              "PIASTRI",
-              "VERSTAPPEN",
-              "LECLERC"
-            ],
-            "locked": true
-          },
-          "race": {
-            "picks": [
-              "NORRIS",
-              "LECLERC",
-              "VERSTAPPEN"
-            ],
-            "locked": true
-          }
-        }
-      },
-      {
-        "name": "SEJIN",
-        "sessions": {
-          "sq": {
-            "picks": [
-              "VERSTAPPEN",
-              "PIASTRI",
-              "NORRIS"
-            ],
-            "locked": true
-          },
-          "sprint": {
-            "picks": [
-              "VERSTAPPEN",
-              "PIASTRI",
-              "NORRIS"
-            ],
-            "locked": true
-          },
-          "quali": {
-            "picks": [
-              "VERSTAPPEN",
-              "PIASTRI",
-              "NORRIS"
-            ],
-            "locked": true
-          },
-          "race": {
-            "picks": [
-              "NORRIS",
-              "VERSTAPPEN",
-              "LECLERC"
-            ],
-            "locked": true
-          }
-        }
-      }
-    ],
-    "results": {
-      "sq": [
-        "PIASTRI",
-        "VERSTAPPEN",
-        "NORRIS"
-      ],
-      "sprint": [
-        "VERSTAPPEN",
-        "PIASTRI",
-        "NORRIS"
-      ],
-      "quali": [
-        "NORRIS",
-        "PIASTRI",
-        "LECLERC"
-      ],
-      "race": [
-        "PIASTRI",
-        "NORRIS",
-        "LECLERC"
-      ]
-    },
-    "resultLocked": {
-      "sq": true,
-      "sprint": true,
-      "quali": true,
-      "race": true
-    },
-    "constructors": [],
-    "constructorLocked": false
-  },
-  "Round 14 — Hungarian GP": {
-    "weekendType": "gp",
-    "sessions": [
-      {
-        "key": "quali",
-        "label": "Qualifying ⏱",
-        "mult": 1.0
-      },
-      {
-        "key": "race",
-        "label": "Race 🏁",
-        "mult": 2.0
-      }
-    ],
-    "participants": [
-      {
-        "name": "ROKU",
-        "sessions": {
-          "quali": {
-            "picks": [
-              "PIASTRI",
-              "NORRIS",
-              "LECLERC"
-            ],
-            "locked": true
-          },
-          "race": {
-            "picks": [
-              "PIASTRI",
-              "LECLERC",
-              "RUSSELL"
-            ],
-            "locked": true
-          }
-        }
-      },
-      {
-        "name": "SEHEE",
-        "sessions": {
-          "quali": {
-            "picks": [
-              "PIASTRI",
-              "NORRIS",
-              "HAMILTON"
-            ],
-            "locked": true
-          },
-          "race": {
-            "picks": [
-              "LECLERC",
-              "PIASTRI",
-              "HAMILTON"
-            ],
-            "locked": true
-          }
-        }
-      },
-      {
-        "name": "SEJIN",
-        "sessions": {
-          "quali": {
-            "picks": [
-              "PIASTRI",
-              "NORRIS",
-              "VERSTAPPEN"
-            ],
-            "locked": true
-          },
-          "race": {
-            "picks": [
-              "LECLERC",
-              "PIASTRI",
-              "VERSTAPPEN"
-            ],
-            "locked": true
-          }
-        }
-      }
-    ],
-    "results": {
-      "quali": [
-        "LECLERC",
-        "PIASTRI",
-        "NORRIS"
-      ],
-      "race": [
-        "NORRIS",
-        "PIASTRI",
-        "RUSSELL"
-      ]
-    },
-    "resultLocked": {
-      "quali": true,
-      "race": true
-    },
-    "constructors": [],
-    "constructorLocked": false
-  },
-  "Round 15 — Dutch GP": {
-    "weekendType": "gp",
-    "sessions": [
-      {
-        "key": "quali",
-        "label": "Qualifying ⏱",
-        "mult": 1.0
-      },
-      {
-        "key": "race",
-        "label": "Race 🏁",
-        "mult": 2.0
-      }
-    ],
-    "participants": [
-      {
-        "name": "ROKU",
-        "sessions": {
-          "quali": {
-            "picks": [
-              "NORRIS",
-              "PIASTRI",
-              "RUSSELL"
-            ],
-            "locked": true
-          },
-          "race": {
-            "picks": [
-              "PIASTRI",
-              "NORRIS",
-              "VERSTAPPEN"
-            ],
-            "locked": true
-          }
-        }
-      },
-      {
-        "name": "SEHEE",
-        "sessions": {
-          "quali": {
-            "picks": [
-              "NORRIS",
-              "PIASTRI",
-              "VERSTAPPEN"
-            ],
-            "locked": true
-          },
-          "race": {
-            "picks": [
-              "PIASTRI",
-              "NORRIS",
-              "VERSTAPPEN"
-            ],
-            "locked": true
-          }
-        }
-      },
-      {
-        "name": "SEJIN",
-        "sessions": {
-          "quali": {
-            "picks": [
-              "NORRIS",
-              "RUSSELL",
-              "ALONSO"
-            ],
-            "locked": true
-          },
-          "race": {
-            "picks": [
-              "PIASTRI",
-              "VERSTAPPEN",
-              "RUSSELL"
-            ],
-            "locked": true
-          }
-        }
-      }
-    ],
-    "results": {
-      "quali": [
-        "PIASTRI",
-        "NORRIS",
-        "VERSTAPPEN"
-      ],
-      "race": [
-        "PIASTRI",
-        "VERSTAPPEN",
-        "HADJAR"
-      ]
-    },
-    "resultLocked": {
-      "quali": true,
-      "race": true
-    },
-    "constructors": [],
-    "constructorLocked": false
-  },
-  "Round 16 — Italian GP": {
-    "weekendType": "gp",
-    "sessions": [
-      {
-        "key": "quali",
-        "label": "Qualifying ⏱",
-        "mult": 1.0
-      },
-      {
-        "key": "race",
-        "label": "Race 🏁",
-        "mult": 2.0
-      }
-    ],
-    "participants": [
-      {
-        "name": "ROKU",
-        "sessions": {
-          "quali": {
-            "picks": [
-              "PIASTRI",
-              "NORRIS",
-              "LECLERC"
-            ],
-            "locked": true
-          },
-          "race": {
-            "picks": [
-              "PIASTRI",
-              "VERSTAPPEN",
-              "NORRIS"
-            ],
-            "locked": true
-          }
-        }
-      },
-      {
-        "name": "SEHEE",
-        "sessions": {
-          "quali": {
-            "picks": [
-              "LECLERC",
-              "NORRIS",
-              "HAMILTON"
-            ],
-            "locked": true
-          },
-          "race": {
-            "picks": [
-              "VERSTAPPEN",
-              "NORRIS",
-              "LECLERC"
-            ],
-            "locked": true
-          }
-        }
-      },
-      {
-        "name": "SEJIN",
-        "sessions": {
-          "quali": {
-            "picks": [
-              "NORRIS",
-              "PIASTRI",
-              "LECLERC"
-            ],
-            "locked": true
-          },
-          "race": {
-            "picks": [
-              "VERSTAPPEN",
-              "NORRIS",
-              "PIASTRI"
-            ],
-            "locked": true
-          }
-        }
-      }
-    ],
-    "results": {
-      "quali": [
-        "VERSTAPPEN",
-        "NORRIS",
-        "PIASTRI"
-      ],
-      "race": [
-        "VERSTAPPEN",
-        "NORRIS",
-        "PIASTRI"
-      ]
-    },
-    "resultLocked": {
-      "quali": true,
-      "race": true
-    },
-    "constructors": [],
-    "constructorLocked": false
-  },
-  "Round 17 — Azerbaijan GP": {
-    "weekendType": "gp",
-    "sessions": [
-      {
-        "key": "quali",
-        "label": "Qualifying ⏱",
-        "mult": 1.0
-      },
-      {
-        "key": "race",
-        "label": "Race 🏁",
-        "mult": 2.0
-      }
-    ],
-    "participants": [
-      {
-        "name": "ROKU",
-        "sessions": {
-          "quali": {
-            "picks": [
-              "VERSTAPPEN",
-              "NORRIS",
-              "PIASTRI"
-            ],
-            "locked": true
-          },
-          "race": {
-            "picks": [
-              "VERSTAPPEN",
-              "RUSSELL",
-              "SAINZ"
-            ],
-            "locked": true
-          }
-        }
-      },
-      {
-        "name": "SEHEE",
-        "sessions": {
-          "quali": {
-            "picks": [
-              "VERSTAPPEN",
-              "NORRIS",
-              "LECLERC"
-            ],
-            "locked": true
-          },
-          "race": {
-            "picks": [
-              "VERSTAPPEN",
-              "SAINZ",
-              "ANTONELLI"
-            ],
-            "locked": true
-          }
-        }
-      },
-      {
-        "name": "SEJIN",
-        "sessions": {
-          "quali": {
-            "picks": [
-              "VERSTAPPEN",
-              "NORRIS",
-              "LECLERC"
-            ],
-            "locked": true
-          },
-          "race": {
-            "picks": [
-              "VERSTAPPEN",
-              "SAINZ",
-              "NORRIS"
-            ],
-            "locked": true
-          }
-        }
-      }
-    ],
-    "results": {
-      "quali": [
-        "VERSTAPPEN",
-        "SAINZ",
-        "LAWSON"
-      ],
-      "race": [
-        "VERSTAPPEN",
-        "RUSSELL",
-        "SAINZ"
-      ]
-    },
-    "resultLocked": {
-      "quali": true,
-      "race": true
-    },
-    "constructors": [],
-    "constructorLocked": false
-  },
-  "Round 18 — Singapore GP": {
-    "weekendType": "gp",
-    "sessions": [
-      {
-        "key": "quali",
-        "label": "Qualifying ⏱",
-        "mult": 1.0
-      },
-      {
-        "key": "race",
-        "label": "Race 🏁",
-        "mult": 2.0
-      }
-    ],
-    "participants": [
-      {
-        "name": "ROKU",
-        "sessions": {
-          "quali": {
-            "picks": [
-              "PIASTRI",
-              "VERSTAPPEN",
-              "RUSSELL"
-            ],
-            "locked": true
-          },
-          "race": {
-            "picks": [
-              "VERSTAPPEN",
-              "PIASTRI",
-              "HAMILTON"
-            ],
-            "locked": true
-          }
-        }
-      },
-      {
-        "name": "SEHEE",
-        "sessions": {
-          "quali": {
-            "picks": [
-              "VERSTAPPEN",
-              "PIASTRI",
-              "LECLERC"
-            ],
-            "locked": true
-          },
-          "race": {
-            "picks": [
-              "VERSTAPPEN",
-              "RUSSELL",
-              "ANTONELLI"
-            ],
-            "locked": true
-          }
-        }
-      },
-      {
-        "name": "SEJIN",
-        "sessions": {
-          "quali": {
-            "picks": [
-              "VERSTAPPEN",
-              "PIASTRI",
-              "RUSSELL"
-            ],
-            "locked": true
-          },
-          "race": {
-            "picks": [
-              "VERSTAPPEN",
-              "RUSSELL",
-              "PIASTRI"
-            ],
-            "locked": true
-          }
-        }
-      }
-    ],
-    "results": {
-      "quali": [
-        "RUSSELL",
-        "VERSTAPPEN",
-        "PIASTRI"
-      ],
-      "race": [
-        "RUSSELL",
-        "VERSTAPPEN",
-        "NORRIS"
-      ]
-    },
-    "resultLocked": {
-      "quali": true,
-      "race": true
-    },
-    "constructors": [],
-    "constructorLocked": false
-  },
-  "Round 19 — United States GP": {
-    "weekendType": "sprint",
-    "sessions": [
-      {
-        "key": "sq",
-        "label": "Sprint Qualifying ⏱",
-        "mult": 1.0
-      },
-      {
-        "key": "sprint",
-        "label": "Sprint 🏁",
-        "mult": 1.5
-      },
-      {
-        "key": "quali",
-        "label": "Qualifying ⏱",
-        "mult": 1.0
-      },
-      {
-        "key": "race",
-        "label": "Race 🏁",
-        "mult": 2.0
-      }
-    ],
-    "participants": [
-      {
-        "name": "ROKU",
-        "sessions": {
-          "sq": {
-            "picks": [
-              "VERSTAPPEN",
-              "RUSSELL",
-              "PIASTRI"
-            ],
-            "locked": true
-          },
-          "sprint": {
-            "picks": [
-              "VERSTAPPEN",
-              "PIASTRI",
-              "NORRIS"
-            ],
-            "locked": true
-          },
-          "quali": {
-            "picks": [
-              "VERSTAPPEN",
-              "PIASTRI",
-              "NORRIS"
-            ],
-            "locked": true
-          },
-          "race": {
-            "picks": [
-              "VERSTAPPEN",
-              "RUSSELL",
-              "LECLERC"
-            ],
-            "locked": true
-          }
-        }
-      },
-      {
-        "name": "SEHEE",
-        "sessions": {
-          "sq": {
-            "picks": [
-              "VERSTAPPEN",
-              "LECLERC",
-              "ANTONELLI"
-            ],
-            "locked": true
-          },
-          "sprint": {
-            "picks": [
-              "VERSTAPPEN",
-              "NORRIS",
-              "PIASTRI"
-            ],
-            "locked": true
-          },
-          "quali": {
-            "picks": [
-              "VERSTAPPEN",
-              "PIASTRI",
-              "NORRIS"
-            ],
-            "locked": true
-          },
-          "race": {
-            "picks": [
-              "VERSTAPPEN",
-              "NORRIS",
-              "LECLERC"
-            ],
-            "locked": true
-          }
-        }
-      },
-      {
-        "name": "SEJIN",
-        "sessions": {
-          "sq": {
-            "picks": [
-              "VERSTAPPEN",
-              "NORRIS",
-              "PIASTRI"
-            ],
-            "locked": true
-          },
-          "sprint": {
-            "picks": [
-              "VERSTAPPEN",
-              "NORRIS",
-              "PIASTRI"
-            ],
-            "locked": true
-          },
-          "quali": {
-            "picks": [
-              "VERSTAPPEN",
-              "NORRIS",
-              "PIASTRI"
-            ],
-            "locked": true
-          },
-          "race": {
-            "picks": [
-              "VERSTAPPEN",
-              "NORRIS",
-              "RUSSELL"
-            ],
-            "locked": true
-          }
-        }
-      }
-    ],
-    "results": {
-      "sq": [
-        "VERSTAPPEN",
-        "NORRIS",
-        "PIASTRI"
-      ],
-      "sprint": [
-        "VERSTAPPEN",
-        "RUSSELL",
-        "SAINZ"
-      ],
-      "quali": [
-        "VERSTAPPEN",
-        "NORRIS",
-        "LECLERC"
-      ],
-      "race": [
-        "VERSTAPPEN",
-        "NORRIS",
-        "LECLERC"
-      ]
-    },
-    "resultLocked": {
-      "sq": true,
-      "sprint": true,
-      "quali": true,
-      "race": true
-    },
-    "constructors": [],
-    "constructorLocked": false
-  },
-  "Round 20 — Mexico City GP": {
-    "weekendType": "gp",
-    "sessions": [
-      {
-        "key": "quali",
-        "label": "Qualifying ⏱",
-        "mult": 1.0
-      },
-      {
-        "key": "race",
-        "label": "Race 🏁",
-        "mult": 2.0
-      }
-    ],
-    "participants": [
-      {
-        "name": "ROKU",
-        "sessions": {
-          "quali": {
-            "picks": [
-              "VERSTAPPEN",
-              "NORRIS",
-              "LECLERC"
-            ],
-            "locked": true
-          },
-          "race": {
-            "picks": [
-              "NORRIS",
-              "LECLERC",
-              "VERSTAPPEN"
-            ],
-            "locked": true
-          }
-        }
-      },
-      {
-        "name": "SEHEE",
-        "sessions": {
-          "quali": {
-            "picks": [
-              "VERSTAPPEN",
-              "LECLERC",
-              "ANTONELLI"
-            ],
-            "locked": true
-          },
-          "race": {
-            "picks": [
-              "NORRIS",
-              "LECLERC",
-              "HAMILTON"
-            ],
-            "locked": true
-          }
-        }
-      },
-      {
-        "name": "SEJIN",
-        "sessions": {
-          "quali": {
-            "picks": [
-              "VERSTAPPEN",
-              "LECLERC",
-              "RUSSELL"
-            ],
-            "locked": true
-          },
-          "race": {
-            "picks": [
-              "VERSTAPPEN",
-              "NORRIS",
-              "LECLERC"
-            ],
-            "locked": true
-          }
-        }
-      }
-    ],
-    "results": {
-      "quali": [
-        "NORRIS",
-        "LECLERC",
-        "HAMILTON"
-      ],
-      "race": [
-        "NORRIS",
-        "LECLERC",
-        "VERSTAPPEN"
-      ]
-    },
-    "resultLocked": {
-      "quali": true,
-      "race": true
-    },
-    "constructors": [],
-    "constructorLocked": false
-  },
-  "Round 21 — São Paulo GP": {
-    "weekendType": "sprint",
-    "sessions": [
-      {
-        "key": "sq",
-        "label": "Sprint Qualifying ⏱",
-        "mult": 1.0
-      },
-      {
-        "key": "sprint",
-        "label": "Sprint 🏁",
-        "mult": 1.5
-      },
-      {
-        "key": "quali",
-        "label": "Qualifying ⏱",
-        "mult": 1.0
-      },
-      {
-        "key": "race",
-        "label": "Race 🏁",
-        "mult": 2.0
-      }
-    ],
-    "participants": [
-      {
-        "name": "ROKU",
-        "sessions": {
-          "sq": {
-            "picks": [
-              "",
-              "",
-              ""
-            ],
-            "locked": true
-          },
-          "sprint": {
-            "picks": [
-              "PIASTRI",
-              "NORRIS",
-              "RUSSELL"
-            ],
-            "locked": true
-          },
-          "quali": {
-            "picks": [
-              "",
-              "",
-              ""
-            ],
-            "locked": true
-          },
-          "race": {
-            "picks": [
-              "NORRIS",
-              "PIASTRI",
-              "HADJAR"
-            ],
-            "locked": true
-          }
-        }
-      },
-      {
-        "name": "SEHEE",
-        "sessions": {
-          "sq": {
-            "picks": [
-              "",
-              "",
-              ""
-            ],
-            "locked": true
-          },
-          "sprint": {
-            "picks": [
-              "NORRIS",
-              "ANTONELLI",
-              "PIASTRI"
-            ],
-            "locked": true
-          },
-          "quali": {
-            "picks": [
-              "",
-              "",
-              ""
-            ],
-            "locked": true
-          },
-          "race": {
-            "picks": [
-              "NORRIS",
-              "LECLERC",
-              "ANTONELLI"
-            ],
-            "locked": true
-          }
-        }
-      },
-      {
-        "name": "SEJIN",
-        "sessions": {
-          "sq": {
-            "picks": [
-              "",
-              "",
-              ""
-            ],
-            "locked": true
-          },
-          "sprint": {
-            "picks": [
-              "NORRIS",
-              "PIASTRI",
-              "VERSTAPPEN"
-            ],
-            "locked": true
-          },
-          "quali": {
-            "picks": [
-              "",
-              "",
-              ""
-            ],
-            "locked": true
-          },
-          "race": {
-            "picks": [
-              "NORRIS",
-              "LECLERC",
-              "PIASTRI"
-            ],
-            "locked": true
-          }
-        }
-      }
-    ],
-    "results": {
-      "sq": [
-        "NORRIS",
-        "ANTONELLI",
-        "PIASTRI"
-      ],
-      "sprint": [
-        "NORRIS",
-        "ANTONELLI",
-        "RUSSELL"
-      ],
-      "quali": [
-        "NORRIS",
-        "ANTONELLI",
-        "LECLERC"
-      ],
-      "race": [
-        "NORRIS",
-        "ANTONELLI",
-        "VERSTAPPEN"
-      ]
-    },
-    "resultLocked": {
-      "sq": true,
-      "sprint": true,
-      "quali": true,
-      "race": true
-    },
-    "constructors": [],
-    "constructorLocked": false
-  },
-  "Round 22 — Las Vegas GP": {
-    "weekendType": "gp",
-    "sessions": [
-      {
-        "key": "quali",
-        "label": "Qualifying ⏱",
-        "mult": 1.0
-      },
-      {
-        "key": "race",
-        "label": "Race 🏁",
-        "mult": 2.0
-      }
-    ],
-    "participants": [
-      {
-        "name": "ROKU",
-        "sessions": {
-          "quali": {
-            "picks": [
-              "",
-              "",
-              ""
-            ],
-            "locked": true
-          },
-          "race": {
-            "picks": [
-              "NORRIS",
-              "VERSTAPPEN",
-              "PIASTRI"
-            ],
-            "locked": true
-          }
-        }
-      },
-      {
-        "name": "SEHEE",
-        "sessions": {
-          "quali": {
-            "picks": [
-              "",
-              "",
-              ""
-            ],
-            "locked": true
-          },
-          "race": {
-            "picks": [
-              "VERSTAPPEN",
-              "NORRIS",
-              "PIASTRI"
-            ],
-            "locked": true
-          }
-        }
-      },
-      {
-        "name": "SEJIN",
-        "sessions": {
-          "quali": {
-            "picks": [
-              "",
-              "",
-              ""
-            ],
-            "locked": true
-          },
-          "race": {
-            "picks": [
-              "VERSTAPPEN",
-              "NORRIS",
-              "RUSSELL"
-            ],
-            "locked": true
-          }
-        }
-      }
-    ],
-    "results": {
-      "quali": [
-        "NORRIS",
-        "VERSTAPPEN",
-        "SAINZ"
-      ],
-      "race": [
-        "VERSTAPPEN",
-        "RUSSELL",
-        "ANTONELLI"
-      ]
-    },
-    "resultLocked": {
-      "quali": true,
-      "race": true
-    },
-    "constructors": [],
-    "constructorLocked": false
-  },
-  "Round 23 — Qatar GP": {
-    "weekendType": "sprint",
-    "sessions": [
-      {
-        "key": "sq",
-        "label": "Sprint Qualifying ⏱",
-        "mult": 1.0
-      },
-      {
-        "key": "sprint",
-        "label": "Sprint 🏁",
-        "mult": 1.5
-      },
-      {
-        "key": "quali",
-        "label": "Qualifying ⏱",
-        "mult": 1.0
-      },
-      {
-        "key": "race",
-        "label": "Race 🏁",
-        "mult": 2.0
-      }
-    ],
-    "participants": [
-      {
-        "name": "ROKU",
-        "sessions": {
-          "sq": {
-            "picks": [
-              "NORRIS",
-              "PIASTRI",
-              "VERSTAPPEN"
-            ],
-            "locked": true
-          },
-          "sprint": {
-            "picks": [
-              "PIASTRI",
-              "RUSSELL",
-              "NORRIS"
-            ],
-            "locked": true
-          },
-          "quali": {
-            "picks": [
-              "PIASTRI",
-              "NORRIS",
-              "RUSSELL"
-            ],
-            "locked": true
-          },
-          "race": {
-            "picks": [
-              "PIASTRI",
-              "VERSTAPPEN",
-              "RUSSELL"
-            ],
-            "locked": true
-          }
-        }
-      },
-      {
-        "name": "SEHEE",
-        "sessions": {
-          "sq": {
-            "picks": [
-              "VERSTAPPEN",
-              "LECLERC",
-              "ANTONELLI"
-            ],
-            "locked": true
-          },
-          "sprint": {
-            "picks": [
-              "PIASTRI",
-              "NORRIS",
-              "RUSSELL"
-            ],
-            "locked": true
-          },
-          "quali": {
-            "picks": [
-              "PIASTRI",
-              "VERSTAPPEN",
-              "NORRIS"
-            ],
-            "locked": true
-          },
-          "race": {
-            "picks": [
-              "PIASTRI",
-              "VERSTAPPEN",
-              "NORRIS"
-            ],
-            "locked": true
-          }
-        }
-      },
-      {
-        "name": "SEJIN",
-        "sessions": {
-          "sq": {
-            "picks": [
-              "PIASTRI",
-              "VERSTAPPEN",
-              "NORRIS"
-            ],
-            "locked": true
-          },
-          "sprint": {
-            "picks": [
-              "PIASTRI",
-              "NORRIS",
-              "VERSTAPPEN"
-            ],
-            "locked": true
-          },
-          "quali": {
-            "picks": [
-              "VERSTAPPEN",
-              "NORRIS",
-              "PIASTRI"
-            ],
-            "locked": true
-          },
-          "race": {
-            "picks": [
-              "VERSTAPPEN",
-              "PIASTRI",
-              "RUSSELL"
-            ],
-            "locked": true
-          }
-        }
-      }
-    ],
-    "results": {
-      "sq": [
-        "PIASTRI",
-        "RUSSELL",
-        "NORRIS"
-      ],
-      "sprint": [
-        "PIASTRI",
-        "RUSSELL",
-        "NORRIS"
-      ],
-      "quali": [
-        "PIASTRI",
-        "NORRIS",
-        "VERSTAPPEN"
-      ],
-      "race": [
-        "VERSTAPPEN",
-        "PIASTRI",
-        "SAINZ"
-      ]
-    },
-    "resultLocked": {
-      "sq": true,
-      "sprint": true,
-      "quali": true,
-      "race": true
-    },
-    "constructors": [],
-    "constructorLocked": false
-  },
-  "Round 24 — Abu Dhabi GP": {
-    "weekendType": "gp",
-    "sessions": [
-      {
-        "key": "quali",
-        "label": "Qualifying ⏱",
-        "mult": 1.0
-      },
-      {
-        "key": "race",
-        "label": "Race 🏁",
-        "mult": 2.0
-      }
-    ],
-    "participants": [
-      {
-        "name": "ROKU",
-        "sessions": {
-          "quali": {
-            "picks": [
-              "NORRIS",
-              "PIASTRI",
-              "VERSTAPPEN"
-            ],
-            "locked": true
-          },
-          "race": {
-            "picks": [
-              "PIASTRI",
-              "NORRIS",
-              "RUSSELL"
-            ],
-            "locked": true
-          }
-        }
-      },
-      {
-        "name": "SEHEE",
-        "sessions": {
-          "quali": {
-            "picks": [
-              "",
-              "",
-              ""
-            ],
-            "locked": true
-          },
-          "race": {
-            "picks": [
-              "VERSTAPPEN",
-              "PIASTRI",
-              "NORRIS"
-            ],
-            "locked": true
-          }
-        }
-      },
-      {
-        "name": "SEJIN",
-        "sessions": {
-          "quali": {
-            "picks": [
-              "",
-              "PIASTRI",
-              "RUSSELL"
-            ],
-            "locked": true
-          },
-          "race": {
-            "picks": [
-              "VERSTAPPEN",
-              "PIASTRI",
-              "RUSSELL"
-            ],
-            "locked": true
-          }
-        }
-      }
-    ],
-    "results": {
-      "quali": [
-        "VERSTAPPEN",
-        "NORRIS",
-        "PIASTRI"
-      ],
-      "race": [
-        "VERSTAPPEN",
-        "PIASTRI",
-        "NORRIS"
-      ]
-    },
-    "resultLocked": {
-      "quali": true,
-      "race": true
-    },
-    "constructors": [],
-    "constructorLocked": false
-  }
-};
-
-function import2025Data() {
-  const status = document.getElementById('importStatus');
-  try {
-    // roundData 병합 (constructors 포함)
-    Object.assign(state.roundData, DATA_2025_ROUND_DATA);
-    // 각 라운드 roundData에 컨스트럭터 순위 주입
-    ROUNDS_2025.forEach(r => {
-      const key = `Round ${r.n} — ${r.name}`;
-      const rn = String(r.n);
-      if (state.roundData[key] && DATA_2025_CONSTRUCTORS[rn]) {
-        state.roundData[key].constructors = [...DATA_2025_CONSTRUCTORS[rn]];
-        state.roundData[key].constructorLocked = true;
-      }
-    });
-    // seasonLog 교체 (2025 데이터만)
-    const existing = window._seasonLog.filter(e => !DATA_2025_ROUND_DATA[e.raceName]);
-    window._seasonLog = [...existing, ...DATA_2025_SEASON_LOG];
-    if (window.fbSave) window.fbSave();
-    if (status) status.textContent = '✅ 2025 시즌 데이터 로드 완료!';
-    renderSeason();
-  } catch(e) {
-    if (status) status.textContent = '❌ 오류: ' + e.message;
+// ── Season globals helper ─────────────────────────────────
+function setSeasonGlobals(season) {
+  if (season === '2025') {
+    ROUNDS               = ROUNDS_2025;
+    SPRINT_ROUNDS        = SPRINT_ROUNDS_2025;
+    SESSIONS             = SESSIONS_2025;
+    DRIVER_NUM           = { ...DRIVER_NUM_2025 };
+    DRIVER_TEAM          = { ...DRIVER_TEAM_2025 };
+    DEFAULT_CONSTRUCTORS = [...CONSTRUCTORS_2025];
+  } else {
+    ROUNDS               = ROUNDS_2026;
+    SPRINT_ROUNDS        = SPRINT_ROUNDS_2026;
+    SESSIONS             = SESSIONS_2026;
+    DRIVER_NUM           = { ...DRIVER_NUM_2026 };
+    DRIVER_TEAM          = { ...DRIVER_TEAM_2026 };
+    DEFAULT_CONSTRUCTORS = [...CONSTRUCTORS_2026];
   }
 }
 
@@ -3802,10 +680,28 @@ let state = {
   resultLocked: {},
   roundData: {},  // 라운드별 { participants, results, resultLocked } 저장
 };
-window._state = state;
 window._seasonLog = [];
-window._NAMES = NAMES;
-window._DEFAULT_CONSTRUCTORS = DEFAULT_CONSTRUCTORS;
+
+// ── Utilities ─────────────────────────────────────────────
+function debounce(fn, ms) {
+  let t;
+  return function(...args) { clearTimeout(t); t = setTimeout(() => fn.apply(this, args), ms); };
+}
+
+function showToast(msg, type = 'info') {
+  const container = document.getElementById('toast-container');
+  if (!container) return;
+  const el = document.createElement('div');
+  el.className = 'toast toast--' + type;
+  el.textContent = msg;
+  container.appendChild(el);
+  requestAnimationFrame(() => { el.classList.add('show'); });
+  setTimeout(() => {
+    el.classList.remove('show');
+    setTimeout(() => el.remove(), 300);
+  }, 2800);
+}
+window.showToast = showToast;
 
 function sessions() {
   // 현재 라운드 데이터에 sessions가 있으면 그걸 우선 사용 (시즌별 mult 차이 반영)
@@ -3842,6 +738,11 @@ function getDriverPts(team, pos) {
   }
 }
 
+// ── Scoring constants ─────────────────────────────────────
+const PRIZE_PER_POINT = 5000; // 원/pt
+const FULL_HIT_BONUS  = 2;
+const HALF_HIT_BONUS  = 1.5;
+
 function calcSession(picks, actual, sessMult) {
   let raw = 0, correct = 0, details = [];
   picks.forEach((pick, i) => {
@@ -3854,9 +755,9 @@ function calcSession(picks, actual, sessMult) {
       details.push({ pos: i+1, pts: 0, hit: false });
     }
   });
-  const correctMult = correct === 3 ? 2 : correct >= 2 ? 1.5 : 1;
+  const correctMult = correct === 3 ? FULL_HIT_BONUS : correct >= 2 ? HALF_HIT_BONUS : 1;
   const totalPts = raw * correctMult * sessMult;
-  const prize = Math.round(totalPts * 5000);
+  const prize = Math.round(totalPts * PRIZE_PER_POINT);
   return { raw, correct, correctMult, sessMult, totalPts, prize, details };
 }
 
@@ -3877,12 +778,6 @@ function applySelectStyle(sel) {
 }
 
 // ── Setup ────────────────────────────────────────────────
-// ── 디버그 패널 ───────────────────────────────────────────
-function dbg(msg) {
-  const t = new Date().toTimeString().slice(0,8);
-  const el = document.getElementById('_dbgPanel');
-  if (el) el.innerHTML = `[${t}] ${msg}<br>` + el.innerHTML.split('<br>').slice(0,19).join('<br>');
-}
 
 function init() {
   // Populate round dropdown
@@ -3924,27 +819,8 @@ function syncSetupUI() {
 }
 
 function onSeasonChange() {
-  const season = document.getElementById('seasonSelect').value;  if (season === '2025') {
-    ROUNDS = ROUNDS_2025;
-    SPRINT_ROUNDS = SPRINT_ROUNDS_2025;
-    SESSIONS = SESSIONS_2025;
-    // 드라이버 & 컨스트럭터 교체
-    Object.keys(DRIVER_NUM).forEach(k => delete DRIVER_NUM[k]);
-    Object.assign(DRIVER_NUM, DRIVER_NUM_2025);
-    Object.keys(DRIVER_TEAM).forEach(k => delete DRIVER_TEAM[k]);
-    Object.assign(DRIVER_TEAM, DRIVER_TEAM_2025);
-    DEFAULT_CONSTRUCTORS.length = 0;
-    CONSTRUCTORS_2025.forEach(c => DEFAULT_CONSTRUCTORS.push(c));  } else {
-    ROUNDS = ROUNDS_2026;
-    SPRINT_ROUNDS = SPRINT_ROUNDS_2026;
-    SESSIONS = SESSIONS_2026;
-    // 드라이버 & 컨스트럭터 교체
-    Object.keys(DRIVER_NUM).forEach(k => delete DRIVER_NUM[k]);
-    Object.assign(DRIVER_NUM, DRIVER_NUM_2026);
-    Object.keys(DRIVER_TEAM).forEach(k => delete DRIVER_TEAM[k]);
-    Object.assign(DRIVER_TEAM, DRIVER_TEAM_2026);
-    DEFAULT_CONSTRUCTORS.length = 0;
-    CONSTRUCTORS_2026.forEach(c => DEFAULT_CONSTRUCTORS.push(c));  }
+  const season = document.getElementById('seasonSelect').value;
+  setSeasonGlobals(season);
   // 라운드 드롭다운 다시 채우기
   const sel = document.getElementById('roundSelect');
   sel.innerHTML = '<option value="">Select round...</option>';
@@ -4099,14 +975,14 @@ window.saveRoundData = saveRoundData;
 
 function saveSetup() {
   const n = parseInt(document.getElementById('roundSelect').value);
-  if (!n) { alert('Please select a round!'); return; }
+  if (!n) { showToast('Please select a round!', 'error'); return; }
   const unique = new Set(state.constructors);
-  if (unique.size < state.constructors.length) { alert('Duplicate teams in constructor standings!'); return; }
+  if (unique.size < state.constructors.length) { showToast('Duplicate teams in constructor standings!', 'error'); return; }
   // onRoundChange에서 이미 라운드 전환 처리됨 — 여기선 저장만
   ensureSessions();
   saveRoundData();
   if (window.fbSave) window.fbSave();
-  alert(`✅ "${state.raceName}" saved!`);
+  showToast(`✅ "${state.raceName}" saved!`, 'success');
   switchTab('predict');
 }
 
@@ -4137,24 +1013,24 @@ function renderConstructors() {
   const season = document.getElementById('seasonSelect')?.value || '2026';
   const multBadge = i => {
     if (season === '2025') {
-      if (i < 4) return `<span style="font-size:10px;color:var(--gold);min-width:24px;font-family:'Orbitron',sans-serif;font-weight:700;">+ &thinsp;0</span>`;
-      if (i < 7) return `<span style="font-size:10px;color:var(--silver);min-width:24px;font-family:'Orbitron',sans-serif;font-weight:700;">+ &thinsp;2</span>`;
-      return              `<span style="font-size:10px;color:var(--bronze);min-width:24px;font-family:'Orbitron',sans-serif;font-weight:700;">+ &thinsp;4</span>`;
+      if (i < 4) return `<span style="font-size:10px;color:var(--gold);min-width:24px;font-family:var(--font-orbitron);font-weight:700;">+ &thinsp;0</span>`;
+      if (i < 7) return `<span style="font-size:10px;color:var(--silver);min-width:24px;font-family:var(--font-orbitron);font-weight:700;">+ &thinsp;2</span>`;
+      return              `<span style="font-size:10px;color:var(--bronze);min-width:24px;font-family:var(--font-orbitron);font-weight:700;">+ &thinsp;4</span>`;
     }
-    if (i < 4) return `<span style="font-size:10px;color:var(--gold);min-width:24px;font-family:'Orbitron',sans-serif;font-weight:700;">× &thinsp;1</span>`;
-    if (i < 7) return `<span style="font-size:10px;color:var(--silver);min-width:24px;font-family:'Orbitron',sans-serif;font-weight:700;">× &thinsp;2</span>`;
-    return              `<span style="font-size:10px;color:var(--bronze);min-width:24px;font-family:'Orbitron',sans-serif;font-weight:700;">× &thinsp;3</span>`;
+    if (i < 4) return `<span style="font-size:10px;color:var(--gold);min-width:24px;font-family:var(--font-orbitron);font-weight:700;">× &thinsp;1</span>`;
+    if (i < 7) return `<span style="font-size:10px;color:var(--silver);min-width:24px;font-family:var(--font-orbitron);font-weight:700;">× &thinsp;2</span>`;
+    return              `<span style="font-size:10px;color:var(--bronze);min-width:24px;font-family:var(--font-orbitron);font-weight:700;">× &thinsp;3</span>`;
   };
   const n = state.constructors.length;
   c.innerHTML = state.constructors.map((team, i) => `
     <div class="reorder-row" data-idx="${i}">
 
-      <span style="font-family:'Orbitron',sans-serif;font-size:11px;color:var(--muted);min-width:28px">P ${i+1}</span>
+      <span style="font-family:var(--font-orbitron);font-size:11px;color:var(--muted);min-width:28px">P ${i+1}</span>
       <div style="flex:1;display:flex;align-items:center;gap:6px;background:var(--surface2);border:1px solid rgba(255,255,255,0.1);border-radius:6px;padding:clamp(6px,1.2vw,8px) clamp(6px,1.2vw,10px) clamp(6px,1.2vw,8px) clamp(12px,2vw,18px);min-width:0;overflow:hidden;">
         <span style="flex-shrink:0;line-height:0;font-size:120%;">${TEAM_LOGO[team]||''}</span>
         <select onchange="updateConstructor(${i},this.value)"
           ${locked ? 'disabled' : ''}
-          style="flex:1;background:transparent;border:none;color:var(--text);font-family:'Exo 2',sans-serif;font-size:clamp(13px,1.8vw,15.6px);outline:none;cursor:${locked?'default':'pointer'};-webkit-appearance:none;appearance:none;min-width:0;">
+          style="flex:1;background:transparent;border:none;color:var(--text);font-family:var(--font-exo);font-size:clamp(13px,1.8vw,15.6px);outline:none;cursor:${locked?'default':'pointer'};-webkit-appearance:none;appearance:none;min-width:0;">
           ${DEFAULT_CONSTRUCTORS.map(t => `<option value="${t}"${t===team?' selected':''}>${t}</option>`).join('')}
         </select>
       </div>
@@ -4167,9 +1043,7 @@ function renderConstructors() {
   if (lockRow) {
     if (locked) {
       lockRow.innerHTML = `
-        <div style="flex:1;display:flex;align-items:center;gap:8px;background:rgba(0,200,100,0.08);border:1px solid rgba(0,200,100,0.3);border-radius:8px;padding:10px 16px;">
-          <span style="color:#00c864;font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:1px;flex:1;text-align:center;">✓ LOCKED IN</span>
-        </div>
+        <div class="lock-indicator" style="padding:10px 16px;">✓ LOCKED IN</div>
         <button class="btn sec" style="width:auto;padding:10px 20px;" onclick="editConstructors()">✏️ EDIT</button>`;
     } else {
       lockRow.innerHTML = `<button id="constructorLockBtn" class="btn grn" style="flex:1" onclick="lockConstructors()">🔒 Lock In</button>`;
@@ -4202,7 +1076,7 @@ function updateConstructor(idx, val) {
 function lockConstructors() {
   const unique = new Set(state.constructors);
   if (unique.size < state.constructors.length) {
-    alert('중복된 팀이 있어요! 확인해주세요.'); return;
+    showToast('Duplicate teams — please check!', 'error'); return;
   }
   const fetchStatus = document.getElementById('fetchStatus');
   if (fetchStatus) fetchStatus.innerHTML = '';
@@ -4317,6 +1191,18 @@ async function fetchStandings() {
 }
 
 // ── Predict Tab ──────────────────────────────────────────
+function toggleAllPredCards(expand) {
+  state.participants.forEach((_, pi) => {
+    const body = document.getElementById(`pred-body-${pi}`);
+    const arrow = document.getElementById(`pred-arrow-${pi}`);
+    if (body) body.style.display = expand ? 'block' : 'none';
+    if (arrow) arrow.style.transform = expand ? 'rotate(0deg)' : 'rotate(-90deg)';
+  });
+  const btn = document.getElementById('pred-toggle-all-btn');
+  if (btn) { btn.dataset.expanded = expand ? '1' : '0'; btn.textContent = expand ? '⊖ Collapse All' : '⊕ Expand All'; }
+}
+window.toggleAllPredCards = toggleAllPredCards;
+
 function renderPredict() {
   const el = document.getElementById('predictContent');
   if (!state.raceName) {
@@ -4324,14 +1210,13 @@ function renderPredict() {
     return;
   }
 
-  el.innerHTML = state.participants.map((p, pi) => {
+  const cardsHTML = state.participants.map((p, pi) => {
     const allLocked = sessions().every(s => p.sessions[s.key]?.locked);
 
     const sessBlocks = sessions().map((s, si) => {
       const sess = p.sessions[s.key];
       const locked = sess?.locked;
       const picks = sess?.picks || ['','',''];
-      const disabled = locked ? 'pointer-events:none;opacity:0.5;' : '';
 
       return `
         ${si > 0 ? '<hr class="divider">' : ''}
@@ -4340,7 +1225,7 @@ function renderPredict() {
             <span class="sess-label">${s.label}</span>
             <span class="sess-mult">×${s.mult}</span>
           </div>
-          <div class="picks-grid" style="${disabled}">
+          <div class="picks-grid${locked ? ' grid--disabled' : ''}">
             <div class="pick-slot">
               <label><span class="medal p1">1</span> P1</label>
               <select id="pick-${pi}-${s.key}-0" class="${picks[0]?'has-value':'has-placeholder'}" onchange="onPick(${pi},'${s.key}',0,this.value)">${driverOpts(picks[0], [picks[1],picks[2]])}</select>
@@ -4356,8 +1241,8 @@ function renderPredict() {
           </div>
           <div style="display:flex;gap:8px;margin-top:10px;">
             ${locked
-              ? `<button class="btn sec" style="font-size:10px;padding:10px;flex:0 0 auto;width:auto;padding:10px 18px;" onclick="unlock(${pi},'${s.key}')">✏️ Edit</button>
-                 <div style="flex:1;display:flex;align-items:center;justify-content:center;background:rgba(0,200,100,0.07);border:1px solid rgba(0,200,100,0.2);border-radius:8px;font-size:11px;color:#00c864;font-family:'Orbitron',sans-serif;letter-spacing:1px;">✓ LOCKED IN</div>`
+              ? `<button class="btn sec" style="font-size:10px;flex:0 0 auto;width:auto;padding:10px 18px;" onclick="unlock(${pi},'${s.key}')">✏️ Edit</button>
+                 <div class="lock-indicator">✓ LOCKED IN</div>`
               : `<button class="btn grn" style="font-size:10px;padding:10px;" onclick="lock(${pi},'${s.key}')">🔒 Lock In</button>`
             }
           </div>
@@ -4378,9 +1263,9 @@ function renderPredict() {
     return `
     <div class="card pred-card" id="pred-card-${pi}" style="border-color:${allLocked ? theme.lockedBorder : theme.border};border-width:2px;padding:0;overflow:hidden;">
       <div style="background:${theme.headerBg};display:flex;justify-content:space-between;align-items:center;padding:18px 24px;cursor:pointer;" onclick="togglePredCard(${pi})">
-        <span style="font-family:'Orbitron',sans-serif;font-size:20px;font-weight:900;letter-spacing:4px;color:${theme.nameFg};">${p.name}</span>
+        <span style="font-family:var(--font-orbitron);font-size:20px;font-weight:900;letter-spacing:4px;color:${theme.nameFg};">${p.name}</span>
         <div style="display:flex;align-items:center;gap:10px;">
-          <span style="font-size:10px;padding:3px 10px;border-radius:10px;font-family:'Orbitron',sans-serif;white-space:nowrap;background:${allLocked ? 'rgba(0,200,100,0.25)' : 'rgba(255,255,255,0.18)'};color:${allLocked ? '#00ff88' : '#fff'};border:1px solid ${allLocked ? 'rgba(0,255,136,0.5)' : 'rgba(255,255,255,0.5)'};font-weight:700;letter-spacing:1px;">${allLocked ? '✓ BET FINISHED' : 'YET TO BET'}</span>
+          <span style="font-size:10px;padding:3px 10px;border-radius:10px;font-family:var(--font-orbitron);white-space:nowrap;background:${allLocked ? 'rgba(0,200,100,0.25)' : 'rgba(255,255,255,0.18)'};color:${allLocked ? '#00ff88' : '#fff'};border:1px solid ${allLocked ? 'rgba(0,255,136,0.5)' : 'rgba(255,255,255,0.5)'};font-weight:700;letter-spacing:1px;">${allLocked ? '✓ BET FINISHED' : 'YET TO BET'}</span>
           <span id="pred-arrow-${pi}" style="font-size:11px;color:rgba(255,255,255,0.5);transition:transform 0.2s;">▼</span>
         </div>
       </div>
@@ -4389,6 +1274,16 @@ function renderPredict() {
       </div>
     </div>`;
   }).join('');
+
+  el.innerHTML = `
+    <div style="display:flex;justify-content:flex-end;margin-bottom:8px;">
+      <button id="pred-toggle-all-btn" data-expanded="1"
+        onclick="(function(btn){const exp=btn.dataset.expanded==='1';toggleAllPredCards(!exp);})(this)"
+        style="font-size:11px;padding:5px 14px;border-radius:8px;border:1px solid rgba(255,255,255,0.18);background:rgba(255,255,255,0.06);color:#aaa;cursor:pointer;font-family:var(--font-exo);letter-spacing:.5px;">
+        ⊖ Collapse All
+      </button>
+    </div>
+    ${cardsHTML}`;
 
   // allLocked 카드는 자동으로 접기
   state.participants.forEach((p, pi) => {
@@ -4436,7 +1331,7 @@ function lock(pi, key) {
   const label = sessions().find(s => s.key === key)?.label || key;
   const [a,b,c] = sess.picks;
   if (a && b && c && new Set([a,b,c]).size < 3) {
-    alert(`${name} — ${label}: Select 3 different drivers!`); return;
+    showToast(`${name} — ${label}: Select 3 different drivers!`, 'error'); return;
   }
   if (!a || !b || !c) {
     showConfirmModal(
@@ -4487,7 +1382,6 @@ function renderResult() {
     const allReady = state.participants.every(p => p.sessions[s.key]?.locked);
     const res = state.results[s.key] || ['','',''];
     const locked = !!state.resultLocked[s.key];
-    const disabledStyle = locked ? 'pointer-events:none;opacity:0.5;' : '';
 
     const lockNotice = !allReady
       ? `<div style="font-size:11px;color:rgba(255,150,50,0.85);background:rgba(255,150,50,0.08);border:1px solid rgba(255,150,50,0.2);border-radius:6px;padding:8px 12px;margin-bottom:14px;">
@@ -4503,14 +1397,14 @@ function renderResult() {
           <span class="sess-label" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${s.label}</span>
         </div>
         <div style="display:flex;align-items:center;gap:6px;flex-shrink:0;">
-          ${allReady ? '<span style="font-size:clamp(8px,1.2vw,10px);padding:2px 7px;border-radius:4px;background:rgba(0,200,100,0.12);color:#00c864;border:1px solid rgba(0,200,100,0.25);font-family:\'Orbitron\',sans-serif;white-space:nowrap;">✓ BET</span>' : ''}
-          ${locked ? '<span style="font-size:clamp(8px,1.2vw,10px);padding:2px 8px;border-radius:10px;font-family:\'Orbitron\',sans-serif;background:rgba(0,200,100,0.25);color:#00ff88;border:1px solid rgba(0,255,136,0.5);font-weight:700;letter-spacing:1px;white-space:nowrap;">✓ LOCKED</span>' : ''}
+          ${allReady ? '<span class="bet-badge--ready">✓ BET</span>' : ''}
+          ${locked ? '<span class="bet-badge--locked">✓ LOCKED</span>' : ''}
           <span id="res-arrow-${s.key}" style="font-size:11px;color:rgba(255,255,255,0.5);transition:transform 0.2s;flex-shrink:0;">▼</span>
         </div>
       </div>
       <div id="res-body-${s.key}" style="padding:24px;">
         ${lockNotice}
-        <div class="res-grid" style="${disabledStyle}">
+        <div class="res-grid${locked ? ' grid--disabled' : ''}">
           <div class="res-slot p1"><div class="res-trophy">🥇</div>
             <select id="res-${s.key}-0" class="${res[0]?'has-value':'has-placeholder'}" onchange="onResult('${s.key}',0,this.value)">${driverOpts(res[0],[res[1],res[2]])}</select>
           </div>
@@ -4524,8 +1418,8 @@ function renderResult() {
         <div class="res-btn-wrap" style="display:flex;gap:8px;margin-top:14px;">
           ${locked
             ? `<button class="btn sec" style="font-size:10px;padding:10px 18px;flex:0 0 auto;width:auto;" onclick="unlockResult('${s.key}')">✏️ Edit</button>
-               <div style="flex:1;display:flex;align-items:center;justify-content:center;background:rgba(0,200,100,0.07);border:1px solid rgba(0,200,100,0.2);border-radius:8px;font-size:11px;color:#00c864;font-family:'Orbitron',sans-serif;letter-spacing:1px;">✓ LOCKED IN</div>`
-            : `<button class="btn grn" style="width:100%;font-size:10px;padding:10px;" onclick="checkResult('${s.key}')">🏁 Check Result</button>`
+               <div class="lock-indicator">✓ LOCKED IN</div>`
+            : `<button class="btn grn" style="width:100%;font-size:10px;padding:10px;" onclick="checkResult('${s.key}')">🔒 Confirm Results</button>`
           }
         </div>
         <div id="result-board-${s.key}" style="display:${locked ? 'block' : 'none'};margin-top:20px;"></div>
@@ -4581,8 +1475,8 @@ function checkResult(key) {
   const r1 = document.getElementById(`res-${key}-1`)?.value;
   const r2 = document.getElementById(`res-${key}-2`)?.value;
   const s = sessions().find(s => s.key === key);
-  if (!r0 || !r1 || !r2) { alert(`${s.label}: P1, P2, P3 결과를 모두 입력하세요!`); return; }
-  if (new Set([r0,r1,r2]).size < 3) { alert(`${s.label}: 서로 다른 드라이버 3명을 선택하세요!`); return; }
+  if (!r0 || !r1 || !r2) { showToast(`${s.label}: Please enter P1, P2, P3 results!`, 'error'); return; }
+  if (new Set([r0,r1,r2]).size < 3) { showToast(`${s.label}: Select 3 different drivers!`, 'error'); return; }
 
   state.results[key] = [r0, r1, r2];
   state.resultLocked[key] = true;
@@ -4602,7 +1496,7 @@ function checkResult(key) {
     card.querySelector('.res-grid').style.opacity = '0.5';
     card.querySelector('.res-btn-wrap').innerHTML = `
       <button class="btn sec" style="font-size:10px;padding:10px 18px;flex:0 0 auto;width:auto;" onclick="unlockResult('${key}')">✏️ Edit</button>
-      <div style="flex:1;display:flex;align-items:center;justify-content:center;background:rgba(0,200,100,0.07);border:1px solid rgba(0,200,100,0.2);border-radius:8px;font-size:11px;color:#00c864;font-family:'Orbitron',sans-serif;letter-spacing:1px;">✓ LOCKED IN</div>`;
+      <div style="flex:1;display:flex;align-items:center;justify-content:center;background:rgba(0,200,100,0.07);border:1px solid rgba(0,200,100,0.2);border-radius:8px;font-size:11px;color:#00c864;font-family:var(--font-orbitron);letter-spacing:1px;">✓ LOCKED IN</div>`;
   }
 
   renderSessionBoard(key, scored, s.label);
@@ -4636,7 +1530,7 @@ function unlockResult(key) {
       if (sel) sel.innerHTML = driverOpts('', []);
     });
     card.querySelector('.res-btn-wrap').innerHTML = `
-      <button class="btn grn" style="width:100%;font-size:10px;padding:10px;" onclick="checkResult('${key}')">🏁 Check Result</button>`;
+      <button class="btn grn" style="width:100%;font-size:10px;padding:10px;" onclick="checkResult('${key}')">🔒 Confirm Results</button>`;
     const board = document.getElementById(`result-board-${key}`);
     if (board) { board.innerHTML = ''; board.style.display = 'none'; }
   }
@@ -4708,7 +1602,7 @@ function computePayments(scored) {
     for (let j = i + 1; j < n; j++) {
       const diff = scored[j].totalPts - scored[i].totalPts;
       if (diff === 0) continue;
-      const amount = Math.abs(diff) * 5000;
+      const amount = Math.abs(diff) * PRIZE_PER_POINT;
       if (diff > 0) {
         payments.push({ from: i, to: j, pts: Math.abs(diff), amount });
         net[i] -= amount; net[j] += amount;
@@ -4773,21 +1667,21 @@ function renderPaymentTable(scored, payments, net, showBreakdown) {
       <div class="score-row ${cls}" style="display:grid;grid-template-columns:0.75fr 2.5fr 0.75fr;align-items:center;gap:clamp(6px,1vw,12px);text-align:center;">
         <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(4px,0.8vw,10px);align-self:center;">
           <span style="font-size:clamp(18px,3.5vw,36px);line-height:1;">${emoji}</span>
-          <span style="font-family:'Orbitron',sans-serif;font-size:clamp(11px,2vw,18px);font-weight:700;letter-spacing:clamp(1px,0.2vw,2px);">${p.name}</span>
+          <span style="font-family:var(--font-orbitron);font-size:clamp(11px,2vw,18px);font-weight:700;letter-spacing:clamp(1px,0.2vw,2px);">${p.name}</span>
         </div>
         <div style="display:flex;flex-direction:column;">${sessionRows}</div>
-        <span style="font-family:'Orbitron',sans-serif;font-size:clamp(11px,2.5vw,22px);font-weight:900;text-align:right;color:${ptColor};">${p.totalPts}pt</span>
+        <span style="font-family:var(--font-orbitron);font-size:clamp(11px,2.5vw,22px);font-weight:900;text-align:right;color:${ptColor};">${p.totalPts}pt</span>
       </div>`;
     }
     return `
     <div class="score-row ${cls}" style="display:grid;grid-template-columns:0.75fr 1.5fr 1fr 0.75fr;align-items:center;gap:clamp(6px,1vw,12px);">
       <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(4px,0.8vw,10px);align-self:center;">
         <span style="font-size:clamp(14px,2.5vw,26px);line-height:1;">${emoji}</span>
-        <span style="font-family:'Orbitron',sans-serif;font-size:clamp(9px,1.6vw,14px);font-weight:700;letter-spacing:clamp(1px,0.2vw,2px);">${p.name}</span>
+        <span style="font-family:var(--font-orbitron);font-size:clamp(9px,1.6vw,14px);font-weight:700;letter-spacing:clamp(1px,0.2vw,2px);">${p.name}</span>
       </div>
       <div class="score-breakdown" style="min-width:0;">${lines}</div>
       <div></div>
-      <span style="font-family:'Orbitron',sans-serif;font-size:clamp(11px,2.5vw,22px);font-weight:900;text-align:right;color:${ptColor}">${p.totalPts}pt</span>
+      <span style="font-family:var(--font-orbitron);font-size:clamp(11px,2.5vw,22px);font-weight:900;text-align:right;color:${ptColor}">${p.totalPts}pt</span>
     </div>`;
   }).join('');
 
@@ -4796,10 +1690,10 @@ function renderPaymentTable(scored, payments, net, showBreakdown) {
     ? `<div style="text-align:center;padding:16px;color:var(--muted);font-size:clamp(11px,2.2vw,18px);">모두 동점 — 정산 없음</div>`
     : payments.map(pay => `
       <div style="display:grid;grid-template-columns:1fr auto 1fr 1fr;align-items:center;gap:clamp(6px,1vw,12px);background:var(--surface2);border:1px solid rgba(255,255,255,0.07);border-radius:8px;padding:10px 12px;">
-        <span style="font-family:'Orbitron',sans-serif;font-size:clamp(11px,2.2vw,18px);font-weight:700;color:#fff;letter-spacing:clamp(1px,0.2vw,2px);text-align:center;">${scored[pay.from].name}</span>
+        <span style="font-family:var(--font-orbitron);font-size:clamp(11px,2.2vw,18px);font-weight:700;color:#fff;letter-spacing:clamp(1px,0.2vw,2px);text-align:center;">${scored[pay.from].name}</span>
         <span style="font-size:clamp(11px,2.2vw,18px);color:rgba(255,255,255,0.4);text-align:center;">→</span>
-        <span style="font-family:'Orbitron',sans-serif;font-size:clamp(11px,2.2vw,18px);font-weight:700;color:#fff;letter-spacing:clamp(1px,0.2vw,2px);text-align:center;">${scored[pay.to].name}</span>
-        <span style="font-family:'Orbitron',sans-serif;font-size:clamp(11px,2.2vw,18px);font-weight:700;color:#fff;text-align:right;white-space:nowrap;">₩${pay.amount.toLocaleString()}</span>
+        <span style="font-family:var(--font-orbitron);font-size:clamp(11px,2.2vw,18px);font-weight:700;color:#fff;letter-spacing:clamp(1px,0.2vw,2px);text-align:center;">${scored[pay.to].name}</span>
+        <span style="font-family:var(--font-orbitron);font-size:clamp(11px,2.2vw,18px);font-weight:700;color:#fff;text-align:right;white-space:nowrap;">₩${pay.amount.toLocaleString()}</span>
       </div>`).join('');
 
   // Net rows
@@ -4810,27 +1704,27 @@ function renderPaymentTable(scored, payments, net, showBreakdown) {
     const signedStr = v < 0 ? `-₩${absV.toLocaleString()}` : `₩${absV.toLocaleString()}`;
     return `
       <div style="display:flex;align-items:center;gap:8px;background:var(--surface2);border:1px solid rgba(255,255,255,0.07);border-radius:8px;padding:10px 12px;">
-        <span style="font-family:'Orbitron',sans-serif;font-size:clamp(11px,2.2vw,18px);font-weight:900;letter-spacing:clamp(1px,0.2vw,2px);flex:1;padding-left:clamp(16px,6vw,64px);">${p.name}</span>
+        <span style="font-family:var(--font-orbitron);font-size:clamp(11px,2.2vw,18px);font-weight:900;letter-spacing:clamp(1px,0.2vw,2px);flex:1;padding-left:clamp(16px,6vw,64px);">${p.name}</span>
         <span style="font-size:clamp(10px,1.6vw,14px);color:var(--muted)">${p.totalPts}pt</span>
-        <span style="font-family:'Orbitron',sans-serif;font-size:clamp(11px,2.2vw,18px);font-weight:700;color:${color};text-align:right;">${signedStr}</span>
+        <span style="font-family:var(--font-orbitron);font-size:clamp(11px,2.2vw,18px);font-weight:700;color:${color};text-align:right;">${signedStr}</span>
       </div>`;
   }).join('');
 
   const paymentSection = showBreakdown ? `
     <hr style="border:none;border-top:1px solid rgba(255,255,255,0.07);margin:18px 0;">
     <div style="margin-bottom:8px;">
-      <div style="font-family:'Orbitron',sans-serif;font-size:clamp(8px,1.4vw,12px);letter-spacing:2px;color:var(--muted);margin-bottom:10px;text-transform:uppercase;">💸 1v1 정산</div>
+      <div style="font-family:var(--font-orbitron);font-size:clamp(8px,1.4vw,12px);letter-spacing:2px;color:var(--muted);margin-bottom:10px;text-transform:uppercase;">💸 1v1 정산</div>
       <div style="display:flex;flex-direction:column;gap:8px;">${payRows}</div>
     </div>
     <hr style="border:none;border-top:1px solid rgba(255,255,255,0.07);margin:18px 0;">
     <div>
-      <div style="font-family:'Orbitron',sans-serif;font-size:clamp(8px,1.4vw,12px);letter-spacing:2px;color:var(--muted);margin-bottom:10px;text-transform:uppercase;">🏦 총 손익</div>
+      <div style="font-family:var(--font-orbitron);font-size:clamp(8px,1.4vw,12px);letter-spacing:2px;color:var(--muted);margin-bottom:10px;text-transform:uppercase;">🏦 총 손익</div>
       <div style="display:flex;flex-direction:column;gap:8px;">${netRows}</div>
     </div>` : '';
 
   return `
     <div style="margin-bottom:8px;">
-      <div style="font-family:'Orbitron',sans-serif;font-size:clamp(8px,1.4vw,12px);letter-spacing:2px;color:var(--muted);margin-bottom:10px;text-transform:uppercase;">📊 점수</div>
+      <div style="font-family:var(--font-orbitron);font-size:clamp(8px,1.4vw,12px);letter-spacing:2px;color:var(--muted);margin-bottom:10px;text-transform:uppercase;">📊 점수</div>
       <div class="scoreboard" style="margin-bottom:0;">${pointsRows}</div>
     </div>
     ${paymentSection}`;
@@ -5064,6 +1958,7 @@ function renderSeason() {
       <div class="sn-cum-list">${cumRows}</div>
     </div>
     <div class="card-title sn-rounds-title raceweek-title">ROUND RECORD 📋</div>
+    <div style="font-size:10px;color:#666;letter-spacing:1px;text-align:right;padding:0 4px 8px;font-family:var(--font-exo);">ROUND HISTORY (Latest First)</div>
     ${roundCards}
     `;
 
@@ -5093,7 +1988,11 @@ function toggleRoundCard(toggleEl) {
 function renderCurrentRoundBadge() {
   const el = document.getElementById('currentRoundBadge');
   if (!el) return;
-  if (!state.raceName) { el.style.visibility = 'hidden'; return; }
+  if (!state.raceName) {
+    el.style.visibility = 'visible';
+    el.innerHTML = `<div style="grid-column:1/-1;text-align:center;font-size:11px;color:#555;letter-spacing:1.5px;font-family:var(--font-exo);">— SELECT A ROUND IN SETUP —</div>`;
+    return;
+  }
 
   const isSprint = state.weekendType === 'sprint';
   const roundObj = ROUNDS.find(r => state.raceName.includes(r.name));
@@ -5133,7 +2032,7 @@ function renderCurrentRoundBadge() {
   `;
   el.style.visibility = 'visible';
 }
-function renderActiveTab() {
+function _renderActiveTab() {
   renderCurrentRoundBadge();
   const tabKeys = ['setup','predict','result','season'];
   const activeEl = document.querySelector('.tab.active');
@@ -5144,6 +2043,7 @@ function renderActiveTab() {
   if (tab === 'season')  renderSeason();
   if (tab === 'setup')   { renderConstructors(); syncSetupUI(); }
 }
+const renderActiveTab = debounce(_renderActiveTab, 50);
 window.renderActiveTab = renderActiveTab;
 
 // Firebase 데이터 적용 함수 — module 스크립트보다 나중에 실행되므로 ROUNDS 등 모두 사용 가능
@@ -5154,30 +2054,8 @@ window.applyFbData = function(data, season) {
   // season 파라미터 없으면 구독 중인 시즌 사용 (ROUNDS 전역변수에 의존하지 않음)
   const applySeason = season || window._subscribedSeason || (document.getElementById('seasonSelect')?.value) || '2026';
   const applyRounds = applySeason === '2025' ? ROUNDS_2025 : ROUNDS_2026;
-  console.log('[DEBUG applyFbData] applySeason:', applySeason, '수신된 seasonLog:', JSON.stringify((data.seasonLog||[]).map(e=>e.raceName)));
-
   // 전역 변수를 applySeason에 맞게 교체 (onSeasonChange 타이밍과 무관하게 보장)
-  if (applySeason === '2025') {
-    ROUNDS = ROUNDS_2025;
-    SPRINT_ROUNDS = SPRINT_ROUNDS_2025;
-    SESSIONS = SESSIONS_2025;
-    Object.keys(DRIVER_NUM).forEach(k => delete DRIVER_NUM[k]);
-    Object.assign(DRIVER_NUM, DRIVER_NUM_2025);
-    Object.keys(DRIVER_TEAM).forEach(k => delete DRIVER_TEAM[k]);
-    Object.assign(DRIVER_TEAM, DRIVER_TEAM_2025);
-    DEFAULT_CONSTRUCTORS.length = 0;
-    CONSTRUCTORS_2025.forEach(c => DEFAULT_CONSTRUCTORS.push(c));
-  } else {
-    ROUNDS = ROUNDS_2026;
-    SPRINT_ROUNDS = SPRINT_ROUNDS_2026;
-    SESSIONS = SESSIONS_2026;
-    Object.keys(DRIVER_NUM).forEach(k => delete DRIVER_NUM[k]);
-    Object.assign(DRIVER_NUM, DRIVER_NUM_2026);
-    Object.keys(DRIVER_TEAM).forEach(k => delete DRIVER_TEAM[k]);
-    Object.assign(DRIVER_TEAM, DRIVER_TEAM_2026);
-    DEFAULT_CONSTRUCTORS.length = 0;
-    CONSTRUCTORS_2026.forEach(c => DEFAULT_CONSTRUCTORS.push(c));
-  }
+  setSeasonGlobals(applySeason);
 
   if (data.state) {
     // 구독 경로의 시즌 기준으로 유효한 라운드 키 목록 생성 (ROUNDS 전역변수 무관)
@@ -5222,7 +2100,6 @@ window.applyFbData = function(data, season) {
       // 오염 항목이 있었으면 Firebase에 직접 재저장 (fbSave 플래그 우회)
       window._seasonLog = filteredLog;
       if (filteredLog.length !== data.seasonLog.length) {
-        console.log('[DEBUG] 오염 항목', data.seasonLog.length - filteredLog.length, '개 제거 → Firebase 직접 재저장');
         // fbCleanAndSave가 준비될 때까지 최대 5초 대기
         const cleaned = Object.assign({}, data, { seasonLog: filteredLog, ts: Date.now() });
         let _cleanTry = 0;
@@ -5232,7 +2109,7 @@ window.applyFbData = function(data, season) {
             clearInterval(_cleanInterval);
           } else if (++_cleanTry > 50) {
             clearInterval(_cleanInterval);
-            console.error('[DEBUG] fbCleanAndSave 준비 안됨 — 재저장 실패');
+            console.error('fbCleanAndSave not ready — re-save failed');
           }
         }, 100);
       }
@@ -5285,12 +2162,15 @@ function getCurrentTab() {
   return null;
 }
 
+const _tabScrollPos = {};
 function switchTab(tab) {
   // fetchStatus 메시지 초기화
   const fetchStatus = document.getElementById('fetchStatus');
   if (fetchStatus) fetchStatus.innerHTML = '';
   // 현재 탭 확인 후 잠금되지 않은 선택 초기화
   const prevTab = getCurrentTab();
+  // 현재 탭 스크롤 위치 저장
+  _tabScrollPos[prevTab] = window.scrollY;
   if (prevTab === 'predict' && tab !== 'predict') {
     // 베팅 탭을 벗어날 때: LOCK IN 안 된 선택 초기화
     sessions().forEach(s => {
@@ -5315,8 +2195,9 @@ function switchTab(tab) {
     t.classList.toggle('active', tabKeys[i] === tab));
   document.querySelectorAll('.section').forEach((s, i) =>
     s.classList.toggle('active', ['tab-setup','tab-predict','tab-result','tab-season'][i] === `tab-${tab}`));
-  // 탭 이동 시 스크롤 최상단으로
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  // 탭 이동 시 저장된 스크롤 위치로 (없으면 최상단)
+  const savedScroll = _tabScrollPos[tab] ?? 0;
+  window.scrollTo({ top: savedScroll, behavior: 'smooth' });
   renderActiveTab();
 }
 window.switchTab = switchTab;
@@ -5335,8 +2216,8 @@ if (window._pendingFbData) {
   <div style="background:#1e1e2e;border:1px solid #333;border-radius:14px;padding:28px 24px 22px;max-width:320px;width:90%;text-align:center;box-shadow:0 8px 32px rgba(0,0,0,0.5);">
     <div id="confirmModalMsg" style="font-size:15px;line-height:1.6;color:#e0e0e0;margin-bottom:22px;"></div>
     <div style="display:flex;gap:12px;justify-content:center;">
-      <button id="confirmModalNo"  style="flex:1;padding:10px 0;border-radius:8px;border:1px solid #555;background:#2a2a3e;color:#ccc;font-size:14px;cursor:pointer;">아니오</button>
-      <button id="confirmModalYes" style="flex:1;padding:10px 0;border-radius:8px;border:none;background:var(--green,#00c864);color:#fff;font-size:14px;font-weight:700;cursor:pointer;">예</button>
+      <button id="confirmModalNo"  style="flex:1;padding:10px 0;border-radius:8px;border:1px solid #555;background:#2a2a3e;color:#ccc;font-size:14px;cursor:pointer;">No</button>
+      <button id="confirmModalYes" style="flex:1;padding:10px 0;border-radius:8px;border:none;background:var(--green,#00c864);color:#fff;font-size:14px;font-weight:700;cursor:pointer;">Yes</button>
     </div>
   </div>
 </div>
@@ -5364,5 +2245,6 @@ if (window._pendingFbData) {
   });
 })();
 </script>
+<div id="toast-container"></div>
 </body>
 </html>
