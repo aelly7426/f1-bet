@@ -197,6 +197,7 @@ img.emoji {
 /* UTILITY — inline style 대체 클래스 */
 .grid--disabled{pointer-events:none;opacity:0.5;}
 .lock-indicator{flex:1;display:flex;align-items:center;justify-content:center;background:rgba(0,200,100,0.07);border:1px solid rgba(0,200,100,0.2);border-radius:8px;font-size:11px;color:#00c864;letter-spacing:1px;}
+.cancelled-indicator{flex:1;display:flex;align-items:center;justify-content:center;background:rgba(180,60,60,0.07);border:1px solid rgba(180,60,60,0.3);border-radius:8px;font-size:11px;color:#e05555;letter-spacing:1px;}
 .bet-badge--ready{font-size:clamp(8px,1.2vw,10px);padding:2px 7px;border-radius:4px;background:rgba(0,200,100,0.12);color:#00c864;border:1px solid rgba(0,200,100,0.25);white-space:nowrap;}
 .bet-badge--locked{font-size:clamp(8px,1.2vw,10px);padding:2px 8px;border-radius:10px;background:rgba(0,200,100,0.25);color:#00ff88;border:1px solid rgba(0,255,136,0.5);font-weight:700;letter-spacing:1px;white-space:nowrap;}
 /* TOAST */
@@ -347,6 +348,7 @@ img.emoji {
           participants:      state.participants,
           results:           state.results,
           resultLocked:      state.resultLocked,
+          resultCancelled:   state.resultCancelled || {},
           roundData:         filteredRoundData,
         },
         seasonLog: window._seasonLog.filter(e => seasonKeys.has(e.raceName)),
@@ -678,6 +680,7 @@ let state = {
   participants: NAMES.map(name => ({ name, sessions: {} })),
   results: {},
   resultLocked: {},
+  resultCancelled: {},
   roundData: {},  // 라운드별 { participants, results, resultLocked } 저장
 };
 window._seasonLog = [];
@@ -847,6 +850,7 @@ function onSeasonChange() {
   state.participants      = {};
   state.results           = {};
   state.resultLocked      = {};
+  state.resultCancelled   = {};
 
   // 시즌 전환 중 fbSave 차단 (빈 state가 Firebase에 저장되는 것 방지)
   window._seasonSwitching = true;
@@ -914,6 +918,7 @@ function saveRoundData() {
     participants: JSON.parse(JSON.stringify(state.participants)),
     results: JSON.parse(JSON.stringify(state.results)),
     resultLocked: JSON.parse(JSON.stringify(state.resultLocked)),
+    resultCancelled: JSON.parse(JSON.stringify(state.resultCancelled || {})),
     constructors: JSON.parse(JSON.stringify(state.constructors)),
     constructorLocked: state.constructorLocked,
   };
@@ -966,6 +971,7 @@ function loadRoundData(raceName) {
     state.participants      = NAMES.map(name => ({ name, sessions: {} }));
     state.results           = {};
     state.resultLocked      = {};
+    state.resultCancelled   = {};
     state.constructorLocked = false;
     state.constructors      = getDefaultConstructors();
   }
@@ -1382,6 +1388,7 @@ function renderResult() {
     const allReady = state.participants.every(p => p.sessions[s.key]?.locked);
     const res = state.results[s.key] || ['','',''];
     const locked = !!state.resultLocked[s.key];
+    const cancelled = locked && !!(state.resultCancelled?.[s.key]);
 
     const lockNotice = !allReady
       ? `<div style="font-size:11px;color:rgba(255,150,50,0.85);background:rgba(255,150,50,0.08);border:1px solid rgba(255,150,50,0.2);border-radius:6px;padding:8px 12px;margin-bottom:14px;">
@@ -1389,8 +1396,13 @@ function renderResult() {
          </div>`
       : '';
 
+    const borderColor = locked ? (cancelled ? 'rgba(180,60,60,0.4)' : 'rgba(0,200,100,0.4)') : 'var(--border)';
+    const lockedBadge = cancelled
+      ? '<span class="bet-badge--locked" style="background:rgba(180,60,60,0.25);color:#e05555;border-color:rgba(180,60,60,0.5);">🚫 CANCELLED</span>'
+      : '<span class="bet-badge--locked">✓ LOCKED</span>';
+
     return `
-    <div class="card" id="sess-card-${s.key}" style="border-color:${locked ? 'rgba(0,200,100,0.4)' : 'var(--border)'};border-width:${locked ? '2px' : '1px'};padding:0;overflow:hidden;">
+    <div class="card" id="sess-card-${s.key}" style="border-color:${borderColor};border-width:${locked ? '2px' : '1px'};padding:0;overflow:hidden;">
       <style>#sess-card-${s.key}::before{display:none;}</style>
       <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;cursor:pointer;background:rgba(255,255,255,0.03);flex-wrap:nowrap;gap:6px;" onclick="toggleResultCard('${s.key}')">
         <div style="display:flex;align-items:center;min-width:0;flex-shrink:1;overflow:hidden;">
@@ -1398,7 +1410,7 @@ function renderResult() {
         </div>
         <div style="display:flex;align-items:center;gap:6px;flex-shrink:0;">
           ${allReady ? '<span class="bet-badge--ready">✓ BET</span>' : ''}
-          ${locked ? '<span class="bet-badge--locked">✓ LOCKED</span>' : ''}
+          ${locked ? lockedBadge : ''}
           <span id="res-arrow-${s.key}" style="font-size:11px;color:rgba(255,255,255,0.5);transition:transform 0.2s;flex-shrink:0;">▼</span>
         </div>
       </div>
@@ -1418,11 +1430,13 @@ function renderResult() {
         <div class="res-btn-wrap" style="display:flex;gap:8px;margin-top:14px;">
           ${locked
             ? `<button class="btn sec" style="font-size:10px;padding:10px 18px;flex:0 0 auto;width:auto;" onclick="unlockResult('${s.key}')">✏️ Edit</button>
-               <div class="lock-indicator">✓ LOCKED IN</div>`
+               ${cancelled
+                 ? `<div class="cancelled-indicator" style="font-family:var(--font-orbitron);">🚫 CANCELLED</div>`
+                 : `<div class="lock-indicator" style="font-family:var(--font-orbitron);">✓ LOCKED IN</div>`}`
             : `<button class="btn grn" style="width:100%;font-size:10px;padding:10px;" onclick="checkResult('${s.key}')">🔒 Confirm Results</button>`
           }
         </div>
-        <div id="result-board-${s.key}" style="display:${locked ? 'block' : 'none'};margin-top:20px;"></div>
+        <div id="result-board-${s.key}" style="display:${locked && !cancelled ? 'block' : 'none'};margin-top:20px;"></div>
       </div>
     </div>`;
   }).join('') + `
@@ -1475,31 +1489,37 @@ function checkResult(key) {
   const r1 = document.getElementById(`res-${key}-1`)?.value;
   const r2 = document.getElementById(`res-${key}-2`)?.value;
   const s = sessions().find(s => s.key === key);
-  if (!r0 || !r1 || !r2) { showToast(`${s.label}: Please enter P1, P2, P3 results!`, 'error'); return; }
-  if (new Set([r0,r1,r2]).size < 3) { showToast(`${s.label}: Select 3 different drivers!`, 'error'); return; }
+  const cancelled = !r0 && !r1 && !r2;
+  if (!cancelled && (!r0 || !r1 || !r2)) { showToast(`${s.label}: Please enter P1, P2, P3 results!`, 'error'); return; }
+  if (!cancelled && new Set([r0,r1,r2]).size < 3) { showToast(`${s.label}: Select 3 different drivers!`, 'error'); return; }
 
-  state.results[key] = [r0, r1, r2];
+  state.results[key] = cancelled ? ['','',''] : [r0, r1, r2];
   state.resultLocked[key] = true;
+  state.resultCancelled = state.resultCancelled || {};
+  state.resultCancelled[key] = cancelled;
 
   const scored = state.participants.map(p => {
     const picks = p.sessions[key]?.picks || ['','',''];
-    const r = calcSession(picks, [r0,r1,r2], s.mult);
+    const r = calcSession(picks, state.results[key], s.mult);
     return { name: p.name, totalPts: r.totalPts, breakdown: [{ label: s.label, ...r }] };
   });
 
   // 카드 상태 업데이트
   const card = document.getElementById(`sess-card-${key}`);
   if (card) {
-    card.style.borderColor = 'rgba(0,200,100,0.4)';
+    card.style.borderColor = cancelled ? 'rgba(180,60,60,0.4)' : 'rgba(0,200,100,0.4)';
     card.style.borderWidth = '2px';
     card.querySelector('.res-grid').style.pointerEvents = 'none';
     card.querySelector('.res-grid').style.opacity = '0.5';
+    const indicator = cancelled
+      ? `<div class="cancelled-indicator" style="font-family:var(--font-orbitron);">🚫 CANCELLED</div>`
+      : `<div class="lock-indicator" style="font-family:var(--font-orbitron);">✓ LOCKED IN</div>`;
     card.querySelector('.res-btn-wrap').innerHTML = `
       <button class="btn sec" style="font-size:10px;padding:10px 18px;flex:0 0 auto;width:auto;" onclick="unlockResult('${key}')">✏️ Edit</button>
-      <div style="flex:1;display:flex;align-items:center;justify-content:center;background:rgba(0,200,100,0.07);border:1px solid rgba(0,200,100,0.2);border-radius:8px;font-size:11px;color:#00c864;font-family:var(--font-orbitron);letter-spacing:1px;">✓ LOCKED IN</div>`;
+      ${indicator}`;
   }
 
-  renderSessionBoard(key, scored, s.label);
+  if (!cancelled) renderSessionBoard(key, scored, s.label);
   if (window.saveRoundData) window.saveRoundData();
   if (window.fbSave) window.fbSave();
   tryRenderCombined();
@@ -1509,6 +1529,7 @@ function checkResult(key) {
 function unlockResult(key) {
   state.results[key] = ['','',''];
   state.resultLocked[key] = false;
+  if (state.resultCancelled) state.resultCancelled[key] = false;
 
   // 시즌 누적에서 이 라운드 항목 삭제
   const idx = window._seasonLog.findIndex(e => e.raceName === state.raceName);
@@ -2085,6 +2106,9 @@ window.applyFbData = function(data, season) {
     }
     if (data.state.resultLocked && Object.keys(data.state.resultLocked).length > 0) {
       state.resultLocked = data.state.resultLocked;
+    }
+    if (data.state.resultCancelled) {
+      state.resultCancelled = data.state.resultCancelled;
     }
     if (data.state.constructors && data.state.constructors.length > 0) {
       state.constructors = data.state.constructors;
